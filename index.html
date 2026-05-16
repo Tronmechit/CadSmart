@@ -89,12 +89,21 @@
         const DATA_SOURCE_URL = "drawings.json"; 
 
         // Start the camera scanner automatically on load
+               // Start the camera scanner automatically on load
         function startScanner() {
             html5QrcodeScanner = new Html5QrcodeScanner("reader", { 
                 fps: 10, 
                 qrbox: { width: 250, height: 250 },
-                rememberLastUsedCamera: true
+                rememberLastUsedCamera: true,
+                // Force the scanner to prefer the back camera
+                supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+                videoConstraints: {
+                    facingMode: { exact: "environment" }
+                }
             });
+            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        }
+ );
             html5QrcodeScanner.render(onScanSuccess, onScanFailure);
         }
 
