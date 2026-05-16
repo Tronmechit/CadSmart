@@ -1,4 +1,4 @@
-<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -89,13 +89,12 @@
         const DATA_SOURCE_URL = "drawings.json"; 
 
         // Start the camera scanner automatically on load
-               // Start the camera scanner automatically on load
         function startScanner() {
             html5QrcodeScanner = new Html5QrcodeScanner("reader", { 
                 fps: 10, 
                 qrbox: { width: 250, height: 250 },
                 rememberLastUsedCamera: true,
-                // Force the scanner to prefer the back camera
+                // Force the scanner to lock onto the back camera
                 supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
                 videoConstraints: {
                     facingMode: { exact: "environment" }
@@ -103,18 +102,14 @@
             });
             html5QrcodeScanner.render(onScanSuccess, onScanFailure);
         }
- );
-            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-        }
 
         // What happens when the camera successfully reads a QR Code
         function onScanSuccess(decodedText, decodedResult) {
-            // Stop scanning immediately so it doesn't keep triggers while showing the result
+            // Stop scanning immediately so it doesn't keep triggering while showing results
             html5QrcodeScanner.clear();
             document.getElementById("reader").style.display = "none";
             
             // Expected QR code text format from your drawing: "DRG-2026-001,Rev B"
-            // Let's split it by the comma to extract the Drawing ID and the Revision in hand
             const qrParts = decodedText.split(",");
             const scannedID = qrParts[0] ? qrParts[0].trim() : "";
             const scannedRev = qrParts[1] ? qrParts[1].trim() : "";
@@ -134,10 +129,11 @@
             // Quietly handle scanning frames without throwing loud alerts
         }
 
+        // Verification logic comparing the scanned code against your drawings.json data
         function processVerification(id, scannedRev, db) {
             const resultBox = document.getElementById("result-container");
             
-            // Check if this drawing ID even exists in our cloud ledger
+            // Check if this drawing ID exists in our cloud ledger
             if (!db[id]) {
                 showResult("NOT FOUND", `Drawing <strong>${id}</strong> is not listed in the official cloud mirror database. Check with Design Office.`, "status-unknown");
                 return;
@@ -195,7 +191,7 @@
             startScanner();
         }
 
-        // Fire it up
+        // Fire it up automatically on page load
         startScanner();
     </script>
 </body>
