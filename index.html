@@ -1,0 +1,193 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Design Office - QR Verification</title>
+    <!-- Include the open-source QR Scanner Library -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h2 { margin-bottom: 5px; color: #00adb5; }
+        #subtitle { color: #888; margin-bottom: 20px; font-size: 14px; }
+        #reader {
+            width: 100%;
+            max-width: 400px;
+            background: #1e1e1e;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #333;
+        }
+        #result-container {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-sizing: border-box;
+            display: none; /* Hidden until a scan happens */
+        }
+        .status-valid {
+            background-color: #1b5e20;
+            border: 2px solid #4caf50;
+        }
+        .status-warning {
+            background-color: #b71c1c;
+            border: 2px solid #f44336;
+        }
+        .status-unknown {
+            background-color: #4a4a4a;
+            border: 2px solid #9e9e9e;
+        }
+        .status-title { font-size: 24px; font-weight: bold; margin-bottom: 10px; }
+        .status-details { font-size: 16px; line-height: 1.5; text-align: left; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px; }
+        button {
+            background-color: #00adb5;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        button:hover { background-color: #007c82; }
+    </style>
+</head>
+<body>
+
+    <h2>DESIGNS VERIFICATION</h2>
+    <div id="subtitle">Field Revision Control System</div>
+
+    <!-- The Camera Scanner Box -->
+    <div id="reader"></div>
+
+    <!-- The Pop-up Result Box -->
+    <div id="result-container">
+        <div id="statusTitle" class="status-title"></div>
+        <div id="statusDetails" class="status-details"></div>
+        <button onclick="resetScanner()">Scan Next Drawing</button>
+    </div>
+
+    <script>
+        let html5QrcodeScanner;
+        
+        // --- CONFIGURATION ---
+        // While traveling, you will use local test data. 
+        // Next Thursday, change this URL to point to your live GitHub JSON file!
+        const DATA_SOURCE_URL = "drawings.json"; 
+
+        // Start the camera scanner automatically on load
+        function startScanner() {
+            html5QrcodeScanner = new Html5QrcodeScanner("reader", { 
+                fps: 10, 
+                qrbox: { width: 250, height: 250 },
+                rememberLastUsedCamera: true
+            });
+            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        }
+
+        // What happens when the camera successfully reads a QR Code
+        function onScanSuccess(decodedText, decodedResult) {
+            // Stop scanning immediately so it doesn't keep triggers while showing the result
+            html5QrcodeScanner.clear();
+            document.getElementById("reader").style.display = "none";
+            
+            // Expected QR code text format from your drawing: "DRG-2026-001,Rev B"
+            // Let's split it by the comma to extract the Drawing ID and the Revision in hand
+            const qrParts = decodedText.split(",");
+            const scannedID = qrParts[0] ? qrParts[0].trim() : "";
+            const scannedRev = qrParts[1] ? qrParts[1].trim() : "";
+
+            // Fetch the latest master ledger (drawings.json)
+            fetch(DATA_SOURCE_URL)
+                .then(response => response.json())
+                .then(database => {
+                    processVerification(scannedID, scannedRev, database);
+                })
+                .catch(error => {
+                    showResult("UNKNOWN", "Error connecting to database mirror or invalid JSON format.", "status-unknown");
+                });
+        }
+
+        function onScanFailure(error) {
+            // Quietly handle scanning frames without throwing loud alerts
+        }
+
+        function processVerification(id, scannedRev, db) {
+            const resultBox = document.getElementById("result-container");
+            
+            // Check if this drawing ID even exists in our cloud ledger
+            if (!db[id]) {
+                showResult("NOT FOUND", `Drawing <strong>${id}</strong> is not listed in the official cloud mirror database. Check with Design Office.`, "status-unknown");
+                return;
+            }
+
+            const latestRecord = db[id];
+            const masterRev = latestRecord.rev;
+            const currentStatus = latestRecord.status;
+            const updateDate = latestRecord.date;
+
+            // Verification Logic
+            if (scannedRev.toUpperCase() === masterRev.toUpperCase() && currentStatus.toUpperCase() === "APPROVED") {
+                // MATCH: Drawing is current and approved
+                showResult(
+                    "VERIFIED OK", 
+                    `<strong>Drawing ID:</strong> ${id}<br>` +
+                    `<strong>Your Copy:</strong> ${scannedRev}<br>` +
+                    `<strong>Latest System Rev:</strong> ${masterRev}<br>` +
+                    `<strong>Status:</strong> ${currentStatus}<br>` +
+                    `<strong>Released On:</strong> ${updateDate}`, 
+                    "status-valid"
+                );
+                // Vibrate phone for success if supported by device
+                if (navigator.vibrate) navigator.vibrate(100);
+            } else {
+                // MISMATCH OR SUPERSEDED
+                showResult(
+                    "DO NOT USE!", 
+                    `<strong>Drawing ID:</strong> ${id}<br>` +
+                    `<strong>Your Copy:</strong> <span style="text-decoration: underline;">${scannedRev}</span> (OUTDATED)<br>` +
+                    `<strong>Latest Master Rev:</strong> <span style="font-size:20px; color:#ffeb3b;">${masterRev}</span><br>` +
+                    `<strong>Current Status:</strong> ${currentStatus}<br>` +
+                    `<strong>Last Updated:</strong> ${updateDate}<br><br>` +
+                    `<span style="color:#ffeb3b; font-weight:bold;">DESTROY THIS PAPER COPY IMMEDIATELY.</span>`, 
+                    "status-warning"
+                );
+                // Heavy vibration pattern for alert warning
+                if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+            }
+        }
+
+        function showResult(title, detailsHtml, cssClass) {
+            const container = document.getElementById("result-container");
+            container.className = ""; // Reset styles
+            container.classList.add(cssClass);
+            
+            document.getElementById("statusTitle").innerHTML = title;
+            document.getElementById("statusDetails").innerHTML = detailsHtml;
+            container.style.display = "block";
+        }
+
+        function resetScanner() {
+            document.getElementById("result-container").style.display = "none";
+            document.getElementById("reader").style.display = "block";
+            startScanner();
+        }
+
+        // Fire it up
+        startScanner();
+    </script>
+</body>
+</html>
