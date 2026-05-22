@@ -111,7 +111,7 @@
             document.getElementById("reader").style.display = "none";
             
             // Expected QR code text format from your drawing: "DRG-2026-001,Rev B"
-            const qrParts = decodedText.split(",");
+            const qrParts = decodedText.split("_");
             const scannedID = qrParts[0] ? qrParts[0].trim() : "";
             const scannedRev = qrParts[1] ? qrParts[1].trim() : "";
 
