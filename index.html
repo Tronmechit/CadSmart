@@ -122,7 +122,7 @@
                     processVerification(scannedID, scannedRev, database);
                 })
                 .catch(error => {
-                    showResult(scannedID, "Error connecting to database!", "status-unknown");
+                    showResult("scannedID", "Error connecting to database!", "status-unknown");
                 });
         }
 
