@@ -122,7 +122,8 @@
 
             // Fetch the latest master ledger (drawings.json)
             fetch(DATA_SOURCE_URL)
-                .then(response => response.json())
+                .then(response => response.json());
+                console.log(response.json());
                 .then(database => {
                     processVerification(scannedID, scannedRev.charAt(4), database);
                 })
@@ -157,7 +158,7 @@
             //            if (scannedRev1.toUpperCase() === masterRev.toUpperCase() && currentStatus.toUpperCase() === "APPROVED") {
             if (scannedRev1.toUpperCase() === masterRev.toUpperCase() ) {
                // console.log(scannedRev1);
-                 console.log(masterRev);
+                 console.log("I am in");
                // console.log(scannedRev);
                 // MATCH: Drawing is current and approved
                 showResult(
