@@ -124,7 +124,7 @@
             fetch(DATA_SOURCE_URL)
                 .then(response => response.json())
                 .then(database => {
-                    processVerification(scannedID.charAt(4), scannedRev, database);
+                    processVerification(scannedID, scannedRev.charAt(4), database);
                 })
                 .catch(error => {
                     showResult(scannedID, "Error connecting to database!", "status-unknown");
