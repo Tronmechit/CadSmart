@@ -3,13 +3,12 @@
 <head>
     <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
     <script>
-          // This instantly initializes the on-screen logger
-          var vConsole = new window.VConsole();
+        // This instantly initializes the on-screen logger
+        var vConsole = new window.VConsole();
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CadSmart- QR Verification</title>
-    <!-- Include the open-source QR Scanner Library -->
+    <title>CadSmart - QR Verification</title>
     <script src="https://unpkg.com/html5-qrcode"></script>
     <style>
         body {
@@ -22,7 +21,7 @@
             flex-direction: column;
             align-items: center;
         }
-        h2 { margin-bottom: 5px; color: #00adb5;text-align: center }
+        h2 { margin-bottom: 5px; color: #00adb5; text-align: center }
         #subtitle { color: #888; margin-bottom: 20px; font-size: 14px; align-items: center; }
         #reader {
             width: 100%;
@@ -76,10 +75,8 @@
     <h2>DESIGNS VERIFICATION CDPLC</h2>
     <div id="subtitle">Field Revision Control System</div>
 
-    <!-- The Camera Scanner Box -->
     <div id="reader"></div>
 
-    <!-- The Pop-up Result Box -->
     <div id="result-container">
         <div id="statusTitle" class="status-title"></div>
         <div id="statusDetails" class="status-details"></div>
@@ -115,21 +112,30 @@
             html5QrcodeScanner.clear();
             document.getElementById("reader").style.display = "none";
             
-            // Expected QR code text format from your drawing: "DRG-2026-001,Rev B"
+            // Expected QR code text format from your drawing: "DRG-2026-001_Rev B"
             const qrParts = decodedText.split("_");
             const scannedID = qrParts[0] ? qrParts[0].trim() : "";
-            const scannedRev = qrParts[1] ? qrParts[1].trim() : "";
+            const fullScannedRev = qrParts[1] ? qrParts[1].trim() : ""; // e.g., "Rev B"
+
+            // Safely parse out just the single character (e.g., extracts "B" from "Rev B")
+            const revCharacter = fullScannedRev.charAt(4) ? fullScannedRev.charAt(4).trim() : fullScannedRev;
 
             // Fetch the latest master ledger (drawings.json)
             fetch(DATA_SOURCE_URL)
-                .then(response => response.json())
-               // console.log(response.json());
-                .then(database => {
-                    processVerification(scannedID, scannedRev.charAt(4), database);
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Database file missing or unreachable");
+                    }
+                    return response.json();
                 })
-               // .catch(error => {
-               //   showResult(scannedID, "Error connecting to database!", "status-unknown");
-               // });
+                .then(database => {
+                    // Pass BOTH the raw label text AND the single verification character down
+                    processVerification(scannedID, fullScannedRev, revCharacter, database);
+                })
+                .catch(error => {
+                    console.error("Database read error:", error);
+                    showResult(scannedID, "Error connecting to database mirror file!", "status-unknown");
+                });
         }
 
         function onScanFailure(error) {
@@ -137,7 +143,7 @@
         }
 
         // Verification logic comparing the scanned code against your drawings.json data
-        function processVerification(id, scannedRev1, db) {
+        function processVerification(id, rawScannedRev, cleanScannedRev, db) {
             const resultBox = document.getElementById("result-container");
             
             // Check if this drawing ID exists in our cloud ledger
@@ -151,20 +157,17 @@
             const currentStatus = latestRecord.status;
             const updateDate = latestRecord.date;
 
-            console.log(latestRecord);
-            
+            console.log("Matched Database Record:", latestRecord);
+            console.log("Scanned Clean Rev:", cleanScannedRev, " | Master Database Rev:", masterRev);
 
-            // Verification Logic
-                        if (scannedRev1.toUpperCase() === masterRev.toUpperCase() && currentStatus.toUpperCase() === "APPROVED") {
-            //if (scannedRev1.toUpperCase() === masterRev.toUpperCase() ) {
-               console.log(scannedRev1);
-                 console.log("I am in");
-               console.log(masterRev);
+            // Verification Logic: Check both the character equality and that status is APPROVED
+            if (cleanScannedRev.toUpperCase() === masterRev.toUpperCase() && currentStatus.toUpperCase() === "APPROVED") {
+                
                 // MATCH: Drawing is current and approved
                 showResult(
                     "VERIFIED OK", 
                     `<strong>Drawing ID:</strong> ${id}<br>` +
-                    `<strong>Your Copy:</strong> ${scannedRev}<br>` +
+                    `<strong>Your Copy:</strong> ${rawScannedRev}<br>` +
                     `<strong>Latest System Rev:</strong> ${masterRev}<br>` +
                     `<strong>Status:</strong> ${currentStatus}<br>` +
                     `<strong>Released On:</strong> ${updateDate}`, 
@@ -177,7 +180,7 @@
                 showResult(
                     "DO NOT USE!", 
                     `<strong>Drawing ID:</strong> ${id}<br>` +
-                    `<strong>Your Copy:</strong> <span style="text-decoration: underline;">${scannedRev}</span> (OUTDATED)<br>` +
+                    `<strong>Your Copy:</strong> <span style="text-decoration: underline;">${rawScannedRev}</span> (OUTDATED)<br>` +
                     `<strong>Latest Master Rev:</strong> <span style="font-size:20px; color:#ffeb3b;">${masterRev}</span><br>` +
                     `<strong>Current Status:</strong> ${currentStatus}<br>` +
                     `<strong>Last Updated:</strong> ${updateDate}<br><br>` +
