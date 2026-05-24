@@ -121,7 +121,9 @@
             const revCharacter = fullScannedRev.charAt(4) ? fullScannedRev.charAt(4).trim() : fullScannedRev;
 
             // Fetch the latest master ledger (drawings.json)
-            fetch(DATA_SOURCE_URL)
+            //fetch(DATA_SOURCE_URL)
+                // Adds a unique number to the end of the request so the phone is forced to fetch fresh data every time
+            fetch(DATA_SOURCE_URL + '?v=' + Date.now())
                 .then(response => {
                     if (!response.ok) {
                         throw new Error("Database file missing or unreachable");
