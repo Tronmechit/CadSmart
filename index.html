@@ -128,7 +128,7 @@
                     processVerification(scannedID, scannedRev.charAt(4), database);
                 })
                 .catch(error => {
-                   // showResult(scannedID, "Error connecting to database!", "status-unknown");
+                  showResult(scannedID, "Error connecting to database!", "status-unknown");
                 });
         }
 
@@ -155,8 +155,8 @@
             
 
             // Verification Logic
-            //            if (scannedRev1.toUpperCase() === masterRev.toUpperCase() && currentStatus.toUpperCase() === "APPROVED") {
-            if (scannedRev1.toUpperCase() === masterRev.toUpperCase() ) {
+                        if (scannedRev1.toUpperCase() === masterRev.toUpperCase() && currentStatus.toUpperCase() === "APPROVED") {
+            //if (scannedRev1.toUpperCase() === masterRev.toUpperCase() ) {
                console.log(scannedRev1);
                  console.log("I am in");
                console.log(masterRev);
