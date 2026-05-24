@@ -136,7 +136,7 @@
         }
 
         // Verification logic comparing the scanned code against your drawings.json data
-        function processVerification(id, scannedRev1, db) {
+        function processVerification(id, scannedRev, db) {
             const resultBox = document.getElementById("result-container");
             
             // Check if this drawing ID exists in our cloud ledger
@@ -151,7 +151,7 @@
             const updateDate = latestRecord.date;
 
             // Verification Logic
-            if (scannedRev1.toUpperCase() === masterRev.toUpperCase() && currentStatus.toUpperCase() === "APPROVED") {
+            if (scannedRev[4].toUpperCase() === masterRev.toUpperCase() && currentStatus.toUpperCase() === "APPROVED") {
                 // MATCH: Drawing is current and approved
                 showResult(
                     "VERIFIED OK", 
