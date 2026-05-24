@@ -127,9 +127,9 @@
                 .then(database => {
                     processVerification(scannedID, scannedRev.charAt(4), database);
                 })
-                .catch(error => {
-                  showResult(scannedID, "Error connecting to database!", "status-unknown");
-                });
+               // .catch(error => {
+               //   showResult(scannedID, "Error connecting to database!", "status-unknown");
+               // });
         }
 
         function onScanFailure(error) {
