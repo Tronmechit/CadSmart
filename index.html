@@ -151,7 +151,8 @@
             const updateDate = latestRecord.date;
 
             // Verification Logic
-            if (scannedRev1.toUpperCase() === masterRev.toUpperCase() && currentStatus.toUpperCase() === "APPROVED") {
+            //            if (scannedRev1.toUpperCase() === masterRev.toUpperCase() && currentStatus.toUpperCase() === "APPROVED") {
+            if (scannedRev1.toUpperCase() === masterRev.toUpperCase() ) {
                 // MATCH: Drawing is current and approved
                 showResult(
                     "VERIFIED OK", 
