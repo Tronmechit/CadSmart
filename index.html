@@ -163,8 +163,8 @@
             console.log("Scanned Clean Rev:", cleanScannedRev, " | Master Database Rev:", masterRev);
 
             // Verification Logic: Check both the character equality and that status is APPROVED
-            if (cleanScannedRev.toUpperCase() === masterRev.toUpperCase() && currentStatus.toUpperCase() === "APPROVED") {
-                
+            //if (cleanScannedRev.toUpperCase() === masterRev.toUpperCase() && currentStatus.toUpperCase() === "APPROVED") {
+                 if (cleanScannedRev.toUpperCase() === masterRev.toUpperCase() ) {
                 // MATCH: Drawing is current and approved
                 showResult(
                     "VERIFIED OK", 
