@@ -95,7 +95,22 @@
         // Array of your 5 separate discipline JSON files sitting in the repository
         const DISCIPLINE_FILES = [
             "SOFdrawings.json",
-            "MOFdrawings.json"       ]; 
+            "MOFdrawings.json" ]; 
+
+         // Start the camera scanner automatically on load
+        function startScanner() {
+            html5QrcodeScanner = new Html5QrcodeScanner("reader", { 
+                fps: 10, 
+                qrbox: { width: 250, height: 250 },
+                rememberLastUsedCamera: true,
+                // Force the scanner to lock onto the back camera
+                supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+                videoConstraints: {
+                    facingMode: { exact: "environment" }
+                }
+            });
+            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        }
 
         // What happens when the camera successfully reads a QR Code
         function onScanSuccess(decodedText, decodedResult) {
