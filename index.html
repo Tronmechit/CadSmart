@@ -134,10 +134,10 @@
                     // Pass BOTH the raw label text AND the single verification character down
                     processVerification(scannedID, fullScannedRev, revCharacter, database);
                 })
-                .catch(error => {
-                    console.error("Database read error:", error);
-                    showResult(scannedID, "Error connecting to database mirror file!", "status-unknown");
-                });
+               // .catch(error => {
+                 //   console.error("Database read error:", error);
+                  //  showResult(scannedID, "Error connecting to database mirror file!", "status-unknown");
+               // });
         }
 
         function onScanFailure(error) {
