@@ -209,7 +209,8 @@
                     `<strong>Drawing ID:</strong> ${id}<br>` +
                     `<strong>Your Copy:</strong> ${rawScannedRev}<br>` +
                     `<strong>Latest System Rev:</strong> ${masterRev}<br>` +
-                    `<strong>Issued On:</strong> ${updateDate}`, 
+                    `<strong>Issued On:</strong> ${updateDate && updateDate.trim() !== "" ? updateDate : "Pending"}`'
+                   // `<strong>Issued On:</strong> ${updateDate}`, 
                     "status-valid"
                 );
                 // Vibrate phone for success if supported by device
