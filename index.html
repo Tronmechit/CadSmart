@@ -157,7 +157,7 @@
             const latestRecord = db[id];
             const masterRev = latestRecord.rev;
             //const currentStatus = latestRecord.status;
-            const updateDate = latestRecord.date;
+            const updateDate = latestRecord.Issue_Date;
 
             console.log("Matched Database Record:", latestRecord);
             console.log("Scanned Clean Rev:", cleanScannedRev, " | Master Database Rev:", masterRev);
@@ -172,7 +172,7 @@
                     `<strong>Drawing ID:</strong> ${id}<br>` +
                     `<strong>Your Copy:</strong> ${rawScannedRev}<br>` +
                     `<strong>Latest System Rev:</strong> ${masterRev}<br>` +
-                    `<strong>Released On:</strong> ${updateDate}`, 
+                    `<strong>Issued On:</strong> ${updateDate}`, 
                     "status-valid"
                 );
                 // Vibrate phone for success if supported by device
