@@ -156,7 +156,7 @@
 
             const latestRecord = db[id];
             const masterRev = latestRecord.rev;
-            const currentStatus = latestRecord.status;
+            'const currentStatus = latestRecord.status;
             const updateDate = latestRecord.date;
 
             console.log("Matched Database Record:", latestRecord);
@@ -172,7 +172,6 @@
                     `<strong>Drawing ID:</strong> ${id}<br>` +
                     `<strong>Your Copy:</strong> ${rawScannedRev}<br>` +
                     `<strong>Latest System Rev:</strong> ${masterRev}<br>` +
-                    `<strong>Status:</strong> ${currentStatus}<br>` +
                     `<strong>Released On:</strong> ${updateDate}`, 
                     "status-valid"
                 );
