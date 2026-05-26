@@ -205,7 +205,7 @@
                      console.log ("wewe", cleanScannedRev,masterRev);
                 // MATCH: Drawing is current and approved
                 showResult(
-                    "VERIFIED OK", 
+                    `${updateDate && updateDate.trim() !== "" ? "VERIFIED OK" : "APPROVAL PENDING"}`, 
                     `<strong>Drawing ID:</strong> ${id}<br>` +
                     `<strong>Your Copy:</strong> ${rawScannedRev}<br>` +
                     `<strong>Latest System Rev:</strong> ${masterRev}<br>` +
