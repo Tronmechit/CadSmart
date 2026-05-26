@@ -90,58 +90,77 @@
         let html5QrcodeScanner;
         
         // --- CONFIGURATION ---
-        // While traveling, you will use local test data. 
-        // Next Thursday, change this URL to point to your live GitHub JSON file!
-        const DATA_SOURCE_URL = "SOFdrawings.json"; 
-
-        // Start the camera scanner automatically on load
-        function startScanner() {
-            html5QrcodeScanner = new Html5QrcodeScanner("reader", { 
-                fps: 10, 
-                qrbox: { width: 250, height: 250 },
-                rememberLastUsedCamera: true,
-                // Force the scanner to lock onto the back camera
-                supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
-                videoConstraints: {
-                    facingMode: { exact: "environment" }
-                }
-            });
-            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-        }
+       // const DATA_SOURCE_URL = "SOFdrawings.json"; 
+// --- CONFIGURATION ---
+        // Array of your 5 separate discipline JSON files sitting in the repository
+        const DISCIPLINE_FILES = [
+            "SOFdrawings.json",
+            "MOFdrawings.json",       ]; 
 
         // What happens when the camera successfully reads a QR Code
         function onScanSuccess(decodedText, decodedResult) {
-            // Stop scanning immediately so it doesn't keep triggering while showing results
+            // Stop scanning immediately so it doesn't keep triggering
             html5QrcodeScanner.clear();
             document.getElementById("reader").style.display = "none";
             
             // Expected QR code text format from your drawing: "DRG-2026-001_Rev B"
             const qrParts = decodedText.split("_");
             const scannedID = qrParts[0] ? qrParts[0].trim() : "";
-            const fullScannedRev = qrParts[1] ? qrParts[1].trim() : ""; // e.g., "Rev B"
+            const fullScannedRev = qrParts[1] ? qrParts[1].trim() : ""; 
 
             // Safely parse out just the single character (e.g., extracts "B" from "Rev B")
             const revCharacter = fullScannedRev.charAt(4) ? fullScannedRev.charAt(4).trim() : fullScannedRev;
 
-            // Fetch the latest master ledger (drawings.json)
-            //fetch(DATA_SOURCE_URL)
-                // Adds a unique number to the end of the request so the phone is forced to fetch fresh data every time
-            fetch(DATA_SOURCE_URL + '?v=' + Date.now())
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error("Database file missing or unreachable");
-                    }
-                    return response.json();
-                })
-                .then(database => {
-                    // Pass BOTH the raw label text AND the single verification character down
-                    processVerification(scannedID, fullScannedRev, revCharacter, database);
-                })
-                .catch(error => {
-                    console.error("Database read error:", error);
-                      showResult(scannedID, "Error connecting to database mirror file!", "status-unknown");
-                });
+            console.log(`Starting search across disciplines for ID: ${scannedID}`);
+            
+            // Kick off the sequential search engine
+            searchDisciplinesSequentially(scannedID, fullScannedRev, revCharacter);
         }
+
+        // Sequential Search Engine: Checks files one by one until a hit is found
+        async function searchDisciplinesSequentially(id, rawScannedRev, cleanScannedRev) {
+            let recordFound = false;
+
+            // Loop through all 5 files sequentially
+            for (let i = 0; i < DISCIPLINE_FILES.length; i++) {
+                const currentFile = DISCIPLINE_FILES[i];
+                console.log(`Searching in: ${currentFile}...`);
+
+                try {
+                    // Fetch the current discipline file
+                    const response = await fetch(currentFile + '?v=' + Date.now()); // Includes the timestamp anti-cache trick!
+                    
+                    if (response.ok) {
+                        const database = await response.json();
+
+                        // Check if the drawing ID exists in THIS specific discipline dictionary
+                        if (database[id]) {
+                            console.log(`🎯 HIT FOUND in ${currentFile}! Terminating loop.`);
+                            recordFound = true;
+                            
+                            // Send data to your existing verification rules and stop the function completely
+                            processVerification(id, rawScannedRev, cleanScannedRev, database);
+                            break; 
+                        }
+                    }
+                } catch (error) {
+                    console.error(`Error reading or parsing ${currentFile}:`, error);
+                    // If one file fails (e.g., net drop or missing), the loop continues to check the others safely
+                }
+            }
+
+            // IF THE LOOP COMPLETES AND NO FILE CONTAINED THE ID:
+            if (!recordFound) {
+                console.log("Drawing ID not found in any discipline file.");
+                showResult(
+                    "NOT FOUND", 
+                    `Drawing <strong>${id}</strong> is not listed in any of the 5 discipline databases. Check with Design Office.`, 
+                    "status-unknown"
+                );
+            }
+        }
+
+        
 
         function onScanFailure(error) {
             // Quietly handle scanning frames without throwing loud alerts
@@ -152,10 +171,10 @@
             const resultBox = document.getElementById("result-container");
             
             // Check if this drawing ID exists in our cloud ledger
-            if (!db[id]) {
-                showResult("NOT FOUND", `Drawing <strong>${id}</strong> is not listed in the official cloud mirror database. Check with Design Office.`, "status-unknown");
-                return;
-            }
+           // if (!db[id]) {
+            //    showResult("NOT FOUND", `Drawing <strong>${id}</strong> is not listed in the official cloud mirror database. Check with Design Office.`, "status-unknown");
+           //     return;
+          //  }
 
             const latestRecord = db[id];
             const masterRev = latestRecord.rev;
