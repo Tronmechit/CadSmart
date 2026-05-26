@@ -163,8 +163,8 @@
             console.log("Scanned Clean Rev:", cleanScannedRev, " | Master Database Rev:", masterRev);
 
             // Verification Logic: Check both the character equality and that status is APPROVED
-            if (cleanScannedRev.toUpperCase() === masterRev.toUpperCase() && currentStatus.toUpperCase() === "APPROVED") {
-                 //if (cleanScannedRev.toUpperCase() === masterRev.toUpperCase() ) {
+            //if (cleanScannedRev.toUpperCase() === masterRev.toUpperCase() && currentStatus.toUpperCase() === "APPROVED") {
+                 if (cleanScannedRev.toUpperCase() === masterRev.toUpperCase() ) {
                      console.log ("wewe", cleanScannedRev,masterRev);
                 // MATCH: Drawing is current and approved
                 showResult(
