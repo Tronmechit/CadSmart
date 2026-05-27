@@ -45,6 +45,10 @@
             box-sizing: border-box;
             display: none; /* Hidden until a scan happens */
         }
+        .status-pending {
+            background-color: #707070;
+            border: 2px solid #4caf50;
+        }
         .status-valid {
             background-color: #1b5e20;
             border: 2px solid #4caf50;
@@ -209,8 +213,9 @@
                     `<strong>Your Copy:</strong> ${rawScannedRev}<br>` +
                     `<strong>Latest System Rev:</strong> ${masterRev}<br>` +
                     `<strong>Issued On:</strong> ${updateDate && updateDate.trim() !== "" ? updateDate : "Pending"}`,
+                    `${updateDate && updateDate.trim() !== "" ? "status-valid" : "status-pending"}`
                    // `<strong>Issued On:</strong> ${updateDate}`, 
-                    "status-valid"
+                    //"status-valid"
                 );
                 // Vibrate phone for success if supported by device
                 if (navigator.vibrate) navigator.vibrate(100);
