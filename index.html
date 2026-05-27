@@ -47,7 +47,7 @@
         }
         .status-pending {
             background-color: #707070;
-            border: 2px solid #4caf50;
+            border: 2px solid #181818;
         }
         .status-valid {
             background-color: #1b5e20;
@@ -101,19 +101,31 @@
             "MOFdrawings.json" ]; 
 
          // Start the camera scanner automatically on load
-        function startScanner() {
-            html5QrcodeScanner = new Html5QrcodeScanner("reader", { 
-                fps: 10, 
-                qrbox: { width: 250, height: 250 },
-                rememberLastUsedCamera: true,
-                // Force the scanner to lock onto the back camera
-                supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
-                videoConstraints: {
-                    facingMode: { exact: "environment" }
-                }
-            });
-            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+   function startScanner() {
+    html5QrcodeScanner = new Html5QrcodeScanner("reader", { 
+        fps: 20, // Bumps up processing frame rate for faster focusing
+        qrbox: function(viewfinderWidth, viewfinderHeight) {
+            // Creates a dynamic scanning target box taking up 75% of the viewport
+            const minEdge = Math.min(viewfinderWidth, viewfinderHeight);
+            const boxSize = Math.floor(minEdge * 0.75);
+            return { width: boxSize, height: boxSize };
+        },
+        rememberLastUsedCamera: true,
+        supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+        
+        // --- HARDENED CAMERA CONSTRAINTS FOR DENSE QR CODES ---
+        videoConstraints: {
+            facingMode: { exact: "environment" },
+            // Force the mobile phone to provide a high-definition video feed
+            width: { min: 1280, ideal: 1920, max: 2560 },
+            height: { min: 720, ideal: 1080, max: 1440 },
+            // Request active autofocusing if supported by the hardware browser
+            advanced: [{ focusMode: "continuous" }]
         }
+    });
+    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+}
+
 
         // What happens when the camera successfully reads a QR Code
         function onScanSuccess(decodedText, decodedResult) {
