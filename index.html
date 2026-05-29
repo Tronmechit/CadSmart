@@ -88,7 +88,22 @@
         <div id="statusDetails" class="status-details"></div>
         <button onclick="resetScanner()">Scan Next Drawing</button>
     </div>
+<!-- 1. The persistent floating button at the bottom of the viewport screen -->
+<button id="manual-trigger-btn" onclick="showManualInput()">Can't Scan? Enter Manually</button>
 
+<!-- 2. The hidden Manual Input form container overlay screen -->
+<div id="manual-input-container">
+    <h3>Manual Drawing Entry</h3>
+    <p>Enter the complete drawing ID and revision code below.</p>
+    
+    <input type="text" id="manual-id" placeholder="e.g., DRG-2026-001" style="text-transform: uppercase;">
+    <input type="text" id="manual-rev" placeholder="e.g., Rev B" style="text-transform: uppercase;">
+    
+    <div style="display: flex; gap: 10px; margin-top: 15px; width: 100%;">
+        <button onclick="submitManualData()" style="flex: 1; margin: 0;">Verify Drawing</button>
+        <button onclick="hideManualInput()" style="flex: 1; margin: 0; background-color: #4a4a4a;">Cancel</button>
+    </div>
+</div>
     <script>
         let html5QrcodeScanner;
         
