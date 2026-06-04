@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Engineering Section Summary</title>
+    <style>
+        /* Base styling locked to viewport height for distance viewing */
+        body { 
+            background-color: #121212; /* Dark background outside the summary */
+            color: #ffffff; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 2vh;
+            overflow: hidden; 
+        }
+        
+        /* The dynamic header showing which section is currently displayed */
+        h1 { 
+            font-size: 5vh; 
+            text-align: center; 
+            margin-top: 1vh; 
+            margin-bottom: 3vh; 
+            color: #58a6ff; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Container for the color bands */
+        .summary-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5vh; /* Slight gap between bands, similar to Excel rows */
+            width: 50%;
+            margin: 0 auto;
+        }
+
+        /* Styling for each colored row */
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5vh 3vh;
+            font-size: 3vh;
+            font-weight: bold;
+        }
+
+        /* Specific colors mapped to your design */
+        .bg-blue { background-color: #00B0F0; color: #ffffff; }
+        .bg-yellow { background-color: #FFFF00; color: #000000; }
+        .bg-orange { background-color: #FFC000; color: #000000; }
+        .bg-green { background-color: #00FF00; color: #000000; }
+        .bg-red { background-color: #FF0000; color: #ffffff; }
+
+        /* Reserved space for delayed drawings at the bottom */
+        .delayed-space {
+            width: 95%;
+            margin: 4vh auto 0 auto;
+            height: 25vh;
+            border: 3px dashed #30363d;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 3vh;
+            background-color: #161b22;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="section-title">Loading Sections...</h1>
+
+    <div class="summary-container">
+        <div class="status-row bg-blue">
+            <span>Forwarded for checking</span>
+            <span id="val-forwarded">-</span>
+        </div>
+        <div class="status-row bg-yellow">
+            <span>Checked but Approval Pending</span>
+            <span id="val-checked">-</span>
+        </div>
+        <div class="status-row bg-orange">
+            <span>Approved but not issued</span>
+            <span id="val-approved">-</span>
+        </div>
+        <div class="status-row bg-green">
+            <span>Issued</span>
+            <span id="val-issued">-</span>
+        </div>
+        <div class="status-row bg-red">
+            <span>Current Delay</span>
+            <span id="val-delay">-</span>
+        </div>
+    </div>
+
+    <div class="delayed-space">
+        Reserved for Delayed Drawings List
+    </div>
+
+    <script>
+        // 1. Core Configuration
+        // *** IMPORTANT: Update baseUrl to point to your repository's raw folder ***
+        // Example: 'https://raw.githubusercontent.com/username/repo_name/main/'
+        // Ensure you keep the trailing slash (/) at the end.
+        const baseUrl = 'https://raw.githubusercontent.com/Tronmechit/CadSmart/main/';
+        
+        const sections = ['SOF', 'MOF'];
+        let currentIndex = 0;
+
+        // 2. Main Fetch and Render Logic
+        async function updateDashboard() {
+            // Get the current section acronym (e.g., "Hull")
+            const currentSection = sections[currentIndex];
+            
+            // Update the main header
+            document.getElementById('section-title').innerText = currentSection + ' SECTION SUMMARY';
+
+            try {
+                // Fetch the specific JSON for this section (appending timestamp to bypass cache)
+                const fileUrl = `${baseUrl}${currentSection}ToDisplay.json?t=${new Date().getTime()}`;
+                const response = await fetch(fileUrl);
+                console.log (fileUrl);
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Map the optimized numeric JSON keys to the HTML rows
+                    // The ?? 0 ensures that if a key is missing, it displays 0 instead of going blank
+                    document.getElementById('val-forwarded').innerText = data['1'] ?? 0;
+                    document.getElementById('val-checked').innerText = data['2'] ?? 0;
+                    document.getElementById('val-approved').innerText = data['3'] ?? 0;
+                    document.getElementById('val-issued').innerText = data['4'] ?? 0;
+                    document.getElementById('val-delay').innerText = data['5'] ?? 0;
+                } else {
+                    throw new Error("File not found");
+                }
+            } catch (error) {
+                console.error(`Error loading ${currentSection} data:`, error);
+                // Display dashes if the fetch fails (e.g., network drop or file hasn't been uploaded yet)
+                document.getElementById('val-forwarded').innerText = '-';
+                document.getElementById('val-checked').innerText = '-';
+                document.getElementById('val-approved').innerText = '-';
+                document.getElementById('val-issued').innerText = '-';
+                document.getElementById('val-delay').innerText = '-';
+            }
+
+            // Move to the next section in the array, loop back to 0 if at the end
+            currentIndex++;
+            if (currentIndex >= sections.length) {
+                currentIndex = 0;
+            }
+        }
+
+        // 3. Execution Flow
+        updateDashboard(); // Run immediately on load
+        setInterval(updateDashboard, 10000); // Trigger a new fetch and UI update every 10 seconds
+    </script>
+</body>
+</html>
