@@ -61,7 +61,6 @@
         .bg-blue { background-color: #00B0F0; color: #ffffff; }
         .bg-yellow { background-color: #FFFF00; color: #000000; }
         .bg-orange { background-color: #FFC000; color: #000000; }
-        /* Updated Green for better visibility and aesthetics */
         .bg-green { background-color: #2ea043; color: #ffffff; }
         .bg-red { background-color: #FF0000; color: #ffffff; }
 
@@ -75,7 +74,7 @@
         .dynamic-list { font-size: 2vh; line-height: 1.6; color: #e6edf3; overflow: hidden; }
         .page-indicator { text-align: right; font-size: 1.8vh; color: #8b949e; font-style: italic; margin-bottom: 1vh; }
 
-        /* Clock Styling (Windows 10 Style) */
+        /* Clock Styling */
         #time-display { font-size: 7vh; font-weight: lighter; color: #ffffff; margin: 0; line-height: 1; letter-spacing: 2px;}
         #date-display { font-size: 2.5vh; color: #58a6ff; margin-top: 1vh; }
 
@@ -104,7 +103,7 @@
             </table>
             
             <div class="charts-container">
-                <div class="chart-wrapper"><div class="chart-label">HULL</div><div class="canvas-container"><canvas id="chart-Hull"></canvas></div></div>
+                <div class="chart-wrapper"><div class="chart-label">HULL</div><div class="canvas-container"><canvas id="chart-HULL"></canvas></div></div>
                 <div class="chart-wrapper"><div class="chart-label">SOF</div><div class="canvas-container"><canvas id="chart-SOF"></canvas></div></div>
                 <div class="chart-wrapper"><div class="chart-label">AOF</div><div class="canvas-container"><canvas id="chart-AOF"></canvas></div></div>
                 <div class="chart-wrapper"><div class="chart-label">MOF</div><div class="canvas-container"><canvas id="chart-MOF"></canvas></div></div>
@@ -161,10 +160,11 @@
     <script>
         // --- CONFIGURATION ---
         const baseUrl = './'; 
-        const sections = ['Hull', 'SOF', 'AOF', 'MOF', 'EOF'];
+        // Fully capitalized array to match GitHub Pages case sensitivity
+        const sections = ['HULL', 'SOF', 'AOF', 'MOF', 'EOF'];
         const chartInstances = {}; 
 
-        // --- CLOCK MODULE (Windows 10 Style) ---
+        // --- CLOCK MODULE ---
         function updateClock() {
             const now = new Date();
             let hours = now.getHours();
@@ -189,9 +189,13 @@
             
             await Promise.all(sections.map(async (sec) => {
                 try {
-                    const res = await fetch(`${baseUrl}${sec}ToDisplay.json?t=${new Date().getTime()}`);
-                    dataMap[sec] = res.ok ? await res.json() : {};
-                } catch {
+                    // Logs to console so you can explicitly see what it is trying to fetch
+                    const fetchUrl = `${baseUrl}${sec}ToDisplay.json?t=${new Date().getTime()}`;
+                    const res = await fetch(fetchUrl);
+                    if (!res.ok) throw new Error(`Could not find ${sec}ToDisplay.json`);
+                    dataMap[sec] = await res.json();
+                } catch (err) {
+                    console.error("Fetch Error:", err.message);
                     dataMap[sec] = {};
                 }
             }));
@@ -215,7 +219,6 @@
                     rowHtml += `<td class="${row.css}">${val}</td>`;
                 });
                 
-                // Changed the Total cell to inherit the row color, adding a slight separator line
                 rowHtml += `<td class="${row.css}" style="border-left: 2px solid #0b0f19;">${rowTotal}</td></tr>`;
                 html += rowHtml;
             });
@@ -232,27 +235,28 @@
 
                 if(!chartInstances[sec]) {
                     if (typeof Chart !== 'undefined') {
-                        const ctx = document.getElementById(`chart-${sec}`).getContext('2d');
-                        chartInstances[sec] = new Chart(ctx, {
-                            type: 'doughnut',
-                            data: {
-                                labels: total > 0 ? ['Issued', 'In Progress'] : ['No Data'],
-                                datasets: [{
-                                    data: chartData,
-                                    backgroundColor: chartColors,
-                                    borderWidth: 0
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: true, // Auto-scales into a perfect circle
-                                cutout: '75%',
-                                layout: {
-                                    padding: 10 // Pushes the graph inward to prevent bottom-edge clipping
+                        const canvasElement = document.getElementById(`chart-${sec}`);
+                        if(canvasElement) {
+                            const ctx = canvasElement.getContext('2d');
+                            chartInstances[sec] = new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: total > 0 ? ['Issued', 'In Progress'] : ['No Data'],
+                                    datasets: [{
+                                        data: chartData,
+                                        backgroundColor: chartColors,
+                                        borderWidth: 0
+                                    }]
                                 },
-                                plugins: { legend: { display: false }, tooltip: { enabled: total > 0 } }
-                            }
-                        });
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: true,
+                                    cutout: '75%',
+                                    layout: { padding: 10 },
+                                    plugins: { legend: { display: false }, tooltip: { enabled: total > 0 } }
+                                }
+                            });
+                        }
                     }
                 } else {
                     chartInstances[sec].data.datasets[0].data = chartData;
@@ -262,7 +266,7 @@
             });
         }
 
-        // --- DYNAMIC ROTATION MODULE (Delay & Today) ---
+        // --- DYNAMIC ROTATION MODULE ---
         class Rotator {
             constructor(fileSuffix, titlePrefix, listId, headerId, pageId, isDateFiltered) {
                 this.fileSuffix = fileSuffix;
@@ -341,4 +345,35 @@
                         </div>`;
                     } else {
                         html += `
-                        <div style="margin-bottom: 1.2vh; border
+                        <div style="margin-bottom: 1.2vh; border-bottom: 1px dashed #30363d; padding-bottom: 0.5vh;">
+                            <span style="color: #f85149; font-weight: bold;">${item.dwg}</span> 
+                            <span style="color: #c9d1d9;">(Rev: ${item.rev || '-'})</span><br>
+                            <span style="font-size: 0.85em; color: #d29922;">${item.Drawing_Name || 'Unknown Title'}</span>
+                        </div>`;
+                    }
+                });
+                document.getElementById(this.listId).innerHTML = html;
+            }
+        }
+
+        // --- INITIALIZATION & TIMERS ---
+        const delayRotator = new Rotator('DelayToDisplay', 'DELAYED DRAWINGS', 'delay-list', 'delay-header', 'delay-page', false);
+        const todayRotator = new Rotator('Drawings', 'TODAY\'S DRAWINGS', 'today-list', 'today-header', 'today-page', true);
+
+        fetchAllStatus();
+        setInterval(fetchAllStatus, 30000); 
+
+        async function initRotators() {
+            await delayRotator.fetchData(sections[0]);
+            await todayRotator.fetchData(sections[0]);
+            delayRotator.tick();
+            todayRotator.tick();
+            
+            setInterval(() => delayRotator.tick(), 8000); 
+            setInterval(() => todayRotator.tick(), 8000);
+        }
+        initRotators();
+
+    </script>
+</body>
+</html>
