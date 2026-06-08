@@ -5,40 +5,10 @@
     <title>Design Office Command Center</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* Base Styling */
-        body { 
-            background-color: #0b0f19; 
-            color: #e6edf3; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            margin: 0; 
-            padding: 1.5vh;
-            height: 100vh;
-            box-sizing: border-box;
-            overflow: hidden; 
-        }
-
-        /* CSS Grid Layout */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 55% 25% 20%;
-            grid-template-rows: 60% 40%;
-            gap: 1.5vh;
-            height: 100%;
-        }
-
-        /* Panel Styling */
-        .panel {
-            background-color: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 8px;
-            padding: 2vh;
-            display: flex;
-            flex-direction: column;
-            box-sizing: border-box;
-            overflow: hidden;
-        }
-
-        /* Grid Area Assignments */
+        body { background-color: #0b0f19; color: #e6edf3; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 1.5vh; height: 100vh; box-sizing: border-box; overflow: hidden; }
+        .dashboard-grid { display: grid; grid-template-columns: 55% 25% 20%; grid-template-rows: 60% 40%; gap: 1.5vh; height: 100%; }
+        .panel { background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 2vh; display: flex; flex-direction: column; box-sizing: border-box; overflow: hidden; }
+        
         .area-status { grid-column: 1; grid-row: 1; }
         .area-delay { grid-column: 1; grid-row: 2; }
         .area-today { grid-column: 2; grid-row: 1; }
@@ -47,157 +17,103 @@
         .area-clock { background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 3vh 2vh; text-align: center; margin-bottom: 1.5vh; }
         .area-meetings { background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 2vh; flex-grow: 1; }
 
-        /* Typography */
         h2 { font-size: 3vh; margin: 0 0 1.5vh 0; color: #58a6ff; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
         .sub-header { font-size: 2.2vh; color: #8b949e; text-align: center; margin-bottom: 1vh; }
 
-        /* Status Table Styling */
         table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-bottom: 2vh; }
         th, td { text-align: center; padding: 0.8vh; font-size: 2.5vh; font-weight: bold; border: 1px solid #30363d; }
         th { background-color: #21262d; color: #c9d1d9; }
         .col-caption { text-align: left; width: 40%; }
         
-        /* Color Bands mapped strictly to cells */
         .bg-blue { background-color: #00B0F0; color: #ffffff; }
         .bg-yellow { background-color: #FFFF00; color: #000000; }
         .bg-orange { background-color: #FFC000; color: #000000; }
         .bg-green { background-color: #2ea043; color: #ffffff; }
         .bg-red { background-color: #FF0000; color: #ffffff; }
 
-        /* Chart Container */
         .charts-container { display: flex; justify-content: space-around; flex-grow: 1; align-items: center; padding-top: 1vh; }
-        .chart-wrapper { width: 18%; position: relative; display: flex; flex-direction: column; align-items: center; }
+        .chart-wrapper { width: 18%; display: flex; flex-direction: column; align-items: center; }
         .chart-label { text-align: center; font-size: 1.8vh; margin-bottom: 0.5vh; color: #8b949e; font-weight: bold; }
-        .canvas-container { position: relative; width: 100%; display: flex; justify-content: center; }
+        
+        /* Fixed Aspect Ratio Container to prevent sheering */
+        .canvas-container { position: relative; width: 100%; aspect-ratio: 1 / 1; display: flex; justify-content: center; }
 
-        /* List Styling (Delay & Today) */
         .dynamic-list { font-size: 2vh; line-height: 1.6; color: #e6edf3; overflow: hidden; }
         .page-indicator { text-align: right; font-size: 1.8vh; color: #8b949e; font-style: italic; margin-bottom: 1vh; }
-
-        /* Clock Styling */
         #time-display { font-size: 7vh; font-weight: lighter; color: #ffffff; margin: 0; line-height: 1; letter-spacing: 2px;}
         #date-display { font-size: 2.5vh; color: #58a6ff; margin-top: 1vh; }
-
-        /* Meeting Styling */
         .meeting-item { background-color: #21262d; padding: 1.5vh; margin-bottom: 1.5vh; border-radius: 4px; border-left: 4px solid #a371f7; }
         .meeting-time { font-weight: bold; color: #a371f7; font-size: 2.2vh; }
         .meeting-title { font-size: 1.8vh; margin-top: 0.5vh; }
     </style>
 </head>
 <body>
-
     <div class="dashboard-grid">
-        
         <div class="panel area-status">
             <h2>Drawing Status</h2>
             <table>
                 <thead>
-                    <tr>
-                        <th class="col-caption">Status</th>
-                        <th>HULL</th><th>SOF</th><th>AOF</th><th>MOF</th><th>EOF</th>
-                        <th style="background-color: #21262d; border-left: 2px solid #0b0f19;">TOTAL</th>
-                    </tr>
+                    <tr><th class="col-caption">Status</th><th>HULL</th><th>SOF</th><th>AOF</th><th>MOF</th><th>EOF</th><th style="background-color: #21262d; border-left: 2px solid #0b0f19;">TOTAL</th></tr>
                 </thead>
-                <tbody id="status-table-body">
-                    </tbody>
+                <tbody id="status-table-body"></tbody>
             </table>
-            
             <div class="charts-container">
-                <div class="chart-wrapper"><div class="chart-label">HULL</div><div class="canvas-container"><canvas id="chart-HULL"></canvas></div></div>
+                <div class="chart-wrapper"><div class="chart-label">HULL</div><div class="canvas-container"><canvas id="chart-Hull"></canvas></div></div>
                 <div class="chart-wrapper"><div class="chart-label">SOF</div><div class="canvas-container"><canvas id="chart-SOF"></canvas></div></div>
                 <div class="chart-wrapper"><div class="chart-label">AOF</div><div class="canvas-container"><canvas id="chart-AOF"></canvas></div></div>
                 <div class="chart-wrapper"><div class="chart-label">MOF</div><div class="canvas-container"><canvas id="chart-MOF"></canvas></div></div>
                 <div class="chart-wrapper"><div class="chart-label">EOF</div><div class="canvas-container"><canvas id="chart-EOF"></canvas></div></div>
             </div>
         </div>
-
         <div class="panel area-delay">
             <h2>Delayed Drawings Panel</h2>
             <div id="delay-header" class="sub-header">Loading...</div>
             <div id="delay-page" class="page-indicator"></div>
             <div id="delay-list" class="dynamic-list"></div>
         </div>
-
         <div class="panel area-today">
             <h2>Today's Drawings</h2>
             <div id="today-header" class="sub-header">Loading...</div>
             <div id="today-page" class="page-indicator"></div>
             <div id="today-list" class="dynamic-list"></div>
         </div>
-
         <div class="panel area-attendance">
             <h2>Today's Attendance</h2>
-            <div style="display: flex; height: 100%; align-items: center; justify-content: center; color: #666; font-size: 2vh; text-align: center;">
-                RESERVED FOR<br>FUTURE DEVELOPMENT
-            </div>
+            <div style="display: flex; height: 100%; align-items: center; justify-content: center; color: #666; font-size: 2vh; text-align: center;">RESERVED</div>
         </div>
-
         <div class="area-right" style="display: flex; flex-direction: column;">
-            <div class="area-clock">
-                <div id="time-display">00:00</div>
-                <div id="date-display">Day, Month 00</div>
-            </div>
-            
+            <div class="area-clock"><div id="time-display">00:00</div><div id="date-display">Day, Month 00</div></div>
             <div class="panel area-meetings">
                 <h2>Today's Meetings</h2>
-                <div class="meeting-item">
-                    <div class="meeting-time">09:00 AM</div>
-                    <div class="meeting-title">Design Review: Anchor Mechanisms</div>
-                </div>
-                <div class="meeting-item">
-                    <div class="meeting-time">11:30 AM</div>
-                    <div class="meeting-title">Checklist Authorization Sync</div>
-                </div>
-                <div class="meeting-item">
-                    <div class="meeting-time">02:00 PM</div>
-                    <div class="meeting-title">Department Briefing</div>
-                </div>
+                <div class="meeting-item"><div class="meeting-time">09:00 AM</div><div class="meeting-title">Design Review</div></div>
+                <div class="meeting-item"><div class="meeting-time">11:30 AM</div><div class="meeting-title">Checklist Sync</div></div>
             </div>
         </div>
-
     </div>
 
     <script>
-        // --- CONFIGURATION ---
         const baseUrl = './'; 
-        // Fully capitalized array to match GitHub Pages case sensitivity
-        const sections = ['HULL', 'SOF', 'AOF', 'MOF', 'EOF'];
+        const sections = ['Hull', 'SOF', 'AOF', 'MOF', 'EOF'];
         const chartInstances = {}; 
 
-        // --- CLOCK MODULE ---
         function updateClock() {
             const now = new Date();
-            let hours = now.getHours();
-            let minutes = now.getMinutes();
-            
-            hours = hours % 12;
-            hours = hours ? hours : 12; 
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            
+            let hours = now.getHours() % 12 || 12;
+            let minutes = now.getMinutes().toString().padStart(2, '0');
             document.getElementById('time-display').innerText = `${hours}:${minutes}`;
-            
-            const options = { weekday: 'long', month: 'long', day: 'numeric' };
-            document.getElementById('date-display').innerText = now.toLocaleDateString('en-US', options);
+            document.getElementById('date-display').innerText = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // --- STATUS & CHARTS MODULE ---
         async function fetchAllStatus() {
             const tableBody = document.getElementById('status-table-body');
             const dataMap = {};
-            
             await Promise.all(sections.map(async (sec) => {
                 try {
-                    // Logs to console so you can explicitly see what it is trying to fetch
-                    const fetchUrl = `${baseUrl}${sec}ToDisplay.json?t=${new Date().getTime()}`;
-                    const res = await fetch(fetchUrl);
-                    if (!res.ok) throw new Error(`Could not find ${sec}ToDisplay.json`);
-                    dataMap[sec] = await res.json();
-                } catch (err) {
-                    console.error("Fetch Error:", err.message);
-                    dataMap[sec] = {};
-                }
+                    const res = await fetch(`${baseUrl}${sec}ToDisplay.json?t=${new Date().getTime()}`);
+                    dataMap[sec] = res.ok ? await res.json() : {};
+                } catch { dataMap[sec] = {}; }
             }));
 
             const rows = [
@@ -212,53 +128,31 @@
             rows.forEach(row => {
                 let rowHtml = `<tr><td class="col-caption ${row.css}">${row.label}</td>`;
                 let rowTotal = 0;
-                
                 sections.forEach(sec => {
                     let val = parseInt(dataMap[sec][row.key] || 0);
                     rowTotal += val;
                     rowHtml += `<td class="${row.css}">${val}</td>`;
                 });
-                
                 rowHtml += `<td class="${row.css}" style="border-left: 2px solid #0b0f19;">${rowTotal}</td></tr>`;
                 html += rowHtml;
             });
             tableBody.innerHTML = html;
 
-            // Update Doughnut Charts
             sections.forEach(sec => {
                 const issued = parseInt(dataMap[sec]['4'] || 0);
                 const progress = parseInt(dataMap[sec]['1'] || 0) + parseInt(dataMap[sec]['2'] || 0) + parseInt(dataMap[sec]['3'] || 0);
                 const total = issued + progress;
-                
                 const chartData = total > 0 ? [issued, progress] : [1];
                 const chartColors = total > 0 ? ['#2ea043', '#FFC000'] : ['#30363d'];
 
-                if(!chartInstances[sec]) {
-                    if (typeof Chart !== 'undefined') {
-                        const canvasElement = document.getElementById(`chart-${sec}`);
-                        if(canvasElement) {
-                            const ctx = canvasElement.getContext('2d');
-                            chartInstances[sec] = new Chart(ctx, {
-                                type: 'doughnut',
-                                data: {
-                                    labels: total > 0 ? ['Issued', 'In Progress'] : ['No Data'],
-                                    datasets: [{
-                                        data: chartData,
-                                        backgroundColor: chartColors,
-                                        borderWidth: 0
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    maintainAspectRatio: true,
-                                    cutout: '75%',
-                                    layout: { padding: 10 },
-                                    plugins: { legend: { display: false }, tooltip: { enabled: total > 0 } }
-                                }
-                            });
-                        }
-                    }
-                } else {
+                if(!chartInstances[sec] && typeof Chart !== 'undefined') {
+                    const ctx = document.getElementById(`chart-${sec}`).getContext('2d');
+                    chartInstances[sec] = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: { datasets: [{ data: chartData, backgroundColor: chartColors, borderWidth: 0 }] },
+                        options: { responsive: true, maintainAspectRatio: true, cutout: '75%', plugins: { legend: { display: false } } }
+                    });
+                } else if(chartInstances[sec]) {
                     chartInstances[sec].data.datasets[0].data = chartData;
                     chartInstances[sec].data.datasets[0].backgroundColor = chartColors;
                     chartInstances[sec].update();
@@ -266,114 +160,54 @@
             });
         }
 
-        // --- DYNAMIC ROTATION MODULE ---
         class Rotator {
             constructor(fileSuffix, titlePrefix, listId, headerId, pageId, isDateFiltered) {
-                this.fileSuffix = fileSuffix;
-                this.titlePrefix = titlePrefix;
-                this.listId = listId;
-                this.headerId = headerId;
-                this.pageId = pageId;
-                this.isDateFiltered = isDateFiltered;
-                
-                this.secIndex = 0;
-                this.pageIndex = 0;
-                this.itemsPerPage = 6; 
-                this.currentData = [];
+                this.fileSuffix = fileSuffix; this.titlePrefix = titlePrefix; this.listId = listId; this.headerId = headerId; this.pageId = pageId; this.isDateFiltered = isDateFiltered;
+                this.secIndex = 0; this.pageIndex = 0; this.itemsPerPage = 6; this.currentData = [];
             }
-
             async tick() {
                 if (this.currentData.length === 0 || this.pageIndex >= Math.ceil(this.currentData.length / this.itemsPerPage)) {
                     this.secIndex = (this.secIndex + 1) % sections.length;
                     await this.fetchData(sections[this.secIndex]);
                     this.pageIndex = 0;
                 }
-                
-                this.renderPage();
-                this.pageIndex++;
+                this.renderPage(); this.pageIndex++;
             }
-
             async fetchData(section) {
-                document.getElementById(this.headerId).innerText = `${section} SECTION - FETCHING...`;
+                document.getElementById(this.headerId).innerText = `${section} - FETCHING...`;
                 try {
                     const res = await fetch(`${baseUrl}${section}${this.fileSuffix}.json?t=${new Date().getTime()}`);
-                    if (!res.ok) throw new Error("Not found");
-                    
                     const rawData = await res.json();
-                    
-                    let arr = Object.keys(rawData).map(key => {
-                        return { dwg: key, ...rawData[key] };
-                    });
-
+                    let arr = Object.keys(rawData).map(key => ({ dwg: key, ...rawData[key] }));
                     if (this.isDateFiltered) {
-                        const now = new Date();
-                        const year = now.getFullYear();
-                        const month = String(now.getMonth() + 1).padStart(2, '0');
-                        const day = String(now.getDate()).padStart(2, '0');
-                        const localTodayStr = `${year}-${month}-${day}`;
-                        
-                        arr = arr.filter(item => item.Issue_Date === localTodayStr);
+                        const today = new Date().toISOString().split('T')[0];
+                        arr = arr.filter(item => item.Issue_Date === today);
                     }
-
                     this.currentData = arr;
-                } catch (e) {
-                    this.currentData = [];
-                }
-                document.getElementById(this.headerId).innerText = `${section} SECTION: ${this.titlePrefix}`;
+                } catch (e) { this.currentData = []; }
+                document.getElementById(this.headerId).innerText = `${section}: ${this.titlePrefix}`;
             }
-
             renderPage() {
                 const totalPages = Math.max(1, Math.ceil(this.currentData.length / this.itemsPerPage));
-                const start = this.pageIndex * this.itemsPerPage;
-                const chunk = this.currentData.slice(start, start + this.itemsPerPage);
-
+                const chunk = this.currentData.slice(this.pageIndex * this.itemsPerPage, (this.pageIndex + 1) * this.itemsPerPage);
                 document.getElementById(this.pageId).innerText = `Page ${this.pageIndex + 1} of ${totalPages}`;
-                
-                if (this.currentData.length === 0) {
-                    document.getElementById(this.listId).innerHTML = '<div style="color: #8b949e; text-align: center; margin-top: 2vh;"><i>No drawings to display for this section.</i></div>';
-                    return;
-                }
-
-                let html = '';
-                chunk.forEach(item => {
-                    if (this.isDateFiltered) {
-                        html += `
-                        <div style="margin-bottom: 1.2vh; border-bottom: 1px solid #30363d; padding-bottom: 0.5vh;">
-                            <span style="color: #58a6ff; font-weight: bold;">${item.dwg}</span> 
-                            <span style="color: #c9d1d9;">(Rev: ${item.rev || '-'})</span><br>
-                            <span style="font-size: 0.85em; color: #8b949e;">Target Date: ${item.Target_Date || 'N/A'}</span>
-                        </div>`;
-                    } else {
-                        html += `
-                        <div style="margin-bottom: 1.2vh; border-bottom: 1px dashed #30363d; padding-bottom: 0.5vh;">
-                            <span style="color: #f85149; font-weight: bold;">${item.dwg}</span> 
-                            <span style="color: #c9d1d9;">(Rev: ${item.rev || '-'})</span><br>
-                            <span style="font-size: 0.85em; color: #d29922;">${item.Drawing_Name || 'Unknown Title'}</span>
-                        </div>`;
-                    }
-                });
-                document.getElementById(this.listId).innerHTML = html;
+                document.getElementById(this.listId).innerHTML = chunk.length ? chunk.map(i => `<div style="margin-bottom:1vh; border-bottom:1px solid #30363d;"><b>${i.dwg}</b><br><small>${i.Drawing_Name || i.Target_Date || ''}</small></div>`).join('') : 'No data';
             }
         }
 
-        // --- INITIALIZATION & TIMERS ---
-        const delayRotator = new Rotator('DelayToDisplay', 'DELAYED DRAWINGS', 'delay-list', 'delay-header', 'delay-page', false);
-        const todayRotator = new Rotator('Drawings', 'TODAY\'S DRAWINGS', 'today-list', 'today-header', 'today-page', true);
+        const delayRotator = new Rotator('DelayToDisplay', 'DELAYED', 'delay-list', 'delay-header', 'delay-page', false);
+        const todayRotator = new Rotator('Drawings', 'TODAY', 'today-list', 'today-header', 'today-page', true);
 
         fetchAllStatus();
-        setInterval(fetchAllStatus, 30000); 
-
-        async function initRotators() {
+        setInterval(fetchAllStatus, 30000);
+        async function init() {
             await delayRotator.fetchData(sections[0]);
             await todayRotator.fetchData(sections[0]);
-            delayRotator.tick();
-            todayRotator.tick();
-            
-            setInterval(() => delayRotator.tick(), 8000); 
+            delayRotator.tick(); todayRotator.tick();
+            setInterval(() => delayRotator.tick(), 8000);
             setInterval(() => todayRotator.tick(), 8000);
         }
-        initRotators();
-
+        init();
     </script>
 </body>
 </html>
