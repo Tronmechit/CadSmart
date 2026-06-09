@@ -183,7 +183,7 @@
                     let arr = Object.keys(rawData).map(key => ({ dwg: key, ...rawData[key] }));
                     if (this.isDateFiltered) {
                         const today = new Date().toISOString().split('T')[0];
-                        arr = arr.filter(item => item.Issue_Date === today);
+                        arr = arr.filter(item => item.Target_Date === today);
                     }
                     this.currentData = arr;
                 } catch (e) { this.currentData = []; }
