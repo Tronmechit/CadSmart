@@ -145,7 +145,7 @@
                 const progress = parseInt(dataMap[sec]['1'] || 0) - parseInt(dataMap[sec]['5'] || 0) ;
                 const total = issued + progress;
                 const chartData = total > 0 ? [issued, progress] : [1];
-                const chartColors = total > 0 ? ['#2ea043', '#00B0F0'] : ['#30363d'];
+                const chartColors = total > 0 ? ['#2ea043', '#ffffff'] : ['#30363d'];
 
                 if(!chartInstances[sec] && typeof Chart !== 'undefined') {
                     const ctx = document.getElementById(`chart-${sec}`).getContext('2d');
