@@ -141,8 +141,8 @@
             tableBody.innerHTML = html;
 
             sections.forEach(sec => {
-                const issued = parseInt(dataMap[sec]['4'] || 0);
-                const progress = parseInt(dataMap[sec]['1'] || 0) + parseInt(dataMap[sec]['2'] || 0) + parseInt(dataMap[sec]['3'] || 0);
+                const issued = parseInt(dataMap[sec]['5'] || 0);
+                const progress = parseInt(dataMap[sec]['1'] || 0) - parseInt(dataMap[sec]['5'] || 0) ;
                 const total = issued + progress;
                 const chartData = total > 0 ? [issued, progress] : [1];
                 const chartColors = total > 0 ? ['#2ea043', '#FFC000'] : ['#30363d'];
