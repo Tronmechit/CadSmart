@@ -193,7 +193,7 @@
                 const totalPages = Math.max(1, Math.ceil(this.currentData.length / this.itemsPerPage));
                 const chunk = this.currentData.slice(this.pageIndex * this.itemsPerPage, (this.pageIndex + 1) * this.itemsPerPage);
                 document.getElementById(this.pageId).innerText = `Page ${this.pageIndex + 1} of ${totalPages}`;
-                document.getElementById(this.listId).innerHTML = chunk.length ? chunk.map(i => `<div style="margin-bottom:1vh; border-bottom:1px solid #30363d;"><b>${i.dwg}</b><br><small>${i.Drawing_Name || i.Target_Date}</small></div>`).join('') : 'No data';
+                document.getElementById(this.listId).innerHTML = chunk.length ? chunk.map(i => `<div style="margin-bottom:1vh; border-bottom:1px solid #30363d;"><b>${i.dwg}</b><br><small>${i.Drawing_Name || i.Target_Date}</small></div>`).join('') : 'No Drawings Scheduled for Today';
             }
         }
 
