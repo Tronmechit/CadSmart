@@ -289,8 +289,15 @@ if (this.isDateFiltered) {
     this.currentData = [];
 }
 
-document.getElementById(this.headerId).innerText =
-    `${section}: ${this.titlePrefix}`;
+document.getElementById(this.headerId).innerHTML =
+    `${section}: ${this.titlePrefix}
+    <span style="
+        color:#FF0000;
+        font-size:2em;
+        font-weight:bold;
+    ">
+        (${arr.length})
+    </span>`;
 }
             renderPage() {
                 const totalPages = Math.max(1, Math.ceil(this.currentData.length / this.itemsPerPage));
