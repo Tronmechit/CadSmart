@@ -166,7 +166,7 @@
         class Rotator {
             constructor(fileSuffix, titlePrefix, listId, headerId, pageId, isDateFiltered) {
                 this.fileSuffix = fileSuffix; this.titlePrefix = titlePrefix; this.listId = listId; this.headerId = headerId; this.pageId = pageId; this.isDateFiltered = isDateFiltered;
-                this.secIndex = 0; this.pageIndex = 0; this.itemsPerPage = 6; this.currentData = [];
+                this.secIndex = 0; this.pageIndex = 0; this.itemsPerPage = 5; this.currentData = [];
             }
             async tick() {
                 if (this.currentData.length === 0 || this.pageIndex >= Math.ceil(this.currentData.length / this.itemsPerPage)) {
