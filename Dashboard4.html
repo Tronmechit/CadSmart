@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Design Office Command Center</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { background-color: #0b0f19; color: #e6edf3; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 1.0vh; height: 100vh; box-sizing: border-box; overflow: hidden; }
+        .dashboard-grid { display: grid; grid-template-columns: 55% 25% 20%; grid-template-rows: 65% 35%; gap: 1.5vh; height: 100%; }
+        .panel { background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 2vh; display: flex; flex-direction: column; box-sizing: border-box; overflow: hidden; }
+        
+        .area-status { grid-column: 1; grid-row: 1; }
+        .area-delay { grid-column: 2; grid-row: 1; }
+        .area-today { grid-column: 1; grid-row: 2; }
+        .area-attendance { grid-column: 2; grid-row: 2; }
+        .area-right { grid-column: 3; grid-row: 1 / span 2; background-color: transparent; border: none; padding: 0; }
+        .area-clock { background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 3vh 2vh; text-align: center; margin-bottom: 1.5vh; }
+        .area-meetings { background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 2vh; flex-grow: 1; }
+
+        h2 { font-size: 3vh; margin: 0 0 1.5vh 0; color: #58a6ff; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
+        .sub-header { font-size: 2.2vh; color: #8b949e; text-align: center; margin-bottom: 1vh; }
+
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-bottom: 2vh; }
+        th, td { text-align: center; padding: 0.3vh; font-size: 2.5vh; font-weight: bold; border: 1px solid #30363d; }
+        th { background-color: #21262d; color: #c9d1d9; }
+        .col-caption { text-align: left; width: 40%; }
+        
+        .bg-white { background-color: #ffffff; color: #000000; }
+        .bg-blue { background-color: #00B0F0; color: #ffffff; }
+        .bg-yellow { background-color: #FFFF00; color: #000000; }
+        .bg-orange { background-color: #FFC000; color: #000000; }
+        .bg-green { background-color: #2ea043; color: #ffffff; }
+        .bg-red { background-color: #FF0000; color: #ffffff; }
+
+        .charts-container { display: flex; justify-content: space-around; flex-grow: 1; align-items: center; padding-top: .1vh; }
+        .chart-wrapper { width: 18%; display: flex; flex-direction: column; align-items: center; }
+        .chart-label { text-align: center; font-size: 1.8vh; margin-bottom: 0.5vh; color: #8b949e; font-weight: bold; }
+        
+        /* Fixed Aspect Ratio Container to prevent sheering */
+        .canvas-container { position: relative; width: 100%; aspect-ratio: 1 / 1; display: flex; justify-content: center; }
+
+        .dynamic-list { font-size: 2vh; line-height: 1.6; color: #e6edf3; overflow: hidden; }
+        .page-indicator { text-align: right; font-size: 1.8vh; color: #8b949e; font-style: italic; margin-bottom: 1vh; }
+        #time-display { font-size: 7vh; font-weight: lighter; color: #ffffff; margin: 0; line-height: 1; letter-spacing: 2px;}
+        #date-display { font-size: 2.5vh; color: #58a6ff; margin-top: 1vh; }
+        .meeting-item { background-color: #21262d; padding: 1.5vh; margin-bottom: 1.5vh; border-radius: 4px; border-left: 4px solid #a371f7; }
+        .meeting-time { font-weight: bold; color: #a371f7; font-size: 2.2vh; }
+        .meeting-title { font-size: 1.8vh; margin-top: 0.5vh; }
+    </style>
+</head>
+<body>
+    <div class="dashboard-grid">
+        <div class="panel area-status">
+            <h2>Drawing Status</h2>
+            <table>
+                <thead>
+                    <tr><th class="col-caption">Status</th><th>HULL</th><th>SOF</th><th>AOF</th><th>MOF</th><th>EOF</th><th style="background-color: #21262d; border-left: 2px solid #0b0f19;">TOTAL</th></tr>
+                </thead>
+                <tbody id="status-table-body"></tbody>
+            </table>
+            <div class="charts-container">
+                <div class="chart-wrapper"><div class="chart-label">HULL</div><div class="canvas-container"><canvas id="chart-Hull"></canvas></div></div>
+                <div class="chart-wrapper"><div class="chart-label">SOF</div><div class="canvas-container"><canvas id="chart-SOF"></canvas></div></div>
+                <div class="chart-wrapper"><div class="chart-label">AOF</div><div class="canvas-container"><canvas id="chart-AOF"></canvas></div></div>
+                <div class="chart-wrapper"><div class="chart-label">MOF</div><div class="canvas-container"><canvas id="chart-MOF"></canvas></div></div>
+                <div class="chart-wrapper"><div class="chart-label">EOF</div><div class="canvas-container"><canvas id="chart-EOF"></canvas></div></div>
+            </div>
+        </div>
+        <div class="panel area-delay">
+            <h2>Delayed Drawings</h2>
+            <div id="delay-header" class="sub-header">Loading...</div>
+            <div id="delay-page" class="page-indicator"></div>
+            <div id="delay-list" class="dynamic-list"></div>
+        </div>
+        <div class="panel area-today">
+            <h2>Today's Drawings</h2>
+            <div id="today-header" class="sub-header">Loading...</div>
+            <div id="today-page" class="page-indicator"></div>
+            <div id="today-list" class="dynamic-list"></div>
+        </div>
+        <div class="panel area-attendance">
+            <h2>...</h2>
+            <div style="display: flex; height: 100%; align-items: center; justify-content: center; color: #666; font-size: 2vh; text-align: center;">RESERVED</div>
+        </div>
+        <div class="area-right" style="display: flex; flex-direction: column;">
+            <div class="area-clock"><div id="time-display">00:00</div><div id="date-display">Day, Month 00</div></div>
+            <div class="panel area-meetings">
+                <h2>Today's Schedules</h2>
+                <div class="meeting-item"><div class="meeting-time">07:30 Hrs</div><div class="meeting-title">Yard Cleaning Campaign </div></div>
+                <div class="meeting-item"><div class="meeting-time">13:00 Hrs</div><div class="meeting-title">LRQA QMS Certification Renewal Audit </div></div>
+                <div class="meeting-item"><div class="meeting-time">13:30 Hrs</div><div class="meeting-title">NC 0263 and NC 0264 - Meeting with Owners</div></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const baseUrl = './'; 
+        const sections = ['Hull', 'SOF', 'AOF', 'MOF', 'EOF'];
+        const chartInstances = {}; 
+
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours() % 12 || 12;
+            let minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('time-display').innerText = `${hours}:${minutes}`;
+            document.getElementById('date-display').innerText = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        async function fetchAllStatus() {
+            const tableBody = document.getElementById('status-table-body');
+            const dataMap = {};
+            await Promise.all(sections.map(async (sec) => {
+                try {
+                    const res = await fetch(`${baseUrl}${sec}ToDisplay.json?t=${new Date().getTime()}`);
+                    dataMap[sec] = res.ok ? await res.json() : {};
+                } catch { dataMap[sec] = {}; }
+            }));
+
+            const rows = [
+                { key: '1', label: 'Total Drawings', css: 'bg-white' },
+                { key: '2', label: 'Forwarded for Checking', css: 'bg-blue' },
+                { key: '3', label: 'Checked, Not Approved', css: 'bg-yellow' },
+                { key: '4', label: 'Approved, To be issued', css: 'bg-orange' },
+                { key: '5', label: 'Issued', css: 'bg-green' },
+                { key: '6', label: 'Current Delay', css: 'bg-red' }
+            ];
+
+            let html = '';
+            rows.forEach(row => {
+                let rowHtml = `<tr><td class="col-caption ${row.css}">${row.label}</td>`;
+                let rowTotal = 0;
+                sections.forEach(sec => {
+                    let val = parseInt(dataMap[sec][row.key] || 0);
+                    rowTotal += val;
+                    rowHtml += `<td class="${row.css}">${val}</td>`;
+                });
+                rowHtml += `<td class="${row.css}" style="border-left: 2px solid #0b0f19;">${rowTotal}</td></tr>`;
+                html += rowHtml;
+            });
+            tableBody.innerHTML = html;
+
+            sections.forEach(sec => {
+                const issued = parseInt(dataMap[sec]['5'] || 0);
+                const progress = parseInt(dataMap[sec]['1'] || 0) - parseInt(dataMap[sec]['5'] || 0) ;
+                const total = issued + progress;
+                const chartData = total > 0 ? [issued, progress] : [1];
+                const chartColors = total > 0 ? ['#2ea043', '#FF4B33'] : ['#30363d'];
+
+                if(!chartInstances[sec] && typeof Chart !== 'undefined') {
+                    const ctx = document.getElementById(`chart-${sec}`).getContext('2d');
+                    chartInstances[sec] = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: { datasets: [{ data: chartData, backgroundColor: chartColors, borderWidth: 0 }] },
+                        options: { responsive: true, maintainAspectRatio: true, cutout: '75%', plugins: { legend: { display: false } } }
+                    });
+                } else if(chartInstances[sec]) {
+                    chartInstances[sec].data.datasets[0].data = chartData;
+                    chartInstances[sec].data.datasets[0].backgroundColor = chartColors;
+                    chartInstances[sec].update();
+                }
+            });
+        }
+
+        class Rotator {
+            constructor(fileSuffix, titlePrefix, listId, headerId, pageId, isDateFiltered, isDelayPanel = false) {
+                this.fileSuffix = fileSuffix; this.titlePrefix = titlePrefix; this.listId = listId; this.headerId = headerId; this.pageId = pageId; this.isDateFiltered = isDateFiltered;
+                this.secIndex = 0; this.pageIndex = 0; this.itemsPerPage = 5; this.currentData = [];
+            }
+            async tick() {
+                if (this.currentData.length === 0 || this.pageIndex >= Math.ceil(this.currentData.length / this.itemsPerPage)) {
+                    this.secIndex = (this.secIndex + 1) % sections.length;
+                    await this.fetchData(sections[this.secIndex]);
+                    this.pageIndex = 0;
+		   this.isDelayPanel = isDelayPanel;
+                }
+                this.renderPage(); this.pageIndex++;
+            }
+            async fetchData(section) {
+                document.getElementById(this.headerId).innerText = `${section} - FETCHING...`;
+                try {
+                    const res = await fetch(`${baseUrl}${section}${this.fileSuffix}.json?t=${new Date().getTime()}`);
+                   const rawData = await res.json();
+
+			let arr = Object.keys(rawData).map(key => {
+    			return {
+       			 dwg: key,
+        		...rawData[key]
+    				};
+			});
+
+		if (this.isDelayPanel) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    arr = arr.filter(item => {
+        if (!item.Target_Date)
+            return false;
+
+        const targetDate = new Date(item.Target_Date);
+        targetDate.setHours(0, 0, 0, 0);
+        return (
+            item.Issue_Date === "" &&
+            targetDate < today
+        );
+    });
+
+}	
+if (this.isDateFiltered) {
+
+    const now = new Date();
+
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+
+    const localTodayStr =
+        `${year}-${month}-${day}`;
+
+    arr = arr.filter(item =>
+        item.Issue_Date === localTodayStr
+    );
+
+}
+            renderPage() {
+                const totalPages = Math.max(1, Math.ceil(this.currentData.length / this.itemsPerPage));
+                const chunk = this.currentData.slice(this.pageIndex * this.itemsPerPage, (this.pageIndex + 1) * this.itemsPerPage);
+                document.getElementById(this.pageId).innerText = `Page ${this.pageIndex + 1} of ${totalPages}`;
+                document.getElementById(this.listId).innerHTML = chunk.length ? chunk.map(i => `<div style="margin-bottom:1vh; border-bottom:1px solid #30363d;"><b>${i.dwg}</b><br><small>${i.Drawing_Name || i.Target_Date}</small></div>`).join('') : 'No drawings to display here...';
+            }
+        }
+
+       	const delayRotator = new Rotator('Drawings','DELAYED DRAWINGS','delay-list','delay-header','delay-page', false,true);
+        const todayRotator = new Rotator('Drawings', 'TODAY', 'today-list', 'today-header', 'today-page', true);
+
+        fetchAllStatus();
+        setInterval(fetchAllStatus, 30000);
+        async function init() {
+            await delayRotator.fetchData(sections[0]);
+            await todayRotator.fetchData(sections[0]);
+            delayRotator.tick(); todayRotator.tick();
+            setInterval(() => delayRotator.tick(), 8000);
+            setInterval(() => todayRotator.tick(), 8000);
+		setInterval(async () => { await delayRotator.fetchData( sections[delayRotator.secIndex]);}, 60000);
+        }
+        init();
+    </script>
+</body>
+</html>
