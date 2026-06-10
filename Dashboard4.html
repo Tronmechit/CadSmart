@@ -164,16 +164,27 @@
         }
 
         class Rotator {
-            constructor(fileSuffix, titlePrefix, listId, headerId, pageId, isDateFiltered, isDelayPanel = false) {
-                this.fileSuffix = fileSuffix; this.titlePrefix = titlePrefix; this.listId = listId; this.headerId = headerId; this.pageId = pageId; this.isDateFiltered = isDateFiltered;
-                this.secIndex = 0; this.pageIndex = 0; this.itemsPerPage = 5; this.currentData = [];
-            }
+      constructor(fileSuffix, titlePrefix, listId, headerId, pageId, isDateFiltered, isDelayPanel = false) {
+
+    this.fileSuffix = fileSuffix;
+    this.titlePrefix = titlePrefix;
+    this.listId = listId;
+    this.headerId = headerId;
+    this.pageId = pageId;
+
+    this.isDateFiltered = isDateFiltered;
+    this.isDelayPanel = isDelayPanel;
+
+    this.secIndex = 0;
+    this.pageIndex = 0;
+    this.itemsPerPage = 5;
+    this.currentData = [];
+}
             async tick() {
                 if (this.currentData.length === 0 || this.pageIndex >= Math.ceil(this.currentData.length / this.itemsPerPage)) {
                     this.secIndex = (this.secIndex + 1) % sections.length;
                     await this.fetchData(sections[this.secIndex]);
                     this.pageIndex = 0;
-		   this.isDelayPanel = isDelayPanel;
                 }
                 this.renderPage(); this.pageIndex++;
             }
@@ -220,7 +231,15 @@ if (this.isDateFiltered) {
     arr = arr.filter(item =>
         item.Issue_Date === localTodayStr
     );
+}
+	this.currentData = arr;
 
+} catch (e) {
+    this.currentData = [];
+}
+
+document.getElementById(this.headerId).innerText =
+    `${section}: ${this.titlePrefix}`;
 }
             renderPage() {
                 const totalPages = Math.max(1, Math.ceil(this.currentData.length / this.itemsPerPage));
