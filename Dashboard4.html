@@ -107,7 +107,40 @@
         }
         setInterval(updateClock, 1000);
         updateClock();
+const centerTextPlugin = {
+    id: 'centerText',
 
+    afterDraw(chart) {
+
+        const { ctx } = chart;
+
+        const centerX =
+            chart.getDatasetMeta(0).data[0].x;
+
+        const centerY =
+            chart.getDatasetMeta(0).data[0].y;
+
+        const percentage =
+            chart.config.options.plugins.centerText.percentage;
+
+        ctx.save();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 22px Segoe UI';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        ctx.fillText(
+            percentage + '%',
+            centerX,
+            centerY
+        );
+
+        ctx.restore();
+    }
+};
+
+Chart.register(centerTextPlugin);
         async function fetchAllStatus() {
             const tableBody = document.getElementById('status-table-body');
             const dataMap = {};
@@ -145,6 +178,11 @@
                 const issued = parseInt(dataMap[sec]['5'] || 0);
                 const progress = parseInt(dataMap[sec]['1'] || 0) - parseInt(dataMap[sec]['5'] || 0) ;
                 const total = issued + progress;
+
+				const percentage =
+    				total > 0
+        			? Math.round((issued / total) * 100)
+        			: 0;
                 const chartData = total > 0 ? [issued, progress] : [1];
                 const chartColors = total > 0 ? ['#2ea043', '#FF4B33'] : ['#30363d'];
 
@@ -153,11 +191,24 @@
                     chartInstances[sec] = new Chart(ctx, {
                         type: 'doughnut',
                         data: { datasets: [{ data: chartData, backgroundColor: chartColors, borderWidth: 0 }] },
-                        options: { responsive: true, maintainAspectRatio: true, cutout: '75%', plugins: { legend: { display: false } } }
+                        options: {
+   							responsive: true,
+    						maintainAspectRatio: true,
+    						cutout: '75%',
+    						plugins: {
+        						legend: {
+            						display: false
+        							},
+        						centerText: {
+            						percentage: percentage
+        										}
+    										}
+										}
                     });
                 } else if(chartInstances[sec]) {
                     chartInstances[sec].data.datasets[0].data = chartData;
                     chartInstances[sec].data.datasets[0].backgroundColor = chartColors;
+					chartInstances[sec].options.plugins.centerText.percentage = percentage;
                     chartInstances[sec].update();
                 }
             });
