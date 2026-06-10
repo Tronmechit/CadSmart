@@ -176,6 +176,7 @@
   "DR-NC-0263-554-101-521": {"rev": "A", "Drawing_Name": "PIPING LAYOUT OF COMPRESSED AIR BUBBLING SYSTEM-UNIT 521 & 522", "Issue_Date": "2026-05-20", "Target_Date": "2026-05-20"},
   "DR-NC-0263-298-451": {"rev": "A", "Drawing_Name": "FOUNDATION DETAILS OF SW SPRAY PUMPS", "Issue_Date": "2026-05-23", "Target_Date": "2026-05-22"},
   "DR-NC-0263-501-002-005": {"rev": "A", "Drawing_Name": "SUPPORT DETAILS & LAYOUT OF PIPE MODULE-05 (ER BILGE PP 1& 2 PIPES U-410)", "Issue_Date": "2026-06-04", "Target_Date": "2026-05-22"},
+  "DR-NC-0263-501-002-005": {"rev": "B", "Drawing_Name": "SUPPORT DETAILS & LAYOUT OF PIPE MODULE-05 (ER BILGE PP 1& 2 PIPES U-410)", "Issue_Date": "", "Target_Date": "2026-06-10"},
   "DR-NC-0263-531-100-521": {"rev": "A", "Drawing_Name": "PIPING LAYOUT OF BILGE SYSTEM-UNIT 521 & 522", "Issue_Date": "2026-05-25", "Target_Date": "2026-05-22"},
   "DR-NC-0263-533-100-711": {"rev": "A", "Drawing_Name": "PIPE LAYOUT OF SANITARY DISCHARGE SYSTEM-UNIT 711&712", "Issue_Date": "2026-05-25", "Target_Date": "2026-05-22"},
   "DR-NC-0263-563-100-410": {"rev": "A", "Drawing_Name": "PIPE LAYOUT OF SOUNDING SYSTEM-UNIT 410", "Issue_Date": "2026-05-23", "Target_Date": "2026-05-22"},
