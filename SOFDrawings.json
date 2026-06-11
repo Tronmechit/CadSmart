@@ -344,6 +344,7 @@
   "DR-NC-0263-232-000": {"rev": "A", "Drawing_Name": "ENGINE ROOM VENTILATION ARRANGEMENT", "Issue_Date": "2026-06-01", "Target_Date": "2026-05-26"},
   "DR-NC-0263-232-001": {"rev": "A", "Drawing_Name": "INLET & OUTLET LOUVER MOUNTING DETAILS - ENGINE ROOM", "Issue_Date": "", "Target_Date": "2027-01-07"},
   "DR-NC-0263-232-002": {"rev": "A", "Drawing_Name": "SPOOL DRAWING FOR ENGINE ROOM VENTILATION", "Issue_Date": "2026-06-01", "Target_Date": "2026-05-20"},
+  "DR-NC-0263-232-003": {"rev": "A", "Drawing_Name": "SUPPORTING BRACKET DETAILS FOR ENGINE ROOM DUCT", "Issue_Date": "", "Target_Date": "2026-06-18"},
   "DR-NC-0263-234-001": {"rev": "A", "Drawing_Name": "DETAILS OF GALLEY EXHAUST DUCT", "Issue_Date": "", "Target_Date": "2026-08-31"},
   "DR-NC-0263-234-106-1006": {"rev": "A", "Drawing_Name": "HVAC ARRANGEMENT - Z1006", "Issue_Date": "", "Target_Date": "2026-09-04"},
   "DR-NC-0263-234-106-U810": {"rev": "A", "Drawing_Name": "SPOOL DRAWING FOR HVAC ARRANGEMENT- U810", "Issue_Date": "", "Target_Date": "2026-08-18"},
