@@ -1,7 +1,7 @@
 {
-  "DR-NC-0263-100-000": {"rev": "A", "Drawing_Name": "GENERAL ARRANGEMENT", "Issue_Date": "", "Target_Date": "2026-03-31"},
+  "DR-NC-0263-100-000": {"rev": "A", "Drawing_Name": "GENERAL ARRANGEMENT", "Issue_Date": "2026-06-12", "Target_Date": "2026-03-31"},
   "DR-NC-0256-297-300": {"rev": "A", "Drawing_Name": "ESCAPE ROUTE SIGNAGE", "Issue_Date": "", "Target_Date": "2027-11-08"},
-  "DR-NC-0263-311-001": {"rev": "A", "Drawing_Name": "MOCK-UP CABIN ARRANGEMENT 3015", "Issue_Date": "", "Target_Date": "2026-03-12"},
+  "DR-NC-0263-311-001": {"rev": "A", "Drawing_Name": "MOCK-UP CABIN ARRANGEMENT 3015", "Issue_Date": "2026-06-12", "Target_Date": "2026-03-12"},
   "DR-NC-0263-311-002": {"rev": "A", "Drawing_Name": "STEEL CUTTING PLAN", "Issue_Date": "", "Target_Date": "2026-06-13"},
   "DR-NC-0263-312-001": {"rev": "A", "Drawing_Name": "PANELLING ARRANGEMENT - TWEEN DECK", "Issue_Date": "", "Target_Date": "2027-01-02"},
   "DR-NC-0263-312-002": {"rev": "A", "Drawing_Name": "PANELLING ARRANGEMENT - MAIN DECK", "Issue_Date": "", "Target_Date": "2027-01-02"},
@@ -92,7 +92,7 @@
   "DR-NC-0263-323-005": {"rev": "A", "Drawing_Name": "SEAMEN SHOP STORE(2023) - TWEEN DECK", "Issue_Date": "", "Target_Date": "2026-06-23"},
   "DR-NC-0263-323-006": {"rev": "A", "Drawing_Name": "ENGINE STORE 2 (2024) - TWEEN DECK", "Issue_Date": "", "Target_Date": "2026-06-08"},
   "DR-NC-0263-323-007": {"rev": "A", "Drawing_Name": "CLEANING PRODUCT STORE(2025) - TWEEN DECK", "Issue_Date": "", "Target_Date": "2026-06-08"},
-  "DR-NC-0263-323-008": {"rev": "A", "Drawing_Name": "BASES FOR WORKBENCH AND CABINET IN FAN & HVAC ROOM (2026)", "Issue_Date": "", "Target_Date": "2026-06-08"},
+  "DR-NC-0263-323-008": {"rev": "A", "Drawing_Name": "BASES FOR WORKBENCH AND CABINET IN FAN & HVAC ROOM (2026)", "Issue_Date": "2026-06-12", "Target_Date": "2026-06-08"},
   "DR-NC-0263-323-009": {"rev": "A", "Drawing_Name": "SHELVES IN FAN ROOM HVAC ROOM (2026) - TWEEN DECK", "Issue_Date": "", "Target_Date": "2026-06-08"},
   "DR-NC-0263-323-010": {"rev": "A", "Drawing_Name": "PAINT AND CHEMICAL STORE(3003) - MAIN DECK", "Issue_Date": "", "Target_Date": "2026-09-29"},
   "DR-NC-0263-323-011": {"rev": "A", "Drawing_Name": "SHELVES IN GENERAL CABLE STORE(3004)", "Issue_Date": "", "Target_Date": "2026-09-29"},
@@ -140,8 +140,8 @@
   "DR-NC-0263-341-007": {"rev": "A", "Drawing_Name": "INSULATION ARRANGEMENT FOR AC SUPPLY DUCT", "Issue_Date": "", "Target_Date": "2026-07-26"},
   "DR-NC-0263-343-001": {"rev": "A", "Drawing_Name": "FLOOR HEATING CABLE ARRANGEMENT", "Issue_Date": "", "Target_Date": "2027-08-03"},
   "DR-NC-0263-344-000": {"rev": "A", "Drawing_Name": "DECK COVERING ARRANGEMENT", "Issue_Date": "", "Target_Date": "2026-10-24"},
-  "DR-NC-0263-344-001": {"rev": "A", "Drawing_Name": "STEEL COAMINGS PLAN - TWEEN DECK", "Issue_Date": "", "Target_Date": "2026-04-25"},
-  "DR-NC-0263-344-002": {"rev": "A", "Drawing_Name": "STEEL COAMINGS PLAN - MAIN DECK", "Issue_Date": "", "Target_Date": "2026-06-26"},
+  "DR-NC-0263-344-001": {"rev": "A", "Drawing_Name": "STEEL COAMINGS PLAN - TWEEN DECK", "Issue_Date": "2026-06-12", "Target_Date": "2026-04-25"},
+  "DR-NC-0263-344-002": {"rev": "A", "Drawing_Name": "STEEL COAMINGS PLAN - MAIN DECK", "Issue_Date": "2026-06-12", "Target_Date": "2026-06-26"},
   "DR-NC-0263-344-003": {"rev": "A", "Drawing_Name": "STEEL COAMINGS PLAN - A DECK", "Issue_Date": "", "Target_Date": "2026-07-22"},
   "DR-NC-0263-344-004": {"rev": "A", "Drawing_Name": "STEEL COAMINGS PLAN - B DECK", "Issue_Date": "", "Target_Date": "2026-08-21"},
   "DR-NC-0263-344-005": {"rev": "A", "Drawing_Name": "STEEL COAMINGS PLAN - C DECK", "Issue_Date": "", "Target_Date": "2026-09-21"},
@@ -176,7 +176,7 @@
   "LI-NC-0263-992-001": {"rev": "A", "Drawing_Name": "PROTOCOL OF INVENTORY EQUIPMENT AOF", "Issue_Date": "", "Target_Date": "2027-11-08"},
   "NC-0263-999-001": {"rev": "A", "Drawing_Name": "OPERATIONAL TEST OF GALLEY, MESH & LAUNDRY EQUIPMENT", "Issue_Date": "", "Target_Date": "2027-11-06"},
   "NC-0263-999-001": {"rev": "A", "Drawing_Name": "OPERATION AND TEST OF WORKSHOP EQUIPMENT", "Issue_Date": "", "Target_Date": "2027-11-06"},
-  "WS-AOF-S-01": {"rev": "A", "Drawing_Name": "YARD STANDARD AOF", "Issue_Date": "", "Target_Date": "2026-04-18"},
+  "WS-AOF-S-01": {"rev": "A", "Drawing_Name": "YARD STANDARD AOF", "Issue_Date": "2026-06-12", "Target_Date": "2026-04-18"},
   "DR-NC-0263-313-000": {"rev": "A", "Drawing_Name": "CLEAR CEILING HEIGHT", "Issue_Date": "", "Target_Date": "2026-05-18"},
   "TM-NC-0263-341-000": {"rev": "A", "Drawing_Name": "NOISE AND VIBRATION MEASURING PROCEDURE", "Issue_Date": "", "Target_Date": "2027-11-05"}
 }
