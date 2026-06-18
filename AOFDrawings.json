@@ -85,7 +85,7 @@
   "DR-NC-0263-322-029": {"rev": "A", "Drawing_Name": "CREW CABIN ARRANGEMENT 3016", "Issue_Date": "", "Target_Date": "2027-06-21"},
   "DR-NC-0263-322-100": {"rev": "A", "Drawing_Name": "COLOR PLAN", "Issue_Date": "", "Target_Date": "2026-12-15"},
   "DR-NC-0263-322-300": {"rev": "A", "Drawing_Name": "ARRANGEMENT FOR MARINE POLLUTION CONTROL", "Issue_Date": "", "Target_Date": "2027-11-22"},
-  "DR-NC-0263-323-001": {"rev": "A", "Drawing_Name": "ENGINE STORE-1(1002) - TANK TOP", "Issue_Date": "", "Target_Date": "2026-06-15"},
+  "DR-NC-0263-323-001": {"rev": "A", "Drawing_Name": "ENGINE STORE-1(1002) - TANK TOP", "Issue_Date": "2026-06-18", "Target_Date": "2026-06-15"},
   "DR-NC-0263-323-002": {"rev": "A", "Drawing_Name": "SHELVES IN AHU ROOM (6001)-C DECK", "Issue_Date": "", "Target_Date": "2026-10-17"},
   "DR-NC-0263-323-003": {"rev": "A", "Drawing_Name": "ENGINE STORE 1(2007) - TWEEN DECK", "Issue_Date": "2026-06-15", "Target_Date": "2026-06-15"},
   "DR-NC-0263-323-004": {"rev": "A", "Drawing_Name": "BONDED STORE(2022) - TWEEN DECK", "Issue_Date": "2026-06-16", "Target_Date": "2026-06-23"},
