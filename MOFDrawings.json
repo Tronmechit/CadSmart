@@ -255,7 +255,7 @@
   "DR-NC-0263-532-101-621": {"rev": "A", "Drawing_Name": "PIPING LAYOUT OF INTERNAL DRAINAGE SYSTEM-UNIT 620, 621 & 622", "Issue_Date": "2026-06-19", "Target_Date": "2026-06-18"},
   "DR-NC-0263-165-001-321": {"rev": "A", "Drawing_Name": "DETAILS OF PENETRATION-UNIT 321", "Issue_Date": "", "Target_Date": "2026-06-19"},
   "DR-NC-0263-298-408": {"rev": "A", "Drawing_Name": "FOUNDATION DETAIL OF SERVICE AIR RECIVER", "Issue_Date": "2026-06-19", "Target_Date": "2026-06-19"},
-  "DR-NC-0263-501-001-015": {"rev": "A", "Drawing_Name": "SPOOL & PIPING LAYOUT OF PIPE MODULE-15 (SHIP SYS RM FW BUNKER & TR. PIPES U-712)", "Issue_Date": "", "Target_Date": "2026-06-19"},
+  "DR-NC-0263-501-001-015": {"rev": "Cancelled", "Drawing_Name": "SPOOL & PIPING LAYOUT OF PIPE MODULE-15 (SHIP SYS RM FW BUNKER & TR. PIPES U-712)", "Issue_Date": "", "Target_Date": "2026-06-19"},
   "DR-NC-0263-501-002-015": {"rev": "A", "Drawing_Name": "SUPPORT DETAILS & LAYOUT OF PIPE MODULE-15 (SHIP SYS RM FW BUNKER & TR. PIPES U-712)", "Issue_Date": "", "Target_Date": "2026-06-19"},
   "DR-NC-0263-571-100-621": {"rev": "A", "Drawing_Name": "PIPING LAYOUT OF FRESH WATER BUNKER & TRANSFER SYSTEM-UNIT 620, 621 & 622", "Issue_Date": "", "Target_Date": "2026-06-20"},
   "DR-NC-0263-165-001-422": {"rev": "A", "Drawing_Name": "DETAILS OF PENETRATION-UNIT 422", "Issue_Date": "", "Target_Date": "2026-06-22"},
