@@ -294,7 +294,7 @@
   "DR-NC-0263-231-701": {"rev": "A", "Drawing_Name": "AC SUPPLY AND RETURN BOX DETAILS - ECR/SWITCH BOARD ROOM", "Issue_Date": "2026-06-13", "Target_Date": "2026-06-11"},
   "DR-NC-0263-231-702": {"rev": "A", "Drawing_Name": "SUPPLY AND RETURN BOX DETAILS - BELOW TWEEN DECK", "Issue_Date": "2026-06-17", "Target_Date": "2026-06-15"},
   "DR-NC-0263-231-801": {"rev": "A", "Drawing_Name": "FOUNDATION FOR FANCOIL (FC 35) IN ROV SWBD ROOM - B DECK", "Issue_Date": "", "Target_Date": "2026-09-11"},
-  "DR-NC-0263-231-802": {"rev": "A", "Drawing_Name": "FOUNDATION FOR FANCOIL (FC 60) IN BATTERY STORAGE ROOM - TANK TOP", "Issue_Date": "", "Target_Date": "2026-06-30"},
+  "DR-NC-0263-231-802": {"rev": "A", "Drawing_Name": "FOUNDATION FOR FANCOIL (FC 60) IN BATTERY STORAGE ROOM - TANK TOP", "Issue_Date": "2026-06-24", "Target_Date": "2026-06-30"},
   "DR-NC-0263-231-803": {"rev": "A", "Drawing_Name": "FOUNDATION FOR FANCOIL (FC **) IN LAUNDRY - MAIN DECK FWD", "Issue_Date": "", "Target_Date": "2026-11-13"},
   "DR-NC-0263-231-804": {"rev": "A", "Drawing_Name": "FOUNDATION FOR FANCOIL (FC 41 & FC-42) IN BOW THRUSTER ROOM - TWEEN DECK", "Issue_Date": "", "Target_Date": "2026-08-31"},
   "DR-NC-0263-231-805": {"rev": "A", "Drawing_Name": "FOUNDATION FOR FANCOIL (FC 43A,43B,44A,44B) IN PROPULSION AND STEERING ROOM - TWEEN DECK", "Issue_Date": "2026-06-08", "Target_Date": "2026-08-19"},
