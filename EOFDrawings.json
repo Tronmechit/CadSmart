@@ -185,5 +185,5 @@
   "DR-NC-0263-762-003": {"rev": "A", "Issue_Date": "", "Drawing_Name": "RADIO TV ANTENA SYSTEM CABLE DIAGRAM", "Target_Date": "2027-02-16"},
   "DR-NC-0256-792-005": {"rev": "A", "Issue_Date": "", "Drawing_Name": "POS.DOORS INDIC. AND CONTROL PANEL WIRING DIAGRAM", "Target_Date": "2027-03-12"},
   "DR-NC-0263-781-204-2004": {"rev": "C", "Issue_Date": "", "Drawing_Name": "CABLE TRAYS - ZONE 2004", "Target_Date": ""},
-  "DR-NC-0263-781-204-2004": {"rev": "B", "Issue_Date": "2026-05-29", "Drawing_Name": "CABLE TRAYS (Z-2004)", "Target_Date": "2026-05-27"}
+  "DR-NC-0263-781-204-2004": {"rev": "B", "Issue_Date": "2026-05-29", "Drawing_Name": "CABLE TRAYS - ZONE 2004", "Target_Date": "2026-05-27"}
 }
