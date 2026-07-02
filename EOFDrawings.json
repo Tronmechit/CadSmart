@@ -13,7 +13,7 @@
   "DR-NC-0263-731-001": {"rev": "A", "Issue_Date": "", "Drawing_Name": "POWER CABLE SCHEDULE", "Target_Date": "2027-01-14"},
   "DR-NC-0263-731-002": {"rev": "A", "Issue_Date": "", "Drawing_Name": "CONTROL CABLE SCHEDULE", "Target_Date": "2027-01-15"},
   "DR-NC-0263-731-003": {"rev": "A", "Issue_Date": "", "Drawing_Name": "TELECOM CABLE SCHEDULE", "Target_Date": "2027-01-16"},
-  "DR-NC-0263-742-201-2001": {"rev": "A", "Issue_Date": "", "Drawing_Name": "ELECTRICAL EQUIPMENT ARRANGEMENT - ZONE 2001", "Target_Date": "2026-06-22"},
+  "DR-NC-0263-742-201-2001": {"rev": "A", "Issue_Date": "2026-07-02", "Drawing_Name": "ELECTRICAL EQUIPMENT ARRANGEMENT - ZONE 2001", "Target_Date": "2026-06-22"},
   "DR-NC-0263-742-202-2002": {"rev": "A", "Issue_Date": "", "Drawing_Name": "ELECTRICAL EQUIPMENT ARRANGEMENT - ZONE 2002", "Target_Date": "2026-07-13"},
   "DR-NC-0263-742-203-2003": {"rev": "A", "Issue_Date": "2026-05-25", "Drawing_Name": "ELECTRICAL EQUIPMENT ARRANGEMENT - ZONE 2003", "Target_Date": "2026-05-09"},
   "DR-NC-0263-742-204-2004": {"rev": "A", "Issue_Date": "2026-04-29", "Drawing_Name": "ELECTRICAL EQUIPMENT ARRANGEMENT - ZONE 2004", "Target_Date": "2026-04-25"},
