@@ -1,6 +1,6 @@
 
 const sections=["Hull","SOF","AOF","MOF","EOF"];
-const baseUrl="./";
+const baseUrl = "../";
 let current="Hull";
 
 function makeTabs(){
