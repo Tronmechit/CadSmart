@@ -1,5 +1,5 @@
 
-const sections=["Hull","SOF","AOF","MOF","EOF"];
+const sections=["SOF","AOF","MOF","EOF"];
 const baseUrl = "../";
 let current="Hull";
 
