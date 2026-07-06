@@ -758,5 +758,9 @@
   "DR-NC-0263-424-004": {"rev": "A", "Drawing_Name": "AZIPOD BOLT TIGHTENING INSTRUCTION", "Issue_Date": "", "Target_Date": "2027-02-11"},
   "DR-NC-0263-424-005": {"rev": "A", "Drawing_Name": "AZIPOD ROOM EQUIPMENT INSTALLATION", "Issue_Date": "", "Target_Date": "2027-02-14"},
   "DR-NC-0263-376-100-4004": {"rev": "A", "Drawing_Name": "PIPING LAYOUT OF PORTABLE WATER SYSTEM-ABOVE MAIN DECK Z-4004", "Issue_Date": "", "Target_Date": "2027-02-16"},
-  "DR-NC-0263-376-100-5001": {"rev": "A", "Drawing_Name": "PIPING LAYOUT OF PORTABLE WATER SYSTEM-ABOVE MAIN DECK Z-5001", "Issue_Date": "", "Target_Date": "2027-02-17"}
+  "DR-NC-0263-376-100-5001": {"rev": "A", "Drawing_Name": "PIPING LAYOUT OF PORTABLE WATER SYSTEM-ABOVE MAIN DECK Z-5001", "Issue_Date": "", "Target_Date": "2027-02-17"},
+  "DR-NC-0263-525-100-433": {"rev": "A", "Drawing_Name": "PIPING LAYOUT OF POTABLE WATER SYSTEM-BELOW MAIN DECK-UNIT 433", "Issue_Date": "", "Target_Date": "2027-02-17"},
+  "DR-NC-0263-377-100-3004": {"rev": "A", "Drawing_Name": "PIPE LAYOUT OF SANITARY DISCHARGE SYSTEM Z-3004", "Issue_Date": "", "Target_Date": "2027-02-23"},
+  "DR-NC-0263-377-100-4003": {"rev": "A", "Drawing_Name": "PIPE LAYOUT OF SANITARY DISCHARGE SYSTEM Z-4003", "Issue_Date": "", "Target_Date": "2027-03-02"},
+  "DR-NC-0263-424-002": {"rev": "A", "Drawing_Name": "AZIPOD TRANSPORT & LIFTING DRAWING", "Issue_Date": "", "Target_Date": "2027-03-12"}
 }
