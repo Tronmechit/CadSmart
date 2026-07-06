@@ -101,7 +101,7 @@
   "DR-NC-0263-783-002-1004": {"rev": "A", "Issue_Date": "2026-04-03", "Drawing_Name": "TANK HOLES & FITTINGS ( ELECTRICAL) - ZONE 1004", "Target_Date": "2026-03-25"},
   "DR-NC-0263-783-002-1005": {"rev": "A", "Issue_Date": "2026-04-17", "Drawing_Name": "TANK HOLES & FITTINGS ( ELECTRICAL) - ZONE 1005", "Target_Date": "2026-04-30"},
   "DR-NC-0263-783-002-1006": {"rev": "A", "Issue_Date": "", "Drawing_Name": "TANK HOLES & FITTINGS ( ELECTRICAL) - ZONE 1006", "Target_Date": "2026-09-08"},
-  "DR-NC-0263-783-002-2001": {"rev": "A", "Issue_Date": "", "Drawing_Name": "TANK HOLES & FITTINGS ( ELECTRICAL) - ZONE 2001", "Target_Date": "2026-06-22"},
+  "DR-NC-0263-783-002-2001": {"rev": "A", "Issue_Date": "2026-07-06", "Drawing_Name": "TANK HOLES & FITTINGS ( ELECTRICAL) - ZONE 2001", "Target_Date": "2026-06-22"},
   "DR-NC-0263-783-002-2002": {"rev": "A", "Issue_Date": "", "Drawing_Name": "TANK HOLES & FITTINGS ( ELECTRICAL) - ZONE 2002", "Target_Date": "2026-07-13"},
   "DR-NC-0263-783-002-2003": {"rev": "A", "Issue_Date": "2026-05-12", "Drawing_Name": "TANK HOLES & FITTINGS ( ELECTRICAL) - ZONE 2003", "Target_Date": "2026-05-09"},
   "DR-NC-0263-783-002-2004": {"rev": "A", "Issue_Date": "2026-04-09", "Drawing_Name": "TANK HOLES & FITTINGS ( ELECTRICAL) - ZONE 2004", "Target_Date": "2026-04-11"},
@@ -187,7 +187,7 @@
   "DR-NC-0263-781-204-2004": {"rev": "C", "Issue_Date": "2026-07-02", "Drawing_Name": "CABLE TRAYS - ZONE 2004", "Target_Date": "2026-07-01"},
   "DR-NC-0263-742-206-2006": {"rev": "B", "Issue_Date": "2026-07-02", "Drawing_Name": "ELECTRICAL EQUIPMENT ARRANGEMENT - ZONE 2006", "Target_Date": "2026-07-01"},
   "DR-NC-0263-781-204-2004": {"rev": "B", "Issue_Date": "2026-05-29", "Drawing_Name": "CABLE TRAYS - ZONE 2004", "Target_Date": "2026-05-27"},
-  "DR-NC-0263-781-205-2005": {"rev": "B", "Issue_Date": "", "Drawing_Name": "CABLE TRAYS - ZONE 2005", "Target_Date": "2026-07-04"},
+  "DR-NC-0263-781-205-2005": {"rev": "B", "Issue_Date": "2026-07-06", "Drawing_Name": "CABLE TRAYS - ZONE 2005", "Target_Date": "2026-07-04"},
   "DR-NC-0263-783-001-2004": {"rev": "C", "Issue_Date": "2026-07-03", "Drawing_Name": "PENETRATION PLAN & FITTINGS (ELECTRICAL) - ZONE 2004", "Target_Date": "2026-07-02"},
-  "DR-NC-0263-742-204-2004": {"rev": "B", "Issue_Date": "", "Drawing_Name": "ELECTRICAL EQUIPMENT ARRANGEMENT - ZONE 2004", "Target_Date": "2026-07-02"}
+  "DR-NC-0263-742-204-2004": {"rev": "B", "Issue_Date": "2026-07-06", "Drawing_Name": "ELECTRICAL EQUIPMENT ARRANGEMENT - ZONE 2004", "Target_Date": "2026-07-02"}
 }
