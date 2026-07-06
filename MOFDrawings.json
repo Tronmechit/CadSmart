@@ -288,7 +288,7 @@
   "DR-NC-0263-525-101-410": {"rev": "A", "Drawing_Name": "PIPING LAYOUT OF FRESH WATER PRODUCTION SYSTEM-UNIT 410", "Issue_Date": "2026-07-02", "Target_Date": "2026-06-30"},
   "DR-NC-0263-165-001-632": {"rev": "A", "Drawing_Name": "DETAILS OF PENETRATION-UNIT 632", "Issue_Date": "", "Target_Date": "2026-07-01"},
   "DR-NC-0263-298-415": {"rev": "A", "Drawing_Name": "FOUNDATION DETAILS OF REHARDENING FILTER UNIT 1 & 2", "Issue_Date": "2026-07-03", "Target_Date": "2026-07-01"},
-  "DR-NC-0263-295-004": {"rev": "A", "Drawing_Name": "DRAIN TRAYS-SHIP SYSTEM ROOM", "Issue_Date": "", "Target_Date": "2026-07-01"},
+  "DR-NC-0263-295-004": {"rev": "Cancelled", "Drawing_Name": "DRAIN TRAYS-SHIP SYSTEM ROOM", "Issue_Date": "", "Target_Date": ""},
   "DR-NC-0263-165-001-322": {"rev": "A", "Drawing_Name": "DETAILS OF PENETRATION-UNIT 322", "Issue_Date": "", "Target_Date": "2026-07-02"},
   "DR-NC-0263-502-000-422": {"rev": "A", "Drawing_Name": "SPOOL DRAWING OF UNIT 422", "Issue_Date": "", "Target_Date": "2026-07-02"},
   "DR-NC-0263-502-000-632": {"rev": "A", "Drawing_Name": "SPOOL DRAWING OF UNIT 632", "Issue_Date": "", "Target_Date": "2026-07-02"},
