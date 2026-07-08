@@ -439,7 +439,7 @@
   "DR-NC-0263-245-001-U321": {"rev": "A", "Drawing_Name": "SPOOL FOR  TOTAL FLOODING SYSTEM  - UNIT 321", "Issue_Date": "", "Target_Date": "2026-07-17"},
   "DR-NC-0263-245-001-U322": {"rev": "A", "Drawing_Name": "SPOOL FOR  TOTAL FLOODING SYSTEM  - UNIT 322", "Issue_Date": "", "Target_Date": "2026-07-30"},
   "DR-NC-0263-245-001-U420": {"rev": "A", "Drawing_Name": "SPOOL FOR  TOTAL FLOODING AND LAS SYSTEM  - UNIT 420", "Issue_Date": "", "Target_Date": "2026-06-09"},
-  "DR-NC-0263-245-001-U421": {"rev": "A", "Drawing_Name": "SPOOL FOR  TOTAL FLOODING SYSTEM  - UNIT 421", "Issue_Date": "", "Target_Date": "2026-06-30"},
+  "DR-NC-0263-245-001-U421": {"rev": "Canceled", "Drawing_Name": "SPOOL FOR  TOTAL FLOODING SYSTEM  - UNIT 421", "Issue_Date": "", "Target_Date": ""},
   "DR-NC-0263-245-001-U422": {"rev": "A", "Drawing_Name": "SPOOL FOR  TOTAL FLOODING AND LAS SYSTEM  - UNIT 422", "Issue_Date": "", "Target_Date": "2026-07-07"},
   "DR-NC-0263-245-001-U431": {"rev": "A", "Drawing_Name": "SPOOL FOR  TOTAL FLOODING AND LAS SYSTEM  - UNIT 431", "Issue_Date": "", "Target_Date": "2026-12-09"},
   "DR-NC-0263-245-001-U432": {"rev": "A", "Drawing_Name": "SPOOL FOR  TOTAL FLOODING SYSTEM  - UNIT 432", "Issue_Date": "", "Target_Date": "2026-11-26"},
