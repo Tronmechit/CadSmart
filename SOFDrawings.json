@@ -457,7 +457,7 @@
   "DR-NC-0263-246-003": {"rev": "A", "Drawing_Name": "FIRE PLAN HOLDER", "Issue_Date": "", "Target_Date": "2026-09-10"},
   "DR-NC-0263-246-004": {"rev": "A", "Drawing_Name": "FIRE PLAN DISPLAY LOCATIONS - INSIDE ACCOMMODATION AREA", "Issue_Date": "", "Target_Date": "2026-12-03"},
   "DR-NC-0263-246-005": {"rev": "A", "Drawing_Name": "MOUNTING DETAILS FOR EXTINGUISHERS IN PANELING AREA", "Issue_Date": "", "Target_Date": "2026-12-08"},
-  "DR-NC-0263-246-006": {"rev": "A", "Drawing_Name": "LOCATION FOR FIRE AXE", "Issue_Date": "", "Target_Date": "2026-07-03"},
+  "DR-NC-0263-246-006": {"rev": "A", "Drawing_Name": "LOCATION FOR FIRE AXE", "Issue_Date": "2026-07-11", "Target_Date": "2026-07-03"},
   "DR-NC-0263-246-007": {"rev": "A", "Drawing_Name": "LOCATION FOR FIRE HOSE BOX - ABOVE MAIN DECK", "Issue_Date": "2026-07-10", "Target_Date": "2026-06-26"},
   "DR-NC-0263-248-000": {"rev": "A", "Drawing_Name": "DAMAGE CONTROL PLAN", "Issue_Date": "", "Target_Date": "2027-03-24"},
   "DR-NC-0263-250-001": {"rev": "A", "Drawing_Name": "WORK DECK ARRANGEMENT", "Issue_Date": "", "Target_Date": "2027-02-10"},
