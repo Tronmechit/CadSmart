@@ -420,6 +420,7 @@
   "DR-NC-0263-504-100-422": {"rev": "A", "Drawing_Name": "PIPE LAYOUT OF INSIDE TANK-UNIT 422", "Issue_Date": "2026-07-07", "Target_Date": "2026-07-06"},
   "DR-NC-0263-504-100-322": {"rev": "A", "Drawing_Name": "PIPE LAYOUT OF INSIDE TANK-UNIT 322", "Issue_Date": "2026-07-10", "Target_Date": "2026-07-08"},
   "DR-NC-0263-504-002-420": {"rev": "A", "Drawing_Name": "DETAILS OF TANK FITTING-UNIT 420", "Issue_Date": "2026-07-10", "Target_Date": "2026-07-10"},
+  "DR-NC-0263-504-100-420": {"rev": "A", "Drawing_Name": "PIPE LAYOUT OF INSIDE TANK-UNIT 420", "Issue_Date": "", "Target_Date": "2026-07-13"},
   "DR-NC-0263-504-002-122": {"rev": "A", "Drawing_Name": "DETAILS OF TANK FITTING-UNIT 122", "Issue_Date": "", "Target_Date": "2026-07-13"},
   "DR-NC-0263-504-002-121": {"rev": "A", "Drawing_Name": "DETAILS OF TANK FITTING-UNIT 121", "Issue_Date": "", "Target_Date": "2026-07-17"},
   "DR-NC-0263-504-100-122": {"rev": "A", "Drawing_Name": "PIPE LAYOUT OF INSIDE TANK-UNIT 122", "Issue_Date": "", "Target_Date": "2026-07-20"},
