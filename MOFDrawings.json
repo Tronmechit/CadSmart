@@ -173,7 +173,7 @@
   "DR-NC-0263-295-004": {"rev": "Cancelled", "Drawing_Name": "DRAIN TRAYS-SHIP SYSTEM ROOM", "Issue_Date": "", "Target_Date": ""},
   "DR-NC-0263-295-001": {"rev": "A", "Drawing_Name": "DRAIN TRAYS-ENGINE ROOM", "Issue_Date": "2026-07-14", "Target_Date": "2026-07-08"},
   "DR-NC-0263-295-005": {"rev": "A", "Drawing_Name": "DRAIN TRAYS-BOW THRUSTER ROOM", "Issue_Date": "", "Target_Date": "2026-07-17"},
-  "DR-NC-0263-295-010": {"rev": "A", "Drawing_Name": "DRAIN TRAYS-ROV HANGER ROOM", "Issue_Date": "", "Target_Date": "2026-07-21"},
+  "DR-NC-0263-295-010": {"rev": "Cancelled", "Drawing_Name": "DRAIN TRAYS-ROV HANGER ROOM", "Issue_Date": "", "Target_Date": ""},
   "DR-NC-0263-295-002": {"rev": "A", "Drawing_Name": "DRAIN TRAYS-CASING", "Issue_Date": "", "Target_Date": "2026-08-20"},
   "DR-NC-0263-295-011": {"rev": "A", "Drawing_Name": "DRAIN TRAYS-FUNNEL TOP", "Issue_Date": "", "Target_Date": "2026-08-25"},
   "DR-NC-0263-295-006": {"rev": "A", "Drawing_Name": "DRAIN TRAYS-SHIP FWD ABOVE BDK", "Issue_Date": "", "Target_Date": "2027-01-05"},
