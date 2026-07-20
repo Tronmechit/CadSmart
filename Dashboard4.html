@@ -149,7 +149,7 @@ Chart.register(centerTextPlugin);
             const dataMap = {};
             await Promise.all(sections.map(async (sec) => {
                 try {
-                    const res = await fetch(`${baseUrl}${sec}ToDisplay.json?t=${new Date().getTime()}`);
+                    const res = await fetch(`${baseUrl}${sec}ToDisplayTest.json?t=${new Date().getTime()}`);
                     dataMap[sec] = res.ok ? await res.json() : {};
                 } catch { dataMap[sec] = {}; }
             }));
