@@ -67,7 +67,7 @@
             </div>
         </div>
         <div class="panel area-delay">
-            <h2>Delayed Drawings</h2>
+            <h2>Delayed </h2>
             <div id="delay-header" class="sub-header">Loading...
 				<div id="delay-count"></div>
 			</div>
@@ -75,7 +75,7 @@
             <div id="delay-list" class="dynamic-list"></div>
         </div>
         <div class="panel area-today">
-            <h2>Today's Drawings</h2>
+            <h2>Today's </h2>
             <div id="today-header" class="sub-header">Loading...</div>
             <div id="today-page" class="page-indicator"></div>
             <div id="today-list" class="dynamic-list"></div>
@@ -155,7 +155,7 @@ Chart.register(centerTextPlugin);
             }));
 
             const rows = [
-                { key: '1', label: 'Total Drawings', css: 'bg-white' },
+                { key: '1', label: 'Total ', css: 'bg-white' },
                 { key: '2', label: 'Forwarded for Checking', css: 'bg-blue' },
                 { key: '3', label: 'Checked, Not Approved', css: 'bg-yellow' },
                 { key: '4', label: 'Approved, To be issued', css: 'bg-orange' },
@@ -313,12 +313,12 @@ document.getElementById(this.headerId).innerHTML =
                 const totalPages = Math.max(1, Math.ceil(this.currentData.length / this.itemsPerPage));
                 const chunk = this.currentData.slice(this.pageIndex * this.itemsPerPage, (this.pageIndex + 1) * this.itemsPerPage);
                 document.getElementById(this.pageId).innerText = `Page ${this.pageIndex + 1} of ${totalPages}`;
-                document.getElementById(this.listId).innerHTML = chunk.length ? chunk.map(i => `<div style="margin-bottom:1vh; border-bottom:1px solid #30363d;"><b>${i.dwg}</b><br><small>${i.Drawing_Name || i.Target_Date}</small></div>`).join('') : 'No drawings to display here...';
+                document.getElementById(this.listId).innerHTML = chunk.length ? chunk.map(i => `<div style="margin-bottom:1vh; border-bottom:1px solid #30363d;"><b>${i.dwg}</b><br><small>${i.Drawing_Name || i.Target_Date}</small></div>`).join('') : 'No  to display here...';
             }
         }
 
-       	const delayRotator = new Rotator('Drawings','DELAYED DRAWINGS','delay-list','delay-header','delay-page', false,true);
-        const todayRotator = new Rotator('Drawings', 'TODAY', 'today-list', 'today-header', 'today-page', true);
+       	const delayRotator = new Rotator('','DELAYED DRAWINGS','delay-list','delay-header','delay-page', false,true);
+        const todayRotator = new Rotator('DrawingsTest', 'TODAY', 'today-list', 'today-header', 'today-page', true);
 
         fetchAllStatus();
         setInterval(fetchAllStatus, 30000);
