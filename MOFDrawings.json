@@ -348,7 +348,7 @@
   "50343": {"drgNum": "DR-NC-0263-502-000-531", "rev": "A", "Drawing_Name": "SPOOL DRAWING OF UNIT 531", "Issue_Date": "2026-07-03", "Target_Date": "2026-06-29"},
   "50344": {"drgNum": "DR-NC-0263-502-000-422", "rev": "A", "Drawing_Name": "SPOOL DRAWING OF UNIT 422", "Issue_Date": "", "Target_Date": "2026-07-02"},
   "50345": {"drgNum": "DR-NC-0263-502-000-632", "rev": "A", "Drawing_Name": "SPOOL DRAWING OF UNIT 632", "Issue_Date": "2026-07-07", "Target_Date": "2026-07-02"},
-  "50774": {"drgNum": "", "rev": "", "Drawing_Name": "", "Issue_Date": "", "Target_Date": ""},
+  "50774": {"drgNum": "DR-NC-0263-502-000-632", "rev": "B", "Drawing_Name": "SPOOL DRAWING OF UNIT 632", "Issue_Date": "", "Target_Date": "2026-07-23"},
   "50346": {"drgNum": "DR-NC-0263-502-000-322", "rev": "A", "Drawing_Name": "SPOOL DRAWING OF UNIT 322", "Issue_Date": "2026-07-11", "Target_Date": "2026-07-06"},
   "50347": {"drgNum": "DR-NC-0263-502-000-732", "rev": "A", "Drawing_Name": "SPOOL DRAWING OF UNIT 732", "Issue_Date": "2026-07-15", "Target_Date": "2026-07-08"},
   "50348": {"drgNum": "DR-NC-0263-502-000-631", "rev": "A", "Drawing_Name": "SPOOL DRAWING OF UNIT 631", "Issue_Date": "2026-07-15", "Target_Date": "2026-07-10"},
