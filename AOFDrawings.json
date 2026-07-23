@@ -140,6 +140,7 @@
   "DR-NC-0263-343-001": {"rev": "A", "Drawing_Name": "FLOOR HEATING CABLE ARRANGEMENT", "Issue_Date": "", "Target_Date": "2027-08-03"},
   "DR-NC-0263-344-000": {"rev": "A", "Drawing_Name": "DECK COVERING ARRANGEMENT", "Issue_Date": "", "Target_Date": "2026-10-24"},
   "DR-NC-0263-344-001": {"rev": "A", "Drawing_Name": "STEEL COAMINGS PLAN - TWEEN DECK", "Issue_Date": "2026-06-12", "Target_Date": "2026-04-25"},
+  "DR-NC-0263-344-001": {"rev": "B", "Drawing_Name": "STEEL COAMINGS PLAN - TWEEN DECK", "Issue_Date": "", "Target_Date": ""},
   "DR-NC-0263-344-002": {"rev": "A", "Drawing_Name": "STEEL COAMINGS PLAN - MAIN DECK", "Issue_Date": "2026-06-12", "Target_Date": "2026-06-26"},
   "DR-NC-0263-344-003": {"rev": "A", "Drawing_Name": "STEEL COAMINGS PLAN - A DECK", "Issue_Date": "", "Target_Date": "2026-07-22"},
   "DR-NC-0263-344-004": {"rev": "A", "Drawing_Name": "STEEL COAMINGS PLAN - B DECK", "Issue_Date": "", "Target_Date": "2026-08-21"},
