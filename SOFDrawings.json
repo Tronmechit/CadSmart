@@ -433,7 +433,7 @@
   "20429": {"drgNum": "DR-NC-0263-245-001-0003", "rev": "A", "Drawing_Name": "ARRANGEMENT FOR TOTAL FLOODING SYSTEM - ENGINE ROOM", "Issue_Date": "", "Target_Date": "2026-05-26"},
   "20430": {"drgNum": "DR-NC-0263-245-001-0004", "rev": "A", "Drawing_Name": "ARRANGEMENT FOR TOTAL FLOODING SYSTEM - FUNNEL", "Issue_Date": "", "Target_Date": "2026-11-18"},
   "20431": {"drgNum": "DR-NC-0263-245-001-0005", "rev": "A", "Drawing_Name": "ARRANGEMENT FOR TOTAL FLOODING SYSTEM - BATTERY STORAGE ROOM", "Issue_Date": "2026-05-15", "Target_Date": "2026-05-08"},
-  "20729": {"drgNum": "", "rev": "", "Drawing_Name": "", "Issue_Date": "", "Target_Date": ""},
+  "20729": {"drgNum": "", "rev": "B", "Drawing_Name": "ARRANGEMENT FOR TOTAL FLOODING SYSTEM - BATTERY STORAGE ROOM", "Issue_Date": "", "Target_Date": "2026-07-24"},
   "20432": {"drgNum": "DR-NC-0263-245-001-0006", "rev": "A", "Drawing_Name": "ARRANGEMENT FOR TOTAL FLOODING SYSTEM - EMERGENCY GENERATOR ROOM", "Issue_Date": "", "Target_Date": "2026-09-02"},
   "20433": {"drgNum": "DR-NC-0263-245-001-0007", "rev": "A", "Drawing_Name": "ARRANGEMENT FOR TOTAL FLOODING SYSTEM - HPU ROOM", "Issue_Date": "2026-07-20", "Target_Date": "2026-07-10"},
   "20434": {"drgNum": "DR-NC-0263-245-001-0008", "rev": "A", "Drawing_Name": "ARRANGEMENT FOR TOTAL FLOODING SYSTEM - CABLE MACHINERY DRIVES ROOM", "Issue_Date": "", "Target_Date": "2026-07-21"},
