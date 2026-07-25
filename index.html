@@ -158,24 +158,30 @@
                 const currentFile = DISCIPLINE_FILES[i];
                 console.log(`Searching in: ${currentFile}...`);
 
-                try {
-                    // Fetch the current discipline file
-                    const response = await fetch(currentFile + '?v=' + Date.now()); // Includes the timestamp anti-cache trick!
-                    
-                    if (response.ok) {
-                        const database = await response.json();
+try {
+    // Fetch the current discipline file
+    const response = await fetch(currentFile + '?v=' + Date.now()); 
+    
+    if (response.ok) {
+        const database = await response.json();
 
-                        // Check if the drawing ID exists in THIS specific discipline dictionary
-                        if (database[id]) {
-                            console.log(`🎯 HIT FOUND in ${currentFile}! Terminating loop.`);
-                            recordFound = true;
-                            
-                            // Send data to your existing verification rules and stop the function completely
-                            processVerification(id, rawScannedRev, cleanScannedRev, database);
-                            break; 
-                        }
-                    }
-                } catch (error) {
+        // 1. Find the key-value pair where the internal property matches your target value
+        const targetValue = id; // Change this to your search value
+        const foundEntry = Object.entries(database).find(([key, record]) => record.drawingNumber === targetValue);
+
+        // 2. If a match is found, extract the ID and the record data
+        if (foundEntry) {
+            const [foundId, foundRecord] = foundEntry; // foundId is "dwg_102"
+            
+            console.log(`🎯 HIT FOUND in ${currentFile}! Terminating loop.`);
+            recordFound = true;
+            
+            // 3. Pass the newly found ID instead of the old 'id' variable
+            processVerification(foundId, rawScannedRev, cleanScannedRev, database);
+            break; 
+        }
+    }
+} catch (error) {
                     console.error(`Error reading or parsing ${currentFile}:`, error);
                     // If one file fails (e.g., net drop or missing), the loop continues to check the others safely
                 }
