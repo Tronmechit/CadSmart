@@ -149,6 +149,8 @@
 
         // Sequential Search Engine: Checks files one by one until a hit is found
         async function searchDisciplinesSequentially(id, rawScannedRev, cleanScannedRev) {
+            
+            console.log(`Starting search across disciplines for ID: ${id}`);
             let recordFound = false;
 
             // Loop through all 5 files sequentially
