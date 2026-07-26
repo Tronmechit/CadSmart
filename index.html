@@ -212,6 +212,7 @@ try {
           //  }
 
             const latestRecord = db[id];
+            const drnum = latestrecord.drgNum;
             const masterRev = latestRecord.rev;
             const currentStatus = latestRecord.status;
             const updateDate = latestRecord.Issue_Date;
@@ -226,7 +227,7 @@ try {
                 // MATCH: Drawing is current and approved
                 showResult(
                     `${updateDate && updateDate.trim() !== "" ? "VERIFIED OK" : "NOT ISSUED"}`, 
-                    `<strong>Drawing ID:</strong> ${id}<br>` +
+                    `<strong>Drawing ID:</strong> ${drnum}<br>` +
                     `<strong>Your Copy:</strong> ${rawScannedRev}<br>` +
                     `<strong>Latest System Rev:</strong> ${masterRev}<br>` +
                     `<strong>Issued On:</strong> ${updateDate && updateDate.trim() !== "" ? updateDate : "Pending"}`,
