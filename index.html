@@ -127,8 +127,6 @@
     });
     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 }
-
-
         // What happens when the camera successfully reads a QR Code
         function onScanSuccess(decodedText, decodedResult) {
             // Stop scanning immediately so it doesn't keep triggering
@@ -186,7 +184,6 @@ try {
                     // If one file fails (e.g., net drop or missing), the loop continues to check the others safely
                 }
             }
-
             // IF THE LOOP COMPLETES AND NO FILE CONTAINED THE ID:
             if (!recordFound) {
                 console.log("Drawing ID not found in any discipline file.");
@@ -196,9 +193,7 @@ try {
                     "status-unknown"
                 );
             }
-        }
-
-        
+        }     
 
         function onScanFailure(error) {
             // Quietly handle scanning frames without throwing loud alerts
@@ -229,7 +224,7 @@ try {
                 // MATCH: Drawing is current and approved
                 showResult(
                     `${updateDate && updateDate.trim() !== "" ? "VERIFIED OK" : "NOT ISSUED"}`, 
-                    `<strong>Drawing ID:</strong> ${id}<br>` +
+                    `<strong>Drawing ID:</strong> ${drgNum}<br>` +
                     `<strong>Your Copy:</strong> ${rawScannedRev}<br>` +
                     `<strong>Latest System Rev:</strong> ${masterRev}<br>` +
                     `<strong>Issued On:</strong> ${updateDate && updateDate.trim() !== "" ? updateDate : "Pending"}`,
