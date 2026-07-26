@@ -91,9 +91,6 @@
 
     <script>
         let html5QrcodeScanner;
-        
-        // --- CONFIGURATION ---
-       // const DATA_SOURCE_URL = "SOFdrawings.json"; 
 // --- CONFIGURATION ---
         // Array of your 5 separate discipline JSON files sitting in the repository
         const DISCIPLINE_FILES = [
@@ -165,9 +162,10 @@ try {
     if (response.ok) {
         const database = await response.json();
 
-        // 1. Find the key-value pair where the internal property matches your target value
-        const targetValue = id; // Change this to your search value
-        const foundEntry = Object.entries(database).find(([key, record]) => record.drgNum === targetValue);
+        // 1. Find the key-value pair where the internal property matches the target value
+        const targetValue = id; // my search dwg num
+        const targetRev = cleanScannedRev //my search rev letter
+        const foundEntry = Object.entries(database).find(([key, record]) => record.drgNum === targetValue && record. = targetRev);
 
         // 2. If a match is found, extract the ID and the record data
         if (foundEntry) {
@@ -191,7 +189,7 @@ try {
                 console.log("Drawing ID not found in any discipline file.");
                 showResult(
                     "NOT FOUND", 
-                    `Drawing <strong>${id}</strong> is not listed in any of the 5 discipline databases. Check with Design Office.`, 
+                    `Drawing <strong>${drnum}</strong> is not listed in databases. Check with Design Office.`, 
                     "status-unknown"
                 );
             }
@@ -241,7 +239,7 @@ try {
                 // MISMATCH OR SUPERSEDED
                 showResult(
                     "DO NOT USE!", 
-                    `<strong>Drawing ID:</strong> ${id}<br>` +
+                    `<strong>Drawing ID:</strong> ${drnum}<br>` +
                     `<strong>Your Copy:</strong> <span style="text-decoration: underline;">${rawScannedRev}</span> (OUTDATED)<br>` +
                     `<strong>Latest Master Rev:</strong> <span style="font-size:20px; color:#ffeb3b;">${masterRev}</span><br>` +
                     //`<strong>Current Status:</strong> ${currentStatus}<br>` +
