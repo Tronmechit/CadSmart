@@ -234,14 +234,21 @@ Chart.register(centerTextPlugin);
     this.itemsPerPage = 5;
     this.currentData = [];
 }
-            async tick() {
-                if (this.currentData.length === 0 || this.pageIndex >= Math.ceil(this.currentData.length / this.itemsPerPage)) {
-                    this.secIndex = (this.secIndex + 1) % sections.length;
-                    await this.fetchData(sections[this.secIndex]);
-                    this.pageIndex = 0;
-                }
-                this.renderPage(); this.pageIndex++;
-            }
+async tick() {
+
+    // Show current section first
+    this.renderPage();
+    this.pageIndex++;
+
+    // Move to next section only after all pages are shown
+    if (this.pageIndex >= Math.ceil(this.currentData.length / this.itemsPerPage) ||
+        this.currentData.length === 0) {
+
+        this.pageIndex = 0;
+        this.secIndex = (this.secIndex + 1) % sections.length;
+        await this.fetchData(sections[this.secIndex]);
+    }
+}
             async fetchData(section) {
                 document.getElementById(this.headerId).innerText = `${section} - FETCHING...`;
                 try {
