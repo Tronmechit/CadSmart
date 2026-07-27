@@ -165,7 +165,7 @@ try {
         // 1. Find the key-value pair where the internal property matches the target value
         const targetValue = id; // my search dwg num
         const targetRev = cleanScannedRev; //my search rev letter
-        const foundEntry = Object.entries(database).find(([key, record]) => record.drgNum === targetValue && record.rev === targetRev);
+        const foundEntry = Object.entries(database).find(([key, record]) => record.drgNum === targetValue );
 
         // 2. If a match is found, extract the ID and the record data
         if (foundEntry) {
