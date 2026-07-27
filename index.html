@@ -189,7 +189,7 @@ try {
                 console.log("Drawing ID not found in any discipline file.");
                 showResult(
                     "NOT FOUND", 
-                    `Drawing <strong>${drnum}</strong> is not listed in databases. Check with Design Office.`, 
+                   `Drawing <strong>${id}</strong> is not listed in databases. Check with Design Office.`, 
                     "status-unknown"
                 );
             }
@@ -200,58 +200,98 @@ try {
         }
 
         // Verification logic comparing the scanned code against your drawings.json data
-        function processVerification(id, rawScannedRev, cleanScannedRev, db) {
-            const resultBox = document.getElementById("result-container");
-            
-            // Check if this drawing ID exists in our cloud ledger
-           // if (!db[id]) {
-            //    showResult("NOT FOUND", `Drawing <strong>${id}</strong> is not listed in the official cloud mirror database. Check with Design Office.`, "status-unknown");
-           //     return;
-          //  }
+//------------------Process verification--------------------------------------------
+// Verification logic comparing the scanned code against your drawings.json data
+function processVerification(id, rawScannedRev, cleanScannedRev, db) {
 
-            const latestRecord = db[id];
-            const drnum = latestRecord.drgNum;
-            const masterRev = latestRecord.rev;
-            const currentStatus = latestRecord.status;
-            const updateDate = latestRecord.Issue_Date;
+    const latestRecord = db[id];
 
-            console.log("Matched Database Record:", latestRecord);
-            console.log("Scanned Clean Rev:", cleanScannedRev, " | Master Database Rev:", masterRev);
+    const drnum = latestRecord.drgNum;
+    const masterRev = latestRecord.rev.toUpperCase();
+    const scannedRev = cleanScannedRev.toUpperCase();
+    const updateDate = latestRecord.Issue_Date;
 
-            // Verification Logic: Check both the character equality and that status is APPROVED
-            //if (cleanScannedRev.toUpperCase() === masterRev.toUpperCase() && currentStatus.toUpperCase() === "APPROVED") {
-                 if (cleanScannedRev.toUpperCase() === masterRev.toUpperCase() ) {
-                     console.log ("wewe",id);
-                // MATCH: Drawing is current and approved
-                showResult(
-                    `${updateDate && updateDate.trim() !== "" ? "VERIFIED OK" : "NOT ISSUED"}`, 
-                    `<strong>Drawing No:</strong> ${drnum}<br>` +
-                    `<strong>Your Copy:</strong> ${rawScannedRev}<br>` +
-                    `<strong>Latest System Rev:</strong> ${masterRev}<br>` +
-                    `<strong>Issued On:</strong> ${updateDate && updateDate.trim() !== "" ? updateDate : "Pending"}`,
-                    `${updateDate && updateDate.trim() !== "" ? "status-valid" : "status-pending"}`
-                   // `<strong>Issued On:</strong> ${updateDate}`, 
-                    //"status-valid"
-                );
-                // Vibrate phone for success if supported by device
-                if (navigator.vibrate) navigator.vibrate(100);
-            } else {
-                // MISMATCH OR SUPERSEDED
-                showResult(
-                    "DO NOT USE!", 
-                    `<strong>Drawing ID:</strong> ${drnum}<br>` +
-                    `<strong>Your Copy:</strong> <span style="text-decoration: underline;">${rawScannedRev}</span> (OUTDATED)<br>` +
-                    `<strong>Latest Master Rev:</strong> <span style="font-size:20px; color:#ffeb3b;">${masterRev}</span><br>` +
-                    //`<strong>Current Status:</strong> ${currentStatus}<br>` +
-                    //`<strong>Rev Issued on:</strong> ${updateDate}<br><br>` +
-                    `<span style="color:#ffeb3b; font-weight:bold;">DISCARD THIS PAPER COPY IMMEDIATELY.</span>`, 
-                    "status-warning"
-                );
-                // Heavy vibration pattern for alert warning
-                if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
-            }
+    console.log("Matched Database Record:", latestRecord);
+    console.log("Scanned Rev:", scannedRev, "| Master Rev:", masterRev);
+
+    const issued = updateDate && updateDate.trim() !== "";
+
+    // ==========================================================
+    // CASE 1 : CURRENT REVISION HAS BEEN ISSUED
+    // ==========================================================
+    if (issued) {
+
+        if (scannedRev === masterRev) {
+
+            // VERIFIED
+            showResult(
+                "VERIFIED OK",
+                `<strong>Drawing No:</strong> ${drnum}<br>` +
+                `<strong>Your Copy:</strong> Rev ${scannedRev}<br>` +
+                `<strong>Latest System Rev:</strong> ${masterRev}<br>` +
+                `<strong>Issued On:</strong> ${updateDate}`,
+                "status-valid"
+            );
+
+            if (navigator.vibrate) navigator.vibrate(100);
+
+        } else {
+
+            // OUTDATED OR INVALID REVISION
+            showResult(
+                "DO NOT USE!",
+                `<strong>Drawing No:</strong> ${drnum}<br>` +
+                `<strong>Your Copy:</strong> Rev ${scannedRev}<br>` +
+                `<strong>Latest System Rev:</strong> <span style="font-size:20px;color:#ffeb3b;">${masterRev}</span><br>` +
+                `<span style="color:#ffeb3b;font-weight:bold;">DISCARD THIS PAPER COPY IMMEDIATELY.</span>`,
+                "status-warning"
+            );
+
+            if (navigator.vibrate) navigator.vibrate([200,100,200]);
         }
 
+    }
+
+    // ==========================================================
+    // CASE 2 : LATEST REVISION EXISTS BUT NOT YET ISSUED
+    // ==========================================================
+    else {
+
+        if (scannedRev < masterRev) {
+
+            // User has an older revision while a newer revision
+            // already exists in the system.
+            showResult(
+                "DO NOT USE!",
+                `<strong>Drawing No:</strong> ${drnum}<br>` +
+                `<strong>Your Copy:</strong> Rev ${scannedRev}<br>` +
+                `<strong>Latest System Rev:</strong> <span style="font-size:20px;color:#ffeb3b;">${masterRev}</span><br>` +
+                `<span style="color:#ffeb3b;font-weight:bold;">DISCARD THIS PAPER COPY IMMEDIATELY.</span>`,
+                "status-warning"
+            );
+
+            if (navigator.vibrate) navigator.vibrate([200,100,200]);
+
+        } else {
+
+            // User scanned the latest revision OR a future revision
+            // that has not yet been officially issued.
+            showResult(
+                "NOT ISSUED",
+                `<strong>Drawing No:</strong> ${drnum}<br>` +
+                `<strong>Your Copy:</strong> Rev ${scannedRev}<br>` +
+                `<strong>Latest System Rev:</strong> ${masterRev}<br>` +
+                `<strong>Issued On:</strong> Pending`,
+                "status-pending"
+            );
+
+            if (navigator.vibrate) navigator.vibrate(100);
+
+        }
+
+    }
+}
+//-------------------------------------------------------------------------------------
         function showResult(title, detailsHtml, cssClass) {
             const container = document.getElementById("result-container");
             container.className = ""; // Reset styles
