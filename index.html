@@ -65,7 +65,7 @@
         .status-details { font-size: 16px; line-height: 1.5; text-align: left; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px; }
         button {
             background-color: #00adb5;
-            color: white;
+            color: we;
             border: none;
             padding: 12px 24px;
             font-size: 16px;
@@ -165,19 +165,26 @@ try {
         // 1. Find the key-value pair where the internal property matches the target value
         const targetValue = id; // my search dwg num
         const targetRev = cleanScannedRev; //my search rev letter
-        const foundEntry = Object.entries(database).find(([key, record]) => record.drgNum === targetValue );
+// Find ALL revisions of this drawing
+const matches = Object.entries(database)
+    .filter(([key, record]) => record.drgNum === targetValue);
 
-        // 2. If a match is found, extract the ID and the record data
-        if (foundEntry) {
-            const [foundId, foundRecord] = foundEntry; // foundId is "dwg_102"
-            
-            console.log(`🎯 HIT FOUND in ${currentFile}! Terminating loop.`);
-            recordFound = true;
-            
-            // 3. Pass the newly found ID instead of the old 'id' variable
-            processVerification(foundId, rawScannedRev, cleanScannedRev, database);
-            break; 
-        }
+if (matches.length > 0) {
+
+    // Select the highest revision (A < B < C ...)
+    matches.sort((a, b) =>
+        a[1].rev.localeCompare(b[1].rev)
+    );
+
+    const [foundId, foundRecord] = matches[matches.length - 1];
+
+    console.log("Latest revision found:", foundRecord.rev);
+
+    recordFound = true;
+
+    processVerification(foundId, rawScannedRev, cleanScannedRev, database);
+    break;
+}
     }
 } catch (error) {
                     console.error(`Error reading or parsing ${currentFile}:`, error);
