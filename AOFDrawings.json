@@ -1,4 +1,4 @@
-,
+{
   "30001": {"drgNum": "DR-NC-0263-100-000", "rev": "A", "Drawing_Name": "GENERAL ARRANGEMENT", "Issue_Date": "2026-06-12", "Target_Date": "2026-03-31"},
   "30002": {"drgNum": "DR-NC-0256-297-300", "rev": "A", "Drawing_Name": "ESCAPE ROUTE SIGNAGE", "Issue_Date": "", "Target_Date": "2027-11-08"},
   "30003": {"drgNum": "DR-NC-0263-311-001", "rev": "A", "Drawing_Name": "MOCK-UP CABIN ARRANGEMENT 3015", "Issue_Date": "2026-06-12", "Target_Date": "2026-03-12"},
@@ -145,6 +145,7 @@
   "30144": {"drgNum": "DR-NC-0263-344-004", "rev": "A", "Drawing_Name": "STEEL COAMINGS PLAN - B DECK", "Issue_Date": "", "Target_Date": "2026-08-21"},
   "30145": {"drgNum": "DR-NC-0263-344-005", "rev": "A", "Drawing_Name": "STEEL COAMINGS PLAN - C DECK", "Issue_Date": "", "Target_Date": "2026-09-21"},
   "30146": {"drgNum": "DR-NC-0263-344-006", "rev": "A", "Drawing_Name": "STEEL COAMINGS PLAN - BRIDGE DECK", "Issue_Date": "", "Target_Date": "2026-10-16"},
+  "30180": {"drgNum": "", "rev": "", "Drawing_Name": "", "Issue_Date": "", "Target_Date": ""},
   "30147": {"drgNum": "WI-NC-0263-344-100", "rev": "A", "Drawing_Name": "FLOATING FLOOR INSTALLATION GUIDE", "Issue_Date": "", "Target_Date": "2026-08-22"},
   "30148": {"drgNum": "DR-NC-0263-347-000", "rev": "A", "Drawing_Name": "RAISED FLOOR ARRANGEMENT IN ECR_SWBD ROOM_CITADEL (2010)", "Issue_Date": "", "Target_Date": "2026-07-28"},
   "30149": {"drgNum": "DR-NC-0263-347-001", "rev": "A", "Drawing_Name": "RAISED FLOOR ARRANGEMENT IN CABLE CONTROL ROOM (4003)", "Issue_Date": "", "Target_Date": "2026-12-19"},
