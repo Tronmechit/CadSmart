@@ -347,7 +347,7 @@
   "50765": {"drgNum": "DR-NC-0263-502-000-532", "rev": "B", "Drawing_Name": "SPOOL DRAWING OF UNIT 532", "Issue_Date": "2026-07-23", "Target_Date": "2026-07-22"},
   "50342": {"drgNum": "DR-NC-0263-501-001-017", "rev": "A", "Drawing_Name": "SPOOL & PIPING LAYOUT OF PIPE MODULE-17 (SHIP SYS RM FW TR PP 1 & 2 PIPES U-712)", "Issue_Date": "2026-05-16", "Target_Date": "2026-06-26"},
   "50343": {"drgNum": "DR-NC-0263-502-000-531", "rev": "A", "Drawing_Name": "SPOOL DRAWING OF UNIT 531", "Issue_Date": "2026-07-03", "Target_Date": "2026-06-29"},
-  "50344": {"drgNum": "DR-NC-0263-502-000-422", "rev": "A", "Drawing_Name": "SPOOL DRAWING OF UNIT 422", "Issue_Date": "", "Target_Date": "2026-07-02"},
+  "50344": {"drgNum": "DR-NC-0263-502-000-422", "rev": "A", "Drawing_Name": "SPOOL DRAWING OF UNIT 422", "Issue_Date": "2026-08-01", "Target_Date": "2026-07-02"},
   "50345": {"drgNum": "DR-NC-0263-502-000-632", "rev": "A", "Drawing_Name": "SPOOL DRAWING OF UNIT 632", "Issue_Date": "2026-07-07", "Target_Date": "2026-07-02"},
   "50774": {"drgNum": "DR-NC-0263-502-000-632", "rev": "B", "Drawing_Name": "SPOOL DRAWING OF UNIT 632", "Issue_Date": "2026-07-28", "Target_Date": "2026-07-23"},
   "50346": {"drgNum": "DR-NC-0263-502-000-322", "rev": "A", "Drawing_Name": "SPOOL DRAWING OF UNIT 322", "Issue_Date": "2026-07-11", "Target_Date": "2026-07-06"},
