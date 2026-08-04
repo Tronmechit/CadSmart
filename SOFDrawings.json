@@ -126,7 +126,7 @@
   "20121": {"drgNum": "DR-NC-0263-213-114", "rev": "A", "Drawing_Name": "FLUSH HATCH FOR STERN WISCUSS-A DECK", "Issue_Date": "", "Target_Date": "2026-10-27"},
   "20122": {"drgNum": "DR-NC-0263-213-115", "rev": "A", "Drawing_Name": "DETAILS OF BOLTED COVER FOR AC SUPPLY DUCT - MAIN DECK", "Issue_Date": "2026-06-08", "Target_Date": "2026-07-21"},
   "20123": {"drgNum": "DR-NC-0263-213-116", "rev": "A", "Drawing_Name": "DETAILS OF BOLTED COVER FOR FRESH AIR DUCT - MAIN DECK AND A DECK", "Issue_Date": "2026-07-22", "Target_Date": "2026-07-23"},
-  "20734": {"drgNum": "", "rev": "", "Drawing_Name": "", "Issue_Date": "", "Target_Date": ""},
+  "20734": {"drgNum": "DR-NC0263-213-116", "rev": "B", "Drawing_Name": "DETAILS OF BOLTED COVER FOR FRESH AIR DUCT - MAIN DECK AND A DECK", "Issue_Date": "", "Target_Date": "2026-08-05"},
   "20124": {"drgNum": "DR-NC-0263-213-117", "rev": "A", "Drawing_Name": "DETAILS OF BOLTED COVER FOR ER VENT TRUNK - A DECK", "Issue_Date": "", "Target_Date": "2026-12-18"},
   "20125": {"drgNum": "DR-NC-0263-213-118", "rev": "A", "Drawing_Name": "DETAILS OF HINGED COVER FOR MAIN MAST", "Issue_Date": "", "Target_Date": "2026-10-23"},
   "20126": {"drgNum": "DR-NC-0263-213-119", "rev": "A", "Drawing_Name": "PROTECTION COVER FOR EMERGENCY EXIT OPENING IN CABLE TANK 2 & 3", "Issue_Date": "2026-04-18", "Target_Date": "2026-04-22"},
