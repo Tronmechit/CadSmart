@@ -104,7 +104,7 @@
   "50101": {"drgNum": "DR-NC-0263-165-001-722", "rev": "A", "Drawing_Name": "DETAILS OF PENETRATION-UNIT 722", "Issue_Date": "2026-06-12", "Target_Date": "2026-06-05"},
   "50102": {"drgNum": "DR-NC-0263-165-001-221", "rev": "A", "Drawing_Name": "DETAILS OF PENETRATION-UNIT 221", "Issue_Date": "2026-06-11", "Target_Date": "2026-06-10"},
   "50103": {"drgNum": "DR-NC-0263-165-001-421", "rev": "A", "Drawing_Name": "DETAILS OF PENETRATION-UNIT 421", "Issue_Date": "2026-06-11", "Target_Date": "2026-06-10"},
-  "50776": {"drgNum": "", "rev": "", "Drawing_Name": "", "Issue_Date": "", "Target_Date": ""},
+  "50776": {"drgNum": "DR-NC-0263-165-001-421", "rev": "B", "Drawing_Name": "DETAILS OF PENETRATION-UNIT 421", "Issue_Date": "", "Target_Date": "2026-08-05"},
   "50104": {"drgNum": "DR-NC-0263-165-001-321", "rev": "A", "Drawing_Name": "DETAILS OF PENETRATION-UNIT 321", "Issue_Date": "2026-06-23", "Target_Date": "2026-06-19"},
   "50105": {"drgNum": "DR-NC-0263-165-001-422", "rev": "A", "Drawing_Name": "DETAILS OF PENETRATION-UNIT 422", "Issue_Date": "2026-06-23", "Target_Date": "2026-06-22"},
   "50106": {"drgNum": "DR-NC-0263-165-001-532", "rev": "A", "Drawing_Name": "DETAILS OF PENETRATION-UNIT 532", "Issue_Date": "2026-06-27", "Target_Date": "2026-06-25"},
