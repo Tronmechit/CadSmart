@@ -36,7 +36,7 @@
   "70035": {"drgNum": "DR-NC-0263-742-901-9001", "rev": "A", "Drawing_Name": "ELECTRICAL EQUIPMENT ARRANGEMENT - ZONE 9001", "Issue_Date": "", "Target_Date": "2026-10-23"},
   "70036": {"drgNum": "DR-NC-0263-781-000-0000", "rev": "A", "Drawing_Name": "MAIN CABLE TRAYS GENERAL ARRANGEMENT", "Issue_Date": "", "Target_Date": "2027-01-03"},
   "70037": {"drgNum": "DR-NC-0263-781-201-2001", "rev": "A", "Drawing_Name": "CABLE TRAYS - ZONE 2001", "Issue_Date": "2026-06-30", "Target_Date": "2026-06-22"},
-  "70038": {"drgNum": "DR-NC-0263-781-202-2002", "rev": "A", "Drawing_Name": "CABLE TRAYS - ZONE 2002", "Issue_Date": "", "Target_Date": "2026-07-13"},
+  "70038": {"drgNum": "DR-NC-0263-781-202-2002", "rev": "A", "Drawing_Name": "CABLE TRAYS - ZONE 2002", "Issue_Date": "2026-08-06", "Target_Date": "2026-07-13"},
   "70039": {"drgNum": "DR-NC-0263-781-203-2003", "rev": "A", "Drawing_Name": "CABLE TRAYS - ZONE 2003", "Issue_Date": "2026-06-24", "Target_Date": "2026-05-09"},
   "70040": {"drgNum": "DR-NC-0263-781-204-2004", "rev": "A", "Drawing_Name": "CABLE TRAYS - ZONE 2004", "Issue_Date": "2026-04-11", "Target_Date": "2026-04-25"},
   "70041": {"drgNum": "DR-NC-0263-781-205-2005", "rev": "A", "Drawing_Name": "CABLE TRAYS - ZONE 2005", "Issue_Date": "2026-05-29", "Target_Date": "2026-04-30"},
@@ -78,7 +78,7 @@
   "70077": {"drgNum": "DR-NC-0263-783-001-8001", "rev": "A", "Drawing_Name": "PENETRATION PLAN & FITTINGS (ELECTRICAL) - ZONE 8001", "Issue_Date": "", "Target_Date": "2026-10-01"},
   "70078": {"drgNum": "DR-NC-0263-783-001-9001", "rev": "A", "Drawing_Name": "PENETRATION PLAN & FITTINGS (ELECTRICAL) - ZONE 9001", "Issue_Date": "", "Target_Date": "2026-09-29"},
   "70079": {"drgNum": "DR-NC-0263-782-201-2001", "rev": "A", "Drawing_Name": "ELECTRICAL MOUNTING BEDS - ZONE 2001", "Issue_Date": "2026-06-30", "Target_Date": "2026-06-22"},
-  "70080": {"drgNum": "DR-NC-0263-782-202-2002", "rev": "A", "Drawing_Name": "ELECTRICAL MOUNTING BEDS - ZONE 2002", "Issue_Date": "", "Target_Date": "2026-07-13"},
+  "70080": {"drgNum": "DR-NC-0263-782-202-2002", "rev": "A", "Drawing_Name": "ELECTRICAL MOUNTING BEDS - ZONE 2002", "Issue_Date": "2026-08-06", "Target_Date": "2026-07-13"},
   "70081": {"drgNum": "DR-NC-0263-782-203-2003", "rev": "A", "Drawing_Name": "ELECTRICAL MOUNTING BEDS - ZONE 2003", "Issue_Date": "2026-06-30", "Target_Date": "2026-05-09"},
   "70082": {"drgNum": "DR-NC-0263-782-204-2004", "rev": "A", "Drawing_Name": "ELECTRICAL MOUNTING BEDS - ZONE 2004", "Issue_Date": "2026-04-08", "Target_Date": "2026-04-07"},
   "70083": {"drgNum": "DR-NC-0263-782-205-2005", "rev": "A", "Drawing_Name": "ELECTRICAL MOUNTING BEDS - ZONE 2005", "Issue_Date": "2026-04-22", "Target_Date": "2026-04-30"},
@@ -192,9 +192,6 @@
   "70190": {"drgNum": "DR-NC-0263-781-205-2005", "rev": "B", "Drawing_Name": "CABLE TRAYS - ZONE 2005", "Issue_Date": "2026-07-06", "Target_Date": "2026-07-04"},
   "70191": {"drgNum": "DR-NC-0263-783-001-2004", "rev": "C", "Drawing_Name": "PENETRATION PLAN & FITTINGS (ELECTRICAL) - ZONE 2004", "Issue_Date": "2026-07-03", "Target_Date": "2026-07-02"},
   "70192": {"drgNum": "DR-NC-0263-742-204-2004", "rev": "B", "Drawing_Name": "ELECTRICAL EQUIPMENT ARRANGEMENT - ZONE 2004", "Issue_Date": "2026-07-06", "Target_Date": "2026-07-02"},
-  "70193": {"drgNum": "DR-NC-0263-782-203-2003", "rev": "B", "Drawing_Name": "ELECTRICAL MOUNTING BEDS (Z-2003)", "Issue_Date": "", "Target_Date": "2026-07-11"},
-  "70194": {"drgNum": "DR-NC-0263-783-001-2005", "rev": "B", "Drawing_Name": "PENETRATION PLAN & FITTINGS (ELECTRICAL) - ZONE 2005", "Issue_Date": "", "Target_Date": "2026-07-17"},
-  "70197": {"drgNum": "", "rev": "", "Drawing_Name": "", "Issue_Date": "", "Target_Date": ""},
-  "70196": {"drgNum": "", "rev": "", "Drawing_Name": "", "Issue_Date": "", "Target_Date": ""},
-  "70195": {"drgNum": "", "rev": "", "Drawing_Name": "", "Issue_Date": "", "Target_Date": ""}
+  "70193": {"drgNum": "DR-NC-0263-782-203-2003", "rev": "B", "Drawing_Name": "ELECTRICAL MOUNTING BEDS (Z-2003)", "Issue_Date": "2026-08-06", "Target_Date": "2026-07-11"},
+  "70194": {"drgNum": "DR-NC-0263-783-001-2005", "rev": "B", "Drawing_Name": "PENETRATION PLAN & FITTINGS (ELECTRICAL) - ZONE 2005", "Issue_Date": "2026-08-06", "Target_Date": "2026-07-17"}
 }
