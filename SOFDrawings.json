@@ -492,7 +492,7 @@
   "20484": {"drgNum": "DR-NC-0263-255-009", "rev": "A", "Drawing_Name": "FUNNEL CASING PLATFORM DETAILS", "Issue_Date": "", "Target_Date": "2026-11-09"},
   "20485": {"drgNum": "DR-NC-0263-255-010", "rev": "A", "Drawing_Name": "RAISED FLOOR ON HPU ROOM", "Issue_Date": "", "Target_Date": "2026-07-27"},
   "20486": {"drgNum": "DR-NC-0263-255-011", "rev": "A", "Drawing_Name": "RAISED FLOOR ON CABLE TANK-3 ACCESS", "Issue_Date": "2026-06-05", "Target_Date": "2026-06-17"},
-  "20487": {"drgNum": "", "rev": "A", "Drawing_Name": "RAISED FLOOR ON CABLE MACHINERY DRIVES", "Issue_Date": "", "Target_Date": "2026-08-10"},
+  "20487": {"drgNum": "DR-NC-0263-255-012", "rev": "A", "Drawing_Name": "RAISED FLOOR ON CABLE MACHINERY DRIVES", "Issue_Date": "", "Target_Date": "2026-08-10"},
   "20488": {"drgNum": "DR-NC-0263-255-013", "rev": "A", "Drawing_Name": "RAISED FLOOR ON ROV STORE", "Issue_Date": "", "Target_Date": "2026-08-18"},
   "20489": {"drgNum": "DR-NC-0263-255-014", "rev": "A", "Drawing_Name": "RAISED FLOOR ON BATTERY STORAGE ROOM", "Issue_Date": "2026-05-27", "Target_Date": "2026-05-26"},
   "20490": {"drgNum": "DR-NC-0263-255-015", "rev": "A", "Drawing_Name": "RAISED FLOOR ON ENGINE STORE", "Issue_Date": "2026-05-20", "Target_Date": "2026-05-15"},
