@@ -172,6 +172,7 @@
   "50167": {"drgNum": "DR-NC-0263-294-019", "rev": "A", "Drawing_Name": "DETAILS OF ROV LARS HYDRAULIC OIL TANK", "Issue_Date": "2026-06-11", "Target_Date": "2026-06-08"},
   "50168": {"drgNum": "DR-NC-0263-295-003", "rev": "Cancelled", "Drawing_Name": "DRAIN TRAYS-CABLE TANK 2", "Issue_Date": "", "Target_Date": "2025-05-25"},
   "50169": {"drgNum": "DR-NC-0263-295-004", "rev": "Cancelled", "Drawing_Name": "DRAIN TRAYS-SHIP SYSTEM ROOM", "Issue_Date": "", "Target_Date": ""},
+  "50779": {"drgNum": "DR-NC-0263-295-001", "rev": "B", "Drawing_Name": "DRAIN TRAYS-ENGINE ROOM", "Issue_Date": "", "Target_Date": "2026-08-07"},
   "50170": {"drgNum": "DR-NC-0263-295-001", "rev": "A", "Drawing_Name": "DRAIN TRAYS-ENGINE ROOM", "Issue_Date": "2026-07-14", "Target_Date": "2026-07-08"},
   "50171": {"drgNum": "DR-NC-0263-295-005", "rev": "A", "Drawing_Name": "DRAIN TRAYS-BOW THRUSTER ROOM", "Issue_Date": "2026-07-20", "Target_Date": "2026-07-17"},
   "50172": {"drgNum": "DR-NC-0263-295-010", "rev": "Cancelled", "Drawing_Name": "DRAIN TRAYS-ROV HANGER ROOM", "Issue_Date": "", "Target_Date": ""},
