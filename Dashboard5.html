@@ -101,7 +101,7 @@
 
     <script>
         const baseUrl = './'; 
-        const sections = ['Hull', 'SOF', 'AOF', 'MOF', 'EOF','EOF'];
+        const sections = ['Hull', 'SOF', 'AOF', 'MOF', 'EOF'];
         const chartInstances = {}; 
 		let GrandTotal = 0;
 		let GrandIssue = 0;
@@ -202,8 +202,11 @@ Chart.register(centerTextPlugin);
     				total > 0
         			? Math.round((issued / total) * 100)
         			: 0;
+				
 
 				                const chartData = total > 0 ? [issued, progress] : [1];
+								const chartData1 = [GrandIssue,GrandTotal-GrandIssue]
+												
                 const chartColors = total > 0 ? ['#2ea043', '#E1E4E8'] : ['#30363d'];
 
                 if(!chartInstances[sec] && typeof Chart !== 'undefined') {
@@ -232,6 +235,27 @@ Chart.register(centerTextPlugin);
                     chartInstances[sec].update();
                 }
             });
+
+			        chartInstances[ovrl] = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: { datasets: [{ data: chartData1, backgroundColor: chartColors, borderWidth: 0 }] },
+                        options: {
+   							responsive: true,
+    						maintainAspectRatio: true,
+    						cutout: '75%',
+    						plugins: {
+        						legend: {
+            						display: false
+        							},
+        						centerText: {
+            						percentage: percentage
+        										}
+    										}
+										}
+                    });
+
+
+			
         }
 
         class Rotator {
