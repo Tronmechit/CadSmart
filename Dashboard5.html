@@ -103,6 +103,7 @@
         const baseUrl = './'; 
         const sections = ['Hull', 'SOF', 'AOF', 'MOF', 'EOF'];
         const chartInstances = {}; 
+		let chartInstancesOA;
 		let GrandTotal = 0;
 		let GrandIssue = 0;
 		let OAPercentage;
@@ -236,7 +237,7 @@ Chart.register(centerTextPlugin);
                 }
             });
 
-			        chartInstances[ovrl] = new Chart(ctx, {
+			        chartInstances1 = new Chart(ctx, {
                         type: 'doughnut',
                         data: { datasets: [{ data: chartData1, backgroundColor: chartColors, borderWidth: 0 }] },
                         options: {
