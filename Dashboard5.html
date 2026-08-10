@@ -236,8 +236,8 @@ Chart.register(centerTextPlugin);
                     chartInstances[sec].update();
                 }
             });
-
-			        chartInstances1 = new Chart(ctx, {
+					const ctx1 = document.getElementById("chart-EOF").getContext('2d');
+			        chartInstances1 = new Chart(ctx1, {
                         type: 'doughnut',
                         data: { datasets: [{ data: chartData1, backgroundColor: chartColors, borderWidth: 0 }] },
                         options: {
