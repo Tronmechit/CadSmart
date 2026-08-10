@@ -58,13 +58,7 @@
                 </thead>
                 <tbody id="status-table-body"></tbody>
             </table>
-            <div class="charts-container">
-                <div class="chart-wrapper"><div class="chart-label">HULL</div><div class="canvas-container"><canvas id="chart-Hull"></canvas></div></div>
-                <div class="chart-wrapper"><div class="chart-label">SOF</div><div class="canvas-container"><canvas id="chart-SOF"></canvas></div></div>
-                <div class="chart-wrapper"><div class="chart-label">AOF</div><div class="canvas-container"><canvas id="chart-AOF"></canvas></div></div>
-                <div class="chart-wrapper"><div class="chart-label">MOF</div><div class="canvas-container"><canvas id="chart-MOF"></canvas></div></div>
-                <div class="chart-wrapper"><div class="chart-label">EOF</div><div class="canvas-container"><canvas id="chart-EOF"></canvas></div></div>
-            </div>
+
         </div>
         <div class="panel area-delay">
             <h2>Delayed Drawings </h2>
@@ -75,10 +69,13 @@
             <div id="delay-list" class="dynamic-list"></div>
         </div>
         <div class="panel area-today">
-            <h2>Today's Drawings</h2>
-            <div id="today-header" class="sub-header">Loading...</div>
-            <div id="today-page" class="page-indicator"></div>
-            <div id="today-list" class="dynamic-list"></div>
+            <div class="charts-container">
+                <div class="chart-wrapper"><div class="chart-label">HULL</div><div class="canvas-container"><canvas id="chart-Hull"></canvas></div></div>
+                <div class="chart-wrapper"><div class="chart-label">SOF</div><div class="canvas-container"><canvas id="chart-SOF"></canvas></div></div>
+                <div class="chart-wrapper"><div class="chart-label">AOF</div><div class="canvas-container"><canvas id="chart-AOF"></canvas></div></div>
+                <div class="chart-wrapper"><div class="chart-label">MOF</div><div class="canvas-container"><canvas id="chart-MOF"></canvas></div></div>
+                <div class="chart-wrapper"><div class="chart-label">EOF</div><div class="canvas-container"><canvas id="chart-EOF"></canvas></div></div>
+            </div>
         </div>
         <div class="panel area-attendance">
             <h2>Overall Progress</h2>
@@ -102,6 +99,8 @@
         const baseUrl = './'; 
         const sections = ['Hull', 'SOF', 'AOF', 'MOF', 'EOF'];
         const chartInstances = {}; 
+		const dataMap = {};
+		
 		let chartInstancesOA;
 		let GrandTotal = 0;
 		let GrandIssue = 0;
@@ -156,7 +155,7 @@ Chart.register(centerTextPlugin);
 		GrandIssue = 0;
 			
             const tableBody = document.getElementById('status-table-body');
-            const dataMap = {};
+            
             await Promise.all(sections.map(async (sec) => {
                 try {
                     const res = await fetch(`${baseUrl}${sec}ToDisplay.json?t=${new Date().getTime()}`);
