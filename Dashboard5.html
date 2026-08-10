@@ -107,6 +107,7 @@
 		let GrandTotal = 0;
 		let GrandIssue = 0;
 		let OAPercentage;
+		let chartData1;
 
         function updateClock() {
             const now = new Date();
@@ -206,7 +207,7 @@ Chart.register(centerTextPlugin);
 				
 
 				                const chartData = total > 0 ? [issued, progress] : [1];
-								const chartData1 = [GrandIssue,GrandTotal-GrandIssue];
+								 chartData1 = [GrandIssue,GrandTotal-GrandIssue];
 												
                 const chartColors = total > 0 ? ['#2ea043', '#E1E4E8'] : ['#30363d'];
 
@@ -253,10 +254,7 @@ Chart.register(centerTextPlugin);
         										}
     										}
 										}
-                    });
-
-
-			
+                    });		
         }
 
         class Rotator {
@@ -311,7 +309,6 @@ Chart.register(centerTextPlugin);
             targetDate < today
         );
     });
-
 }	
 if (this.isDateFiltered) {
 
@@ -320,7 +317,6 @@ if (this.isDateFiltered) {
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, '0');
     const day = String(now.getDate()).padStart(2, '0');
-
     const localTodayStr =
         `${year}-${month}-${day}`;
 
@@ -343,7 +339,6 @@ document.getElementById(this.headerId).innerHTML =
     document.getElementById(this.headerId).innerText =
         section + ': ' + this.titlePrefix;
 }
-
 
 } catch (e) {
     this.currentData = [];
