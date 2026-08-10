@@ -102,6 +102,7 @@
         const chartInstances = {}; 
 		let GrandTotal = 0;
 		let GrandIssue = 0;
+		let OAPercentage;
 
         function updateClock() {
             const now = new Date();
@@ -189,9 +190,9 @@ Chart.register(centerTextPlugin);
 				GrandTotal += total
 				GrandIssue += issued
 				
-				const OverallPercentage = 
-					total > 0
-        			? Math.round((issued / total) * 100)
+				const OAPercentage; = 
+					GrandTotal > 0
+        			? Math.round((GrandIssue / GrandTotal) * 100)
         			: 0;
 
 				const percentage =
