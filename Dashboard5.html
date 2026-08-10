@@ -147,6 +147,9 @@ const centerTextPlugin = {
 
 Chart.register(centerTextPlugin);
         async function fetchAllStatus() {
+		GrandTotal = 0;
+		GrandIssue = 0;
+			
             const tableBody = document.getElementById('status-table-body');
             const dataMap = {};
             await Promise.all(sections.map(async (sec) => {
