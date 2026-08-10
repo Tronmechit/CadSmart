@@ -100,6 +100,8 @@
         const baseUrl = './'; 
         const sections = ['Hull', 'SOF', 'AOF', 'MOF', 'EOF'];
         const chartInstances = {}; 
+		let GrandTotal = 0;
+		let GrandIssue = 0;
 
         function updateClock() {
             const now = new Date();
@@ -181,12 +183,20 @@ Chart.register(centerTextPlugin);
                 const issued = parseInt(dataMap[sec]['5'] || 0);
                 const progress = parseInt(dataMap[sec]['1'] || 0) - parseInt(dataMap[sec]['5'] || 0) ;
                 const total = issued + progress;
+				GrandTotal += total
+				GrandIssue += issued
+				
+				const OverallPercentage = 
+					total > 0
+        			? Math.round((issued / total) * 100)
+        			: 0;
 
 				const percentage =
     				total > 0
         			? Math.round((issued / total) * 100)
         			: 0;
-                const chartData = total > 0 ? [issued, progress] : [1];
+
+				                const chartData = total > 0 ? [issued, progress] : [1];
                 const chartColors = total > 0 ? ['#2ea043', '#E1E4E8'] : ['#30363d'];
 
                 if(!chartInstances[sec] && typeof Chart !== 'undefined') {
