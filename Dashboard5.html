@@ -187,8 +187,8 @@ Chart.register(centerTextPlugin);
                 const issued = parseInt(dataMap[sec]['5'] || 0);
                 const progress = parseInt(dataMap[sec]['1'] || 0) - parseInt(dataMap[sec]['5'] || 0) ;
                 const total = issued + progress;
-				GrandTotal += total
-				GrandIssue += issued
+				GrandTotal += total;
+				GrandIssue += issued;
 				
 				const OAPercentage; = 
 					GrandTotal > 0
