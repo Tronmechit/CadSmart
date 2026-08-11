@@ -242,7 +242,9 @@ Chart.register(centerTextPlugin);
 					chartInstances[sec].options.plugins.centerText.percentage = percentage;
                     chartInstances[sec].update();
                 }
-		const chartColors1 = GrandTotal > 0 ? ['#2ea043', '#E1E4E8'] : ['#30363d'];
+				
+            });
+					const chartColors1 = GrandTotal > 0 ? ['#2ea043', '#E1E4E8'] : ['#30363d'];
 					if(!chartInstances1 && typeof Chart !== 'undefined') {
 					const ctx1 = document.getElementById("chart-Overall").getContext('2d');
 			        chartInstances1 = new Chart(ctx1, {
@@ -263,10 +265,6 @@ Chart.register(centerTextPlugin);
 										}
                     });	
 					 }
-
-
-				
-            });
 					
         }
 
