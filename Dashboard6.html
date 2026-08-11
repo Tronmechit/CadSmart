@@ -43,21 +43,25 @@
 
         .today-count-row { display: flex; justify-content: space-between; gap: 1vh; margin-top: auto; }
         .today-count-box { flex: 1; background-color: #21262d; border: 1px solid #30363d; border-radius: 6px; text-align: center; padding: 0.3vh; overflow: hidden; }
-        .today-count-box .tc-section { font-size: 1.8vh; color: #e6edf3; letter-spacing: 0.5px; margin-bottom: 0.3vh; font-weight: normal; }
-        .today-count-box .tc-tier { border-radius: 4px; padding: 0.3vh 0; }
-        .today-count-box .tc-tier + .tc-tier { margin-top: 0.3vh; }
-        .today-count-box .tc-label { font-size: 1.4vh; letter-spacing: 0.5px; font-weight: normal; }
-        .today-count-box .tc-value { font-size: 3.4vh; font-weight: 900; line-height: 1.1; }
+        .today-count-box .tc-section { font-size: 1.7vh; color: #e6edf3; letter-spacing: 0.5px; margin-bottom: 0.3vh; font-weight: 600; }
+        .tc-days { display: flex; gap: 0.4vh; }
+        .tc-day { flex: 1; display: flex; flex-direction: column; gap: 0.3vh; }
+        .tc-day-label { font-size: 1.1vh; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 0.1vh; }
+        .today-count-box .tc-tier { border-radius: 4px; padding: 0.25vh 0; }
+        .today-count-box .tc-label { font-size: 1.2vh; letter-spacing: 0.3px; font-weight: 500; }
+        .today-count-box .tc-value { font-size: 2.6vh; font-weight: 600; line-height: 1.1; }
         .today-count-box .tc-scheduled { background-color: #FFC000; }
         .today-count-box .tc-scheduled .tc-label, .today-count-box .tc-scheduled .tc-value { color: #000000; }
         .today-count-box .tc-issued { background-color: #2ea043; }
         .today-count-box .tc-issued .tc-label, .today-count-box .tc-issued .tc-value { color: #ffffff; }
+        .today-count-box .tc-tomorrow { background-color: #58a6ff; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+        .today-count-box .tc-tomorrow .tc-label, .today-count-box .tc-tomorrow .tc-value { color: #000000; }
 
         .charts-container { display: flex; justify-content: space-around; flex-grow: 1; align-items: center; padding-top: 0; }
         .charts-container1 { display: flex; justify-content: space-around; flex-grow: 1; align-items: stretch; padding-top: 0; }
         .chart-wrapper { width: 18%; display: flex; flex-direction: column; align-items: center; }
         .chart-label { text-align: center; font-size: 2.5vh; margin-bottom: 0.5vh; color: #8b949e; font-weight: bold; }
-        .charts-container1 .chart-wrapper { width: auto; height: 60%; }
+        .charts-container1 .chart-wrapper { width: auto; height: 100%; }
 
         /* Fixed Aspect Ratio Container to prevent sheering */
         .canvas-container { position: relative; width: 100%; aspect-ratio: 1 / 1; display: flex; justify-content: center; }
@@ -82,8 +86,7 @@
                 </thead>
                 <tbody id="status-table-body"></tbody>
             </table>
-			<h2>Today's Target Drawings </h2>
-            <!-- <div class="sub-header" style="margin-bottom: 0.5vh;">Today's Target Drawings</div> --!>
+            <div class="sub-header" style="margin-bottom: 0.5vh;">Today &amp; Tomorrow's Target Drawings</div>
             <div id="today-count-row" class="today-count-row"></div>
         </div>
         <div class="panel area-delay">
@@ -295,24 +298,28 @@ Chart.register(centerTextPlugin);
 					
         }
 
-        // Counts today's target-dated drawings per section, reading each section's Drawings.json
+        // Counts today's and tomorrow's target-dated drawings per section, reading each section's Drawings.json
         async function fetchTodayCounts() {
             const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const todayStr = `${year}-${month}-${day}`;
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+
+            const toDateStr = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            const todayStr = toDateStr(now);
+            const tomorrowStr = toDateStr(tomorrow);
 
             const counts = {};
             await Promise.all(sections.map(async (sec) => {
                 try {
                     const res = await fetch(`${baseUrl}${sec}Drawings.json?t=${new Date().getTime()}`);
                     const rawData = res.ok ? await res.json() : {};
-                    const arr = Object.values(rawData).filter(item => item.Target_Date === todayStr);
-                    const issued = arr.filter(item => item.Issue_Date && item.Issue_Date !== "").length;
-                    counts[sec] = { scheduled: arr.length, issued };
+                    const all = Object.values(rawData);
+                    const todayArr = all.filter(item => item.Target_Date === todayStr);
+                    const todayIssued = todayArr.filter(item => item.Issue_Date && item.Issue_Date !== "").length;
+                    const tomorrowCount = all.filter(item => item.Target_Date === tomorrowStr).length;
+                    counts[sec] = { todayScheduled: todayArr.length, todayIssued, tomorrowScheduled: tomorrowCount };
                 } catch {
-                    counts[sec] = { scheduled: 0, issued: 0 };
+                    counts[sec] = { todayScheduled: 0, todayIssued: 0, tomorrowScheduled: 0 };
                 }
             }));
 
@@ -320,13 +327,25 @@ Chart.register(centerTextPlugin);
             row.innerHTML = sections.map(sec => `
                 <div class="today-count-box">
                     <div class="tc-section">${sec}</div>
-                    <div class="tc-tier tc-scheduled">
-                        <div class="tc-label">Scheduled</div>
-                        <div class="tc-value">${counts[sec].scheduled}</div>
-                    </div>
-                    <div class="tc-tier tc-issued">
-                        <div class="tc-label">Issued</div>
-                        <div class="tc-value">${counts[sec].issued}</div>
+                    <div class="tc-days">
+                        <div class="tc-day">
+                            <div class="tc-day-label">Today</div>
+                            <div class="tc-tier tc-scheduled">
+                                <div class="tc-label">Sched</div>
+                                <div class="tc-value">${counts[sec].todayScheduled}</div>
+                            </div>
+                            <div class="tc-tier tc-issued">
+                                <div class="tc-label">Issued</div>
+                                <div class="tc-value">${counts[sec].todayIssued}</div>
+                            </div>
+                        </div>
+                        <div class="tc-day">
+                            <div class="tc-day-label">Tomorrow</div>
+                            <div class="tc-tier tc-tomorrow">
+                                <div class="tc-label">Sched</div>
+                                <div class="tc-value">${counts[sec].tomorrowScheduled}</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             `).join('');
