@@ -246,7 +246,29 @@ Chart.register(centerTextPlugin);
 					
         }
 
-        class Rotator {
+		const chartColors1 = GrandTotal > 0 ? ['#2ea043', '#E1E4E8'] : ['#30363d'];
+					if(!chartInstances1 && typeof Chart !== 'undefined') {
+					const ctx1 = document.getElementById("chart-Overall").getContext('2d');
+			        chartInstances1 = new Chart(ctx1, {
+                        type: 'doughnut',
+                        data: { datasets: [{ data: chartData1, backgroundColor: chartColors1, borderWidth: 0 }] },
+                        options: {
+   							responsive: true,
+    						maintainAspectRatio: true,
+    						cutout: '75%',
+    						plugins: {
+        						legend: {
+            						display: false
+        							},
+        						centerText: {
+            						percentage: OAPercentage 
+        										}
+    										}
+										}
+                    });	
+					 }
+
+    class Rotator {
       constructor(fileSuffix, titlePrefix, listId, headerId, pageId, isDateFiltered, isDelayPanel = false) {
 
     this.fileSuffix = fileSuffix;
