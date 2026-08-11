@@ -368,13 +368,13 @@ document.getElementById(this.headerId).innerHTML =
         }
 
        	const delayRotator = new Rotator('Drawings','DELAYED DRAWINGS','delay-list','delay-header','delay-page', false,true);
-        const todayRotator = new Rotator('Drawings', 'TODAY', 'today-list', 'today-header', 'today-page', true);
+        //const todayRotator = new Rotator('Drawings', 'TODAY', 'today-list', 'today-header', 'today-page', true);
 
         fetchAllStatus();
         setInterval(fetchAllStatus, 30000);
         async function init() {
             await delayRotator.fetchData(sections[0]);
-            await todayRotator.fetchData(sections[0]);
+           // await todayRotator.fetchData(sections[0]);
             delayRotator.tick(); todayRotator.tick();
             setInterval(() => delayRotator.tick(), 8000);
             setInterval(() => todayRotator.tick(), 8000);
