@@ -375,9 +375,9 @@ document.getElementById(this.headerId).innerHTML =
         async function init() {
             await delayRotator.fetchData(sections[0]);
            // await todayRotator.fetchData(sections[0]);
-            delayRotator.tick(); todayRotator.tick();
+            delayRotator.tick(); //todayRotator.tick();
             setInterval(() => delayRotator.tick(), 8000);
-            setInterval(() => todayRotator.tick(), 8000);
+           // setInterval(() => todayRotator.tick(), 8000);
 		setInterval(async () => { await delayRotator.fetchData( sections[delayRotator.secIndex]);}, 60000);
         }
         init();
