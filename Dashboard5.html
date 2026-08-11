@@ -82,7 +82,12 @@
         <div class="panel area-attendance">
             <h2>Overall Progress</h2>
             <div class="charts-container1">
-                <div class="chart-wrapper"><div class="chart-label">Overall</div><div class="canvas-container1"><canvas id="chart-Overall"></canvas></div></div>
+                <div class="chart-wrapper">
+					<div class="chart-label">Overall</div>
+					<div class="canvas-container1">
+						<canvas id="chart-Overall"></canvas>
+					</div>
+				</div>
 			</div>
         </div>
         <div class="area-right" style="display: flex; flex-direction: column;">
@@ -238,6 +243,7 @@ Chart.register(centerTextPlugin);
                 }
             });
 					const chartColors1 = GrandTotal > 0 ? ['#2ea043', '#E1E4E8'] : ['#30363d'];
+					if(!chartInstances[sec] && typeof Chart !== 'undefined') {
 					const ctx1 = document.getElementById("chart-Overall").getContext('2d');
 			        chartInstances1 = new Chart(ctx1, {
                         type: 'doughnut',
@@ -255,7 +261,8 @@ Chart.register(centerTextPlugin);
         										}
     										}
 										}
-                    });		
+                    });	
+					 }
         }
 
         class Rotator {
