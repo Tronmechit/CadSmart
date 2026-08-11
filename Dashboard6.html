@@ -54,14 +54,16 @@
         .today-count-box .tc-scheduled .tc-label, .today-count-box .tc-scheduled .tc-value { color: #000000; }
         .today-count-box .tc-issued { background-color: #2ea043; }
         .today-count-box .tc-issued .tc-label, .today-count-box .tc-issued .tc-value { color: #ffffff; }
-        .today-count-box .tc-tomorrow { background-color: #58a6ff; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
-        .today-count-box .tc-tomorrow .tc-label, .today-count-box .tc-tomorrow .tc-value { color: #000000; }
+        .today-count-box .tc-tomorrow-sched { background-color: #58a6ff; }
+        .today-count-box .tc-tomorrow-sched .tc-label, .today-count-box .tc-tomorrow-sched .tc-value { color: #000000; }
+        .today-count-box .tc-tomorrow-issued { background-color: #a371f7; }
+        .today-count-box .tc-tomorrow-issued .tc-label, .today-count-box .tc-tomorrow-issued .tc-value { color: #ffffff; }
 
         .charts-container { display: flex; justify-content: space-around; flex-grow: 1; align-items: center; padding-top: 0; }
         .charts-container1 { display: flex; justify-content: space-around; flex-grow: 1; align-items: stretch; padding-top: 0; }
         .chart-wrapper { width: 18%; display: flex; flex-direction: column; align-items: center; }
         .chart-label { text-align: center; font-size: 2.5vh; margin-bottom: 0.5vh; color: #8b949e; font-weight: bold; }
-        .charts-container1 .chart-wrapper { width: auto; height: 100%; }
+        .charts-container1 .chart-wrapper { width: auto; height: 60%; }
 
         /* Fixed Aspect Ratio Container to prevent sheering */
         .canvas-container { position: relative; width: 100%; aspect-ratio: 1 / 1; display: flex; justify-content: center; }
@@ -316,10 +318,11 @@ Chart.register(centerTextPlugin);
                     const all = Object.values(rawData);
                     const todayArr = all.filter(item => item.Target_Date === todayStr);
                     const todayIssued = todayArr.filter(item => item.Issue_Date && item.Issue_Date !== "").length;
-                    const tomorrowCount = all.filter(item => item.Target_Date === tomorrowStr).length;
-                    counts[sec] = { todayScheduled: todayArr.length, todayIssued, tomorrowScheduled: tomorrowCount };
+                    const tomorrowArr = all.filter(item => item.Target_Date === tomorrowStr);
+                    const tomorrowIssued = tomorrowArr.filter(item => item.Issue_Date && item.Issue_Date !== "").length;
+                    counts[sec] = { todayScheduled: todayArr.length, todayIssued, tomorrowScheduled: tomorrowArr.length, tomorrowIssued };
                 } catch {
-                    counts[sec] = { todayScheduled: 0, todayIssued: 0, tomorrowScheduled: 0 };
+                    counts[sec] = { todayScheduled: 0, todayIssued: 0, tomorrowScheduled: 0, tomorrowIssued: 0 };
                 }
             }));
 
@@ -341,9 +344,13 @@ Chart.register(centerTextPlugin);
                         </div>
                         <div class="tc-day">
                             <div class="tc-day-label">Tomorrow</div>
-                            <div class="tc-tier tc-tomorrow">
+                            <div class="tc-tier tc-tomorrow-sched">
                                 <div class="tc-label">Sched</div>
                                 <div class="tc-value">${counts[sec].tomorrowScheduled}</div>
+                            </div>
+                            <div class="tc-tier tc-tomorrow-issued">
+                                <div class="tc-label">Issued</div>
+                                <div class="tc-value">${counts[sec].tomorrowIssued}</div>
                             </div>
                         </div>
                     </div>
