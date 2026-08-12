@@ -12,9 +12,10 @@
 
         .area-status { grid-column: 1; grid-row: 1; }
         .area-delay { grid-column: 2; grid-row: 1; }
-        .area-today { grid-column: 1; grid-row: 3; padding: 0.5vh; }
+		.area-todaytomorrow { grid-column: 1; grid-row: 2; padding: 0.5vh; }
+        .area-secwise { grid-column: 1; grid-row: 3; padding: 0.5vh; }
         .area-overallprogress { grid-column: 2; grid-row: 3; padding: 0.5vh; }
-        .area-right { grid-column: 3; grid-row: 1 / span 2; background-color: transparent; border: none; padding: 0; }
+        .area-right { grid-column: 3; grid-row: 1 / span 3; background-color: transparent; border: none; padding: 0; }
         .area-clock { background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 3vh 2vh; text-align: center; margin-bottom: 1.5vh; }
         .area-meetings { background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 2vh; flex-grow: 1; }
 
@@ -84,12 +85,12 @@
             .dashboard-grid { display: flex; flex-direction: column; height: auto; gap: 3vw; }
             .panel, .area-right { grid-column: auto; grid-row: auto; }
             .panel { overflow: visible; padding: 4vw; }
-            .area-today, .area-overallprogress { padding: 3vw; }
+            ., .area-overallprogress { padding: 3vw; }
 
             h2 { font-size: 5.5vw; margin-bottom: 2vw; }
             h3 { font-size: 3vw; margin-bottom: 2vw; }
-            .area-today h2, .area-overallprogress h2 { margin: 1vw 0; }
-            .area-today h3 { margin: 0 0 1.5vw 0; }
+            . h2, .area-overallprogress h2 { margin: 1vw 0; }
+            . h3 { margin: 0 0 1.5vw 0; }
             .sub-header { font-size: 4vw; margin-bottom: 2vw; }
 
             table { margin-bottom: 2vw; }
@@ -150,7 +151,7 @@
             <div id="delay-page" class="page-indicator"></div>
             <div id="delay-list" class="dynamic-list"></div>
         </div>
-        <div class="panel area-today">
+        <div class="panel area-secwise">
 			<h2> Section-wise Progress</h2>
 			<h3> (Green - Issued) </h3>
             <div class="charts-container">
