@@ -457,6 +457,8 @@ Chart.register(centerTextPlugin);
     arr = arr.filter(item => {
         if (!item.Target_Date)
             return false;
+		if (item.Rev && item.Rev.trim().toLowerCase() === 'cancelled')
+            return false;
 
         const targetDate = new Date(item.Target_Date);
         targetDate.setHours(0, 0, 0, 0);
