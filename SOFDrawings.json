@@ -601,7 +601,7 @@
   "20586": {"drgNum": "DR-NC-0263-292-014", "rev": "A", "Drawing_Name": "INSTALLATION DETAILS FOR SCUTTLES & WINDOWS IN CABLE WORK DECK AREA", "Issue_Date": "", "Target_Date": "2026-10-26"},
   "20587": {"drgNum": "DR-NC-0263-293-100", "rev": "A", "Drawing_Name": "CATHODIC PROTECTION PLAN", "Issue_Date": "", "Target_Date": "2026-07-01"},
   "20588": {"drgNum": "DR-NC-0263-293-101", "rev": "A", "Drawing_Name": "TEMPORARY CATHODIC PROTECTION PLAN", "Issue_Date": "2026-06-05", "Target_Date": "2026-05-04"},
-  "20739": {"drgNum": "DR-NC-0263-293-101", "rev": "C", "Drawing_Name": "TEMPORARY CATHODIC PROTECTION PLAN", "Issue_Date": "2026-08-15", "Target_Date": "2026-08-14"},
+  "20739": {"drgNum": "DR-NC-0263-293-101", "rev": "C", "Drawing_Name": "TEMPORARY CATHODIC PROTECTION PLAN", "Issue_Date": "", "Target_Date": "2026-08-14"},
   "20589": {"drgNum": "DR-NC-0263-293-101", "rev": "B", "Drawing_Name": "TEMPORARY CATHODIC PROTECTION PLAN", "Issue_Date": "2026-06-26", "Target_Date": "2026-06-26"},
   "20590": {"drgNum": "DR-NC-0263-293-200", "rev": "A", "Drawing_Name": "ANTI-FOULING SYSTEM ARRANGMENT", "Issue_Date": "", "Target_Date": "2026-08-11"},
   "20591": {"drgNum": "DR-NC-0263-296-001", "rev": "A", "Drawing_Name": "RAIN GUARD  DETAILS FOR DOORS", "Issue_Date": "2026-07-24", "Target_Date": "2026-08-21"},
@@ -736,6 +736,6 @@
   "20718": {"drgNum": "WI-NC-0263-292-003", "rev": "A", "Drawing_Name": "WORK INSTRUCTION FOR WHEELHOUSE WINDOW", "Issue_Date": "", "Target_Date": "2027-01-19"},
   "20719": {"drgNum": "WI-NC-0263-292-006", "rev": "A", "Drawing_Name": "WORKING INSTRUCTIONS FOR BRIDGE DECK WINDOW WIPER ARRANGEMENT", "Issue_Date": "", "Target_Date": "2027-01-28"},
   "20720": {"drgNum": "WI-NC-0263-293-100", "rev": "A", "Drawing_Name": "WORK INSTRUCTION FOR CATHODIC PROTECTION PLAN", "Issue_Date": "2026-07-17", "Target_Date": "2026-07-01"},
-  "20721": {"drgNum": "WI-NC-0263-293-200", "rev": "A", "Drawing_Name": "WORK INSTRUCTION FOR ANTI-FOULING SYSTEM ARRANGMENT", "Issue_Date": "2026-08-15", "Target_Date": "2026-08-14"},
+  "20721": {"drgNum": "WI-NC-0263-293-200", "rev": "A", "Drawing_Name": "WORK INSTRUCTION FOR ANTI-FOULING SYSTEM ARRANGMENT", "Issue_Date": "", "Target_Date": "2026-08-14"},
   "20722": {"drgNum": "WI-NC-0263-611-002", "rev": "A", "Drawing_Name": "WORK INSTRUCTION FOR AZIPOD SURFACE TREATMENT AND PAINT SYSYTEM", "Issue_Date": "", "Target_Date": "2026-12-16"}
 }
