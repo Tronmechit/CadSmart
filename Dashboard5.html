@@ -316,8 +316,7 @@ return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}`;
 
 function monthLabel(key){
 const parts=key.split('-');
-const abbr=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][Number(parts[1])-1];
-return `${abbr} '${parts[0].slice(2)}`;
+return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][Number(parts[1])-1];
 }
 
 function addMonths(date,count){
@@ -325,22 +324,25 @@ return new Date(date.getFullYear(),date.getMonth()+count,1);
 }
 
 function buildMonthRange(items){
-const dates=[];
-items.forEach(item=>{
-const target=parseDate(item.Target_Date);
-const issue=parseDate(item.Issue_Date);
-if(target)dates.push(new Date(target.getFullYear(),target.getMonth(),1));
-if(issue)dates.push(new Date(issue.getFullYear(),issue.getMonth(),1));
-});
-if(!dates.length)return [];
-let min=new Date(Math.min(...dates.map(d=>d.getTime())));
-let max=new Date(Math.max(...dates.map(d=>d.getTime())));
-const result=[];
-while(min<=max){
-result.push(monthKey(min));
-min=addMonths(min,1);
-}
-return result;
+    const dates = [];
+    items.forEach(item => {
+        const target = parseDate(item.Target_Date);
+        const issue = parseDate(item.Issue_Date);
+        if (target) {
+            dates.push(new Date(target.getFullYear(), target.getMonth(), 1));
+        } else if (issue) {
+            dates.push(new Date(issue.getFullYear(), issue.getMonth(), 1));
+        }
+    });
+    if (!dates.length) return [];
+    let min = new Date(Math.min(...dates.map(d => d.getTime())));
+    let max = new Date(Math.max(...dates.map(d => d.getTime())));
+    const result = [];
+    while (min <= max) {
+        result.push(monthKey(min));
+        min = addMonths(min, 1);
+    }
+    return result;
 }
 
 function calculateBarData(rawData){
@@ -362,41 +364,37 @@ delayed[k]=0;
 const today=new Date();
 today.setHours(0,0,0,0);
 
-all.forEach(item=>{
-const target=parseDate(item.Target_Date);
-const issue=parseDate(item.Issue_Date);
+all.forEach(item => {
+    const target = parseDate(item.Target_Date);
+    const issue = parseDate(item.Issue_Date);
 
-if(target){
-const targetKey=monthKey(target);
-if(scheduled[targetKey]===undefined){
-scheduled[targetKey]=0;
-issued[targetKey]=0;
-delayed[targetKey]=0;
-}
-scheduled[targetKey]++;
+    if (target) {
+        const targetKey = monthKey(target);
+        if (scheduled[targetKey] === undefined) {
+            scheduled[targetKey] = 0;
+            issued[targetKey] = 0;
+            delayed[targetKey] = 0;
+        }
+        scheduled[targetKey]++;
 
-if(issue){
-const issueKey=monthKey(issue);
-if(issued[issueKey]===undefined){
-issued[issueKey]=0;
-scheduled[issueKey]=0;
-delayed[issueKey]=0;
-}
-issued[issueKey]++;
-
-if(issue>target)delayed[targetKey]++;
-}else if(target<today){
-delayed[targetKey]++;
-}
-}else if(issue){
-const issueKey=monthKey(issue);
-if(issued[issueKey]===undefined){
-issued[issueKey]=0;
-scheduled[issueKey]=0;
-delayed[issueKey]=0;
-}
-issued[issueKey]++;
-}
+        if (issue) {
+            // Issued count is attributed to the TARGET month, not the issue month,
+            // even if actually issued in a later month.
+            issued[targetKey]++;
+            // Once issued, never counted as delayed - regardless of how late.
+        } else if (target < today) {
+            delayed[targetKey]++;
+        }
+    } else if (issue) {
+        // No target date at all - fall back to bucketing by issue month.
+        const issueKey = monthKey(issue);
+        if (issued[issueKey] === undefined) {
+            issued[issueKey] = 0;
+            scheduled[issueKey] = 0;
+            delayed[issueKey] = 0;
+        }
+        issued[issueKey]++;
+    }
 });
 
 const keys=Object.keys({...scheduled,...issued,...delayed}).sort();
@@ -452,7 +450,8 @@ callbacks:{
 title:function(items){
 if(!items.length)return '';
 const key=chartData.keys[items[0].dataIndex];
-return monthLabel(key);
+const parts=key.split('-');
+return `${monthLabel(key)} ${parts[0]}`;
 }
 }
 }
