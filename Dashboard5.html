@@ -534,7 +534,6 @@ async function fetchAllStatus(){
 
         createOrUpdateBarChart(sec,[]);
     });
-});
 
 OAPercentage=GrandTotal>0?Math.round(GrandIssue/GrandTotal*100):0;
 const overallData=GrandTotal>0?[GrandIssue,GrandTotal-GrandIssue]:[1];
