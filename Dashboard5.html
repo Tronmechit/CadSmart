@@ -1,526 +1,2582 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Design Office Command Center</title>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
-        body { background-color: #0b0f19; color: #e6edf3; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 1.0vh; height: 100vh; box-sizing: border-box; overflow: hidden; }
-        .dashboard-grid { display: grid; grid-template-columns: 55% 25% 20%; grid-template-rows: 55% 45%; gap: 1.5vh; height: 100%; }
-        .panel { background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 2vh; display: flex; flex-direction: column; box-sizing: border-box; overflow: hidden; }
+        body {
+            background-color: #0b0f19;
+            color: #e6edf3;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 1vh;
+            height: 100vh;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
 
-        .area-status { grid-column: 1; grid-row: 1; }
-        .area-delay { grid-column: 2; grid-row: 1; }
-        .area-today { grid-column: 1; grid-row: 2; padding: 0.5vh; }
-        .area-overallprogress { grid-column: 2; grid-row: 2; padding: 0.5vh; }
-        .area-right { grid-column: 3; grid-row: 1 / span 2; background-color: transparent; border: none; padding: 0; }
-        .area-clock { background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 3vh 2vh; text-align: center; margin-bottom: 1.5vh; }
-        .area-meetings { background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 2vh; flex-grow: 1; }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 35% 20% 25% 20%;
+            grid-template-rows: 5% 31% 27.5% 32%;
+            gap: 1.5vh;
+            height: 100%;
+        }
 
-        h2 { font-size: 3vh; margin: 0 0 1.5vh 0; color: #58a6ff; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
-        h3 { font-size: 1.5vh; margin: 0 0 1.5vh 0; color: #008000; text-transform: uppercase; letter-spacing: .8px; text-align: center; }
-        .area-today h2, .area-overallprogress h2 { margin: 0.5vh 0; }
-        .area-today h3 { margin: 0 0 0.5vh 0; }
-        .sub-header { font-size: 2.2vh; color: #8b949e; text-align: center; margin-bottom: 1vh; }
+        .panel {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 1vh;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
 
-        table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-bottom: 1.2vh; }
-        th, td { text-align: center; padding: 0.3vh; font-size: 2.5vh; font-weight: bold; border: 1px solid #30363d; }
-        th { background-color: #21262d; color: #c9d1d9; }
-        .col-caption { text-align: left; width: 40%; }
+        /* =========================
+           GRID AREAS
+           ========================= */
 
-        .area-status h2 { margin-bottom: 0.6vh; }
-        .area-status table { margin-bottom: 0.6vh; }
-        .area-status th, .area-status td { padding: 0.15vh; font-size: 2vh; }
-        .area-status .sub-header { margin-bottom: 0.3vh; }
+        .area-title {
+            grid-column: 1 / span 4;
+            grid-row: 1;
+        }
 
-        .bg-white { background-color: #ffffff; color: #000000; }
-        .bg-pale { background-color: #E6E6FA; color: #000000; }
-        .bg-blue { background-color: #00B0F0; color: #ffffff; }
-        .bg-yellow { background-color: #FFFF00; color: #000000; }
-        .bg-orange { background-color: #FFC000; color: #000000; }
-        .bg-green { background-color: #2ea043; color: #ffffff; }
-        .bg-red { background-color: #FF0000; color: #ffffff; }
+        .area-status {
+            grid-column: 1;
+            grid-row: 2;
+        }
 
-        .today-count-row { display: flex; justify-content: space-between; gap: 1vh; margin-top: auto; }
-        .today-count-box { flex: 1; background-color: #21262d; border: 1px solid #30363d; border-radius: 6px; text-align: center; padding: 0.3vh; overflow: hidden; }
-        .today-count-box .tc-section { font-size: 1.7vh; color: #e6edf3; letter-spacing: 0.5px; margin-bottom: 0.3vh; font-weight: 600; }
-        .tc-days { display: flex; gap: 0.4vh; }
-        .tc-day { flex: 1; display: flex; flex-direction: column; gap: 0.3vh; }
-        .tc-day-label { font-size: 1.1vh; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 0.1vh; }
-        .today-count-box .tc-tier { border-radius: 4px; padding: 0.25vh 0; }
-        .today-count-box .tc-label { font-size: 1.2vh; letter-spacing: 0.3px; font-weight: 500; }
-        .today-count-box .tc-value { font-size: 2.6vh; font-weight: 600; line-height: 1.1; }
-        .today-count-box .tc-scheduled { background-color: #FFC000; }
-        .today-count-box .tc-scheduled .tc-label, .today-count-box .tc-scheduled .tc-value { color: #000000; }
-        .today-count-box .tc-issued { background-color: #2ea043; }
-        .today-count-box .tc-issued .tc-label, .today-count-box .tc-issued .tc-value { color: #ffffff; }
-        .today-count-box .tc-tomorrow-sched { background-color: #58a6ff; }
-        .today-count-box .tc-tomorrow-sched .tc-label, .today-count-box .tc-tomorrow-sched .tc-value { color: #000000; }
-        .today-count-box .tc-tomorrow-issued { background-color: #a371f7; }
-        .today-count-box .tc-tomorrow-issued .tc-label, .today-count-box .tc-tomorrow-issued .tc-value { color: #ffffff; }
+        .area-overallprogress {
+            grid-column: 2;
+            grid-row: 2;
+            padding: 0.5vh;
+        }
 
-        .charts-container { display: flex; justify-content: space-around; flex-grow: 1; align-items: center; padding-top: 0; }
-        .charts-container1 { display: flex; justify-content: space-around; flex-grow: 1; align-items: stretch; padding-top: 0; }
-        .chart-wrapper { width: 18%; display: flex; flex-direction: column; align-items: center; }
-        .chart-label { text-align: center; font-size: 2.5vh; margin-bottom: 0.5vh; color: #8b949e; font-weight: bold; }
-        .charts-container1 .chart-wrapper { width: auto; height: 60%; }
+        .area-barcharts {
+            grid-column: 3;
+            grid-row: 2 / span 3;
+            padding: 0.8vh;
+        }
 
-        /* Fixed Aspect Ratio Container to prevent sheering */
-        .canvas-container { position: relative; width: 100%; aspect-ratio: 1 / 1; display: flex; justify-content: center; }
-        .canvas-container1 { position: relative; height: 100%; aspect-ratio: 1 / 1; display: flex; justify-content: center; }
+        .area-todaytomorrow {
+            grid-column: 1 / span 2;
+            grid-row: 3;
+        }
 
-        .dynamic-list { font-size: 2vh; line-height: 1.6; color: #e6edf3; overflow: hidden; }
-        .page-indicator { text-align: right; font-size: 1.8vh; color: #8b949e; font-style: italic; margin-bottom: 1vh; }
-        #time-display { font-size: 10vh; font-weight: lighter; color: #ffffff; margin: 0; line-height: 1; letter-spacing: 2px;}
-        #date-display { font-size: 2.5vh; color: #58a6ff; margin-top: 1vh; }
-        .meeting-item { background-color: #21262d; padding: 1.5vh; margin-bottom: 1.5vh; border-radius: 4px; border-left: 4px solid #a371f7; }
-        .meeting-time { font-weight: bold; color: #a371f7; font-size: 2.2vh; }
-        .meeting-title { font-size: 1.8vh; margin-top: 0.5vh; }
+        .area-secwise {
+            grid-column: 1 / span 2;
+            grid-row: 4;
+            padding: 0.5vh;
+        }
 
-        /* ===== Mobile layout ===== */
+        .area-right {
+            grid-column: 4;
+            grid-row: 2 / span 3;
+            background-color: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        /* =========================
+           BAR CHART GRID
+           ========================= */
+
+        .barchart-grid {
+            display: grid;
+            grid-template-columns: 100%;
+            grid-template-rows: repeat(5, 1fr);
+            gap: 0.8vh;
+            height: 100%;
+        }
+
+        .bar-chart-panel {
+            background-color: #1e222b;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 0.5vh 0.8vh;
+            min-height: 0;
+            box-sizing: border-box;
+        }
+
+        .bar-chart-title {
+            font-size: 1.55vh;
+            color: #58a6ff;
+            text-align: center;
+            margin: 0 0 0.2vh 0;
+            font-weight: bold;
+            height: 2vh;
+            line-height: 2vh;
+        }
+
+        .bar-chart-container {
+            position: relative;
+            height: calc(100% - 2vh);
+            width: 100%;
+        }
+
+        /* =========================
+           HEADINGS
+           ========================= */
+
+        h2 {
+            font-size: 3vh;
+            margin: 0 0 1.5vh 0;
+            color: #58a6ff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 1.5vh;
+            margin: 0 0 1.5vh 0;
+            color: #008000;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            text-align: center;
+        }
+
+        .area-secwise h2,
+        .area-overallprogress h2 {
+            margin: 0.25vh 0;
+        }
+
+        .area-secwise h3 {
+            margin: 0 0 0.4vh 0;
+        }
+
+        .sub-header {
+            font-size: 2.2vh;
+            color: #8b949e;
+            text-align: center;
+            margin-bottom: 1vh;
+        }
+
+        /* =========================
+           STATUS TABLE
+           ========================= */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            margin-bottom: 1.2vh;
+        }
+
+        th,
+        td {
+            text-align: center;
+            padding: 0.3vh;
+            font-size: 2.5vh;
+            font-weight: bold;
+            border: 1px solid #30363d;
+        }
+
+        th {
+            background-color: #21262d;
+            color: #c9d1d9;
+        }
+
+        .col-caption {
+            text-align: left;
+            width: 40%;
+        }
+
+        .area-status h2 {
+            margin-bottom: 0.6vh;
+        }
+
+        .area-status table {
+            margin-bottom: 0.6vh;
+        }
+
+        .area-status th,
+        .area-status td {
+            padding: 0.15vh;
+            font-size: 2vh;
+        }
+
+        .area-status .sub-header {
+            margin-bottom: 0.3vh;
+        }
+
+        /* =========================
+           STATUS COLORS
+           ========================= */
+
+        .bg-white {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .bg-pale {
+            background-color: #E6E6FA;
+            color: #000000;
+        }
+
+        .bg-blue {
+            background-color: #00B0F0;
+            color: #ffffff;
+        }
+
+        .bg-yellow {
+            background-color: #FFFF00;
+            color: #000000;
+        }
+
+        .bg-orange {
+            background-color: #FFC000;
+            color: #000000;
+        }
+
+        .bg-green {
+            background-color: #2ea043;
+            color: #ffffff;
+        }
+
+        .bg-red {
+            background-color: #FF0000;
+            color: #ffffff;
+        }
+
+        /* =========================
+           TODAY / TOMORROW
+           ========================= */
+
+        .today-count-row {
+            display: flex;
+            justify-content: center;
+            gap: 1vh;
+            margin-top: 0.5vh;
+        }
+
+        .today-count-box {
+            flex: 1;
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            text-align: center;
+            padding: 0.3vh;
+            overflow: hidden;
+        }
+
+        .today-count-box .tc-section {
+            font-size: 1.6vh;
+            color: #e6edf3;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3vh;
+            font-weight: 600;
+        }
+
+        .tc-days {
+            display: flex;
+            gap: 0.3vh;
+        }
+
+        .tc-day {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25vh;
+            min-width: 0;
+        }
+
+        .tc-day-label {
+            font-size: 1vh;
+            color: #8b949e;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 600;
+            margin-bottom: 0.1vh;
+            height: 1.5vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .today-count-box .tc-tier {
+            border-radius: 4px;
+            padding: 0.2vh 0;
+        }
+
+        .today-count-box .tc-label {
+            font-size: 1.25vh;
+            letter-spacing: 0.2px;
+            font-weight: 500;
+        }
+
+        .today-count-box .tc-value {
+            font-size: 2.2vh;
+            font-weight: 600;
+            line-height: 1.1;
+        }
+
+        .tc-scheduled {
+            background-color: #FFC000;
+        }
+
+        .tc-scheduled .tc-label,
+        .tc-scheduled .tc-value {
+            color: #000000;
+        }
+
+        .tc-issued {
+            background-color: #2ea043;
+        }
+
+        .tc-issued .tc-label,
+        .tc-issued .tc-value {
+            color: #ffffff;
+        }
+
+        .tc-tomorrow-sched {
+            background-color: #58a6ff;
+        }
+
+        .tc-tomorrow-sched .tc-label,
+        .tc-tomorrow-sched .tc-value {
+            color: #000000;
+        }
+
+        .tc-tomorrow-issued {
+            background-color: #2ea043;
+        }
+
+        .tc-tomorrow-issued .tc-label,
+        .tc-tomorrow-issued .tc-value {
+            color: #ffffff;
+        }
+
+        .tc-week-sched {
+            background-color: #a371f7;
+        }
+
+        .tc-week-sched .tc-label,
+        .tc-week-sched .tc-value {
+            color: #000000;
+        }
+
+        .tc-week-issued {
+            background-color: #2ea043;
+        }
+
+        .tc-week-issued .tc-label,
+        .tc-week-issued .tc-value {
+            color: #ffffff;
+        }
+
+        .tc-total-row {
+            display: flex;
+            gap: 0.3vh;
+            margin-top: 0.35vh;
+            padding-top: 0.35vh;
+            border-top: 1px solid #30363d;
+        }
+
+        .tc-total-row .tc-tier {
+            flex: 1;
+            min-width: 0;
+            background-color: #1f6f78;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .tc-total-row .tc-label,
+        .tc-total-row .tc-value {
+            color: #ffffff;
+        }
+
+        .tc-total-row .tc-day-label {
+            color: #7fd7de;
+        }
+
+        /* =========================
+           DOUGHNUT CHARTS
+           ========================= */
+
+        .charts-container {
+            display: flex;
+            justify-content: space-around;
+            flex-grow: 1;
+            align-items: center;
+            padding-top: 0;
+        }
+
+        .charts-container1 {
+            display: flex;
+            justify-content: space-around;
+            flex-grow: 1;
+            align-items: center;
+            padding-top: 0;
+        }
+
+        .chart-wrapper {
+            width: 18%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .chart-label {
+            text-align: center;
+            font-size: 2.5vh;
+            margin-bottom: 0.3vh;
+            color: #8b949e;
+            font-weight: bold;
+        }
+
+        .charts-container1 .chart-wrapper {
+            width: auto;
+            height: 80%;
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .canvas-container1 {
+            position: relative;
+            height: 100%;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        /* =========================
+           CLOCK
+           ========================= */
+
+        .area-clock {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 3vh 2vh;
+            text-align: center;
+            margin-bottom: 1.5vh;
+        }
+
+        #time-display {
+            font-size: 10vh;
+            font-weight: lighter;
+            color: #ffffff;
+            margin: 0;
+            line-height: 1;
+            letter-spacing: 2px;
+        }
+
+        #date-display {
+            font-size: 2.5vh;
+            color: #58a6ff;
+            margin-top: 1vh;
+        }
+
+        /* =========================
+           SCHEDULE PANEL
+           ========================= */
+
+        .area-meetings {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 2vh;
+            flex-grow: 1;
+        }
+
+        .meeting-item {
+            background-color: #21262d;
+            padding: 1.5vh;
+            margin-bottom: 1.5vh;
+            border-radius: 4px;
+            border-left: 4px solid #a371f7;
+        }
+
+        .meeting-time {
+            font-weight: bold;
+            color: #a371f7;
+            font-size: 2.2vh;
+        }
+
+        .meeting-title {
+            font-size: 1.8vh;
+            margin-top: 0.5vh;
+        }
+
+        /* =========================
+           MOBILE
+           ========================= */
+
         @media (max-width: 820px) {
-            body { height: auto; min-height: 100vh; overflow-y: auto; padding: 3vw; }
-            .dashboard-grid { display: flex; flex-direction: column; height: auto; gap: 3vw; }
-            .panel, .area-right { grid-column: auto; grid-row: auto; }
-            .panel { overflow: visible; padding: 4vw; }
-            .area-today, .area-overallprogress { padding: 3vw; }
 
-            h2 { font-size: 5.5vw; margin-bottom: 2vw; }
-            h3 { font-size: 3vw; margin-bottom: 2vw; }
-            .area-today h2, .area-overallprogress h2 { margin: 1vw 0; }
-            .area-today h3 { margin: 0 0 1.5vw 0; }
-            .sub-header { font-size: 4vw; margin-bottom: 2vw; }
+            body {
+                height: auto;
+                min-height: 100vh;
+                overflow-y: auto;
+                padding: 3vw;
+            }
 
-            table { margin-bottom: 2vw; }
-            th, td { font-size: 3.6vw; padding: 1.2vw; }
-            .area-status h2 { margin-bottom: 2vw; }
-            .area-status table { margin-bottom: 2vw; }
-            .area-status th, .area-status td { font-size: 3vw; padding: 1vw; }
-            .area-status .sub-header { margin-bottom: 1.5vw; }
+            .dashboard-grid {
+                display: flex;
+                flex-direction: column;
+                height: auto;
+                gap: 3vw;
+            }
 
-            .today-count-row { flex-wrap: wrap; gap: 2vw; }
-            .today-count-box { flex: 1 1 45%; padding: 2vw; }
-            .today-count-box .tc-section { font-size: 3.6vw; margin-bottom: 1.5vw; }
-            .tc-day-label { font-size: 2.6vw; }
-            .today-count-box .tc-label { font-size: 2.8vw; }
-            .today-count-box .tc-value { font-size: 6vw; }
-            .tc-days { gap: 1.5vw; }
-            .today-count-box .tc-tier { padding: 1vw 0; }
+            .panel,
+            .area-right {
+                grid-column: auto;
+                grid-row: auto;
+            }
 
-            .charts-container { flex-wrap: wrap; row-gap: 3vw; }
-            .chart-wrapper { width: 30%; }
-            .chart-label { font-size: 3.4vw; margin-bottom: 1vw; }
+            .panel {
+                overflow: visible;
+                padding: 4vw;
+            }
 
-            .charts-container1 { padding: 2vw 0; }
-            .charts-container1 .chart-wrapper { width: 60%; height: auto; }
-            .canvas-container1 { height: auto; }
+            .area-secwise,
+            .area-overallprogress {
+                padding: 3vw;
+            }
 
-            .area-right { display: flex; flex-direction: column; }
-            .area-clock { display: none; }
-            .area-meetings, .area-s { padding: 4vw; }
-            .meeting-item { padding: 3vw; margin-bottom: 2.5vw; }
-            .meeting-time { font-size: 4vw; }
-            .meeting-title { font-size: 3.4vw; margin-top: 1vw; }
+            h2 {
+                font-size: 5.5vw;
+                margin-bottom: 2vw;
+            }
 
-            .dynamic-list { font-size: 3.6vw; }
-            .page-indicator { font-size: 3vw; }
+            h3 {
+                font-size: 3vw;
+                margin-bottom: 2vw;
+            }
+
+            .area-secwise h2,
+            .area-overallprogress h2 {
+                margin: 1vw 0;
+            }
+
+            .area-secwise h3 {
+                margin: 0 0 1.5vw 0;
+            }
+
+            .sub-header {
+                font-size: 4vw;
+                margin-bottom: 2vw;
+            }
+
+            table {
+                margin-bottom: 2vw;
+            }
+
+            th,
+            td {
+                font-size: 3.6vw;
+                padding: 1.2vw;
+            }
+
+            .area-status h2 {
+                margin-bottom: 2vw;
+            }
+
+            .area-status table {
+                margin-bottom: 2vw;
+            }
+
+            .area-status th,
+            .area-status td {
+                font-size: 2.2vw;
+                padding: 1vw;
+            }
+
+            .today-count-row {
+                flex-wrap: wrap;
+                gap: 2vw;
+            }
+
+            .today-count-box {
+                flex: 1 1 100%;
+                padding: 2vw;
+            }
+
+            .today-count-box .tc-section {
+                font-size: 4vw;
+                margin-bottom: 1.5vw;
+            }
+
+            .tc-day-label {
+                font-size: 2.4vw;
+                height: 3.2vw;
+            }
+
+            .today-count-box .tc-label {
+                font-size: 2.6vw;
+            }
+
+            .today-count-box .tc-value {
+                font-size: 5vw;
+            }
+
+            .tc-days {
+                gap: 1.5vw;
+            }
+
+            .today-count-box .tc-tier {
+                padding: 1vw 0;
+            }
+
+            .tc-total-row {
+                gap: 1.5vw;
+                margin-top: 2vw;
+                padding-top: 2vw;
+            }
+
+            .charts-container {
+                flex-wrap: wrap;
+                row-gap: 3vw;
+            }
+
+            .chart-wrapper {
+                width: 30%;
+            }
+
+            .chart-label {
+                font-size: 3.4vw;
+                margin-bottom: 1vw;
+            }
+
+            .charts-container1 {
+                padding: 2vw 0;
+            }
+
+            .charts-container1 .chart-wrapper {
+                width: 60%;
+                height: auto;
+            }
+
+            .canvas-container1 {
+                height: auto;
+            }
+
+            .area-right {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .area-clock {
+                display: none;
+            }
+
+            .meeting-item {
+                padding: 3vw;
+                margin-bottom: 2.5vw;
+            }
+
+            .meeting-time {
+                font-size: 4vw;
+            }
+
+            .meeting-title {
+                font-size: 3.4vw;
+                margin-top: 1vw;
+            }
+
+            /* Make bar charts taller on mobile */
+            .barchart-grid {
+                grid-template-rows: repeat(5, 220px);
+            }
+
+            .bar-chart-title {
+                font-size: 3vw;
+            }
         }
     </style>
 </head>
+
+
 <body>
-    <div class="dashboard-grid">
-        <div class="panel area-status">
-            <h2>Drawing Status - REV A</h2>
-            <table>
-                <thead>
-                    <tr><th class="col-caption">Status</th><th>HULL</th><th>SOF</th><th>AOF</th><th>MOF</th><th>EOF</th><th style="background-color: #21262d; border-left: 2px solid #0b0f19;">TOTAL</th></tr>
-                </thead>
-                <tbody id="status-table-body"></tbody>
-            </table>
-            <div class="sub-header" style="margin-bottom: 0.5vh;">Today &amp; Tomorrow's Target Drawings</div>
-            <div id="today-count-row" class="today-count-row"></div>
-        </div>
-        <div class="panel area-delay">
-            <h2>Delayed Drawings </h2>
-            <div id="delay-header" class="sub-header">Loading...
-				<div id="delay-count"></div>
-			</div>
-            <div id="delay-page" class="page-indicator"></div>
-            <div id="delay-list" class="dynamic-list"></div>
-        </div>
-        <div class="panel area-today">
-			<h2> Section-wise Progress</h2>
-			<h3> (Green - Issued) </h3>
-            <div class="charts-container">
-                <div class="chart-wrapper"><div class="chart-label">HULL</div><div class="canvas-container"><canvas id="chart-Hull"></canvas></div></div>
-                <div class="chart-wrapper"><div class="chart-label">SOF</div><div class="canvas-container"><canvas id="chart-SOF"></canvas></div></div>
-                <div class="chart-wrapper"><div class="chart-label">AOF</div><div class="canvas-container"><canvas id="chart-AOF"></canvas></div></div>
-                <div class="chart-wrapper"><div class="chart-label">MOF</div><div class="canvas-container"><canvas id="chart-MOF"></canvas></div></div>
-                <div class="chart-wrapper"><div class="chart-label">EOF</div><div class="canvas-container"><canvas id="chart-EOF"></canvas></div></div>
-            </div>
-        </div>
-        <div class="panel area-overallprogress">
-            <h2>Overall Progress</h2>
-            <div class="charts-container1">
-                <div class="chart-wrapper">
-					<div class="chart-label">Overall</div>
-					<div class="canvas-container1">
-						<canvas id="chart-Overall"></canvas>
-					</div>
-				</div>
-			</div>
-        </div>
-        <div class="area-right" style="display: flex; flex-direction: column;">
-            <div class="area-clock"><div id="time-display">00:00</div><div id="date-display">Day, Month 00</div></div>
-            <div class="panel area-s">
-                <h2>Today's Schedules</h2>
-                <div class="-item"><div class="meeting-time"></div><div class="meeting-title"></div></div>
-                <div class="meeting-item"><div class="meeting-time">  </div><div class="meeting-title">...</div></div>
-                <div class="meeting-item"><div class="meeting-time"> </div><div class="meeting-title">...</div></div>
-				<div class="meeting-item"><div class="meeting-time"> </div><div class="meeting-title"> ...</div></div>
-            </div>
-        </div>
+
+<div class="dashboard-grid">
+
+    <!-- =====================================================
+         TITLE
+         ===================================================== -->
+
+    <div class="panel area-title">
+        <h2>NC-0263 LIVE DASHBOARD</h2>
     </div>
 
-    <script>
-        const baseUrl = './'; 
-        const sections = ['Hull', 'SOF', 'AOF', 'MOF', 'EOF'];
-        const chartInstances = {}; 
-		const dataMap = {};
-		
-		let chartInstancesOA;
-		let chartInstances1;
-		let GrandTotal = 0;
-		let GrandIssue = 0;
-		let OAPercentage;
-		let chartData1;
 
-        function updateClock() {
-            const now = new Date();
-            let hours = now.getHours() % 12 || 12;
-            let minutes = now.getMinutes().toString().padStart(2, '0');
-            document.getElementById('time-display').innerText = `${hours}:${minutes}`;
-            document.getElementById('date-display').innerText = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    <!-- =====================================================
+         DRAWING STATUS
+         ===================================================== -->
+
+    <div class="panel area-status">
+
+        <h2>Drawing Status - REV A</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th class="col-caption">Status</th>
+                    <th>HULL</th>
+                    <th>SOF</th>
+                    <th>AOF</th>
+                    <th>MOF</th>
+                    <th>EOF</th>
+                    <th style="background-color:#21262d;
+                               border-left:2px solid #0b0f19;">
+                        TOTAL
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody id="status-table-body"></tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- =====================================================
+         OVERALL PROGRESS
+         ===================================================== -->
+
+    <div class="panel area-overallprogress">
+
+        <h2>Overall Progress</h2>
+
+        <div class="charts-container1">
+
+            <div class="chart-wrapper">
+
+                <div class="canvas-container1">
+                    <canvas id="chart-Overall"></canvas>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         FIVE MONTHLY BAR CHARTS
+         ===================================================== -->
+
+    <div class="panel area-barcharts">
+
+        <div class="barchart-grid">
+
+            <!-- HULL -->
+
+            <div class="bar-chart-panel">
+
+                <div class="bar-chart-title">
+                    HULL PLAN VS PROGRESS
+                </div>
+
+                <div class="bar-chart-container">
+                    <canvas id="barChart-Hull"></canvas>
+                </div>
+
+            </div>
+
+
+            <!-- SOF -->
+
+            <div class="bar-chart-panel">
+
+                <div class="bar-chart-title">
+                    SOF PLAN VS PROGRESS
+                </div>
+
+                <div class="bar-chart-container">
+                    <canvas id="barChart-SOF"></canvas>
+                </div>
+
+            </div>
+
+
+            <!-- AOF -->
+
+            <div class="bar-chart-panel">
+
+                <div class="bar-chart-title">
+                    AOF PLAN VS PROGRESS
+                </div>
+
+                <div class="bar-chart-container">
+                    <canvas id="barChart-AOF"></canvas>
+                </div>
+
+            </div>
+
+
+            <!-- MOF -->
+
+            <div class="bar-chart-panel">
+
+                <div class="bar-chart-title">
+                    MOF PLAN VS PROGRESS
+                </div>
+
+                <div class="bar-chart-container">
+                    <canvas id="barChart-MOF"></canvas>
+                </div>
+
+            </div>
+
+
+            <!-- EOF -->
+
+            <div class="bar-chart-panel">
+
+                <div class="bar-chart-title">
+                    EOF PLAN VS PROGRESS
+                </div>
+
+                <div class="bar-chart-container">
+                    <canvas id="barChart-EOF"></canvas>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         TODAY / TOMORROW / THIS WEEK
+         ===================================================== -->
+
+    <div class="panel area-todaytomorrow">
+
+        <h2>
+            Today, Tomorrow &amp; This Week's Target Drawings
+        </h2>
+
+        <div id="today-count-row"
+             class="today-count-row">
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SECTION-WISE DOUGHNUT PROGRESS
+         ===================================================== -->
+
+    <div class="panel area-secwise">
+
+        <h2>Section-wise Progress</h2>
+
+        <h3>(Green - Issued)</h3>
+
+        <div class="charts-container">
+
+            <div class="chart-wrapper">
+                <div class="chart-label">HULL</div>
+                <div class="canvas-container">
+                    <canvas id="chart-Hull"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-wrapper">
+                <div class="chart-label">SOF</div>
+                <div class="canvas-container">
+                    <canvas id="chart-SOF"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-wrapper">
+                <div class="chart-label">AOF</div>
+                <div class="canvas-container">
+                    <canvas id="chart-AOF"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-wrapper">
+                <div class="chart-label">MOF</div>
+                <div class="canvas-container">
+                    <canvas id="chart-MOF"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-wrapper">
+                <div class="chart-label">EOF</div>
+                <div class="canvas-container">
+                    <canvas id="chart-EOF"></canvas>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         RIGHT SIDE
+         ===================================================== -->
+
+    <div class="area-right">
+
+        <div class="area-clock">
+
+            <div id="time-display">00:00</div>
+
+            <div id="date-display">
+                Day, Month 00
+            </div>
+
+        </div>
+
+
+        <div class="panel area-meetings">
+
+            <h2>Today's Schedules</h2>
+
+            <div class="meeting-item">
+                <div class="meeting-time"></div>
+                <div class="meeting-title"></div>
+            </div>
+
+            <div class="meeting-item">
+                <div class="meeting-time"></div>
+                <div class="meeting-title">...</div>
+            </div>
+
+            <div class="meeting-item">
+                <div class="meeting-time"></div>
+                <div class="meeting-title">...</div>
+            </div>
+
+            <div class="meeting-item">
+                <div class="meeting-time"></div>
+                <div class="meeting-title">...</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+    /* =========================================================
+       BASIC SETTINGS
+       ========================================================= */
+
+    const baseUrl = './';
+
+    const sections = [
+        'Hull',
+        'SOF',
+        'AOF',
+        'MOF',
+        'EOF'
+    ];
+
+    /*
+       Monthly chart period.
+
+       Your example/reference chart starts from April and
+       finishes at December.
+
+       JavaScript months:
+       January = 0
+       February = 1
+       March = 2
+       April = 3
+       ...
+       December = 11
+    */
+
+    const PLAN_YEAR = 2026;
+
+    const PLAN_START_MONTH = 3;   // April
+    const PLAN_END_MONTH = 11;    // December
+
+
+    const monthLabels = [
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec'
+    ];
+
+
+    /* =========================================================
+       CHART STORAGE
+       ========================================================= */
+
+    const chartInstances = {};
+
+    const barChartInstances = {};
+
+    let overallChart = null;
+
+
+    /* =========================================================
+       DATA STORAGE
+       ========================================================= */
+
+    const dataMap = {};
+
+    let GrandTotal = 0;
+
+    let GrandIssue = 0;
+
+    let OAPercentage = 0;
+
+
+    /* =========================================================
+       CLOCK
+       ========================================================= */
+
+    function updateClock() {
+
+        const now = new Date();
+
+        let hours =
+            now.getHours() % 12 || 12;
+
+        let minutes =
+            now.getMinutes()
+                .toString()
+                .padStart(2, '0');
+
+        document.getElementById('time-display').innerText =
+            `${hours}:${minutes}`;
+
+        document.getElementById('date-display').innerText =
+            now.toLocaleDateString(
+                'en-US',
+                {
+                    weekday: 'long',
+                    month: 'long',
+                    day: 'numeric'
+                }
+            );
+    }
+
+
+    setInterval(updateClock, 1000);
+
+    updateClock();
+
+
+    /* =========================================================
+       CENTER TEXT PLUGIN FOR DOUGHNUTS
+       ========================================================= */
+
+    const centerTextPlugin = {
+
+        id: 'centerText',
+
+        afterDraw(chart) {
+
+            const meta =
+                chart.getDatasetMeta(0);
+
+            if (!meta ||
+                !meta.data ||
+                !meta.data.length) {
+                return;
+            }
+
+            const ctx = chart.ctx;
+
+            const centerX =
+                meta.data[0].x;
+
+            const centerY =
+                meta.data[0].y;
+
+            const percentage =
+                chart.config.options.plugins
+                    .centerText.percentage;
+
+            ctx.save();
+
+            ctx.fillStyle = '#ffffff';
+
+            ctx.font =
+                'bold 3vh Segoe UI';
+
+            ctx.textAlign = 'center';
+
+            ctx.textBaseline = 'middle';
+
+            ctx.fillText(
+                percentage + '%',
+                centerX,
+                centerY
+            );
+
+            ctx.restore();
         }
-        setInterval(updateClock, 1000);
-        updateClock();
-const centerTextPlugin = {
-    id: 'centerText',
+    };
 
-    afterDraw(chart) {
 
-        const { ctx } = chart;
+    Chart.register(centerTextPlugin);
 
-        const centerX =
-            chart.getDatasetMeta(0).data[0].x;
 
-        const centerY =
-            chart.getDatasetMeta(0).data[0].y;
+    /* =========================================================
+       DATE HELPER
+       ========================================================= */
 
-        const percentage =
-            chart.config.options.plugins.centerText.percentage;
+    function parseDate(dateString) {
 
-        ctx.save();
+        if (!dateString) {
+            return null;
+        }
 
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 50px Segoe UI';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
+        const parts =
+            dateString.split('-');
 
-        ctx.fillText(
-            percentage + '%',
-            centerX,
-            centerY
+        if (parts.length !== 3) {
+            return null;
+        }
+
+        const year =
+            Number(parts[0]);
+
+        const month =
+            Number(parts[1]) - 1;
+
+        const day =
+            Number(parts[2]);
+
+        const date =
+            new Date(
+                year,
+                month,
+                day
+            );
+
+        date.setHours(0, 0, 0, 0);
+
+        return date;
+    }
+
+
+    /* =========================================================
+       REVISION HANDLING
+       =========================================================
+
+       If the same drawing number occurs more than once,
+       select the latest revision.
+
+       Example:
+
+       DR-NC-0263-162-245-U421
+       Rev A
+       Rev B
+
+       Rev B will be used.
+    */
+
+    function revisionRank(rev) {
+
+        if (!rev) {
+            return 0;
+        }
+
+        const clean =
+            String(rev)
+                .trim()
+                .toUpperCase();
+
+        if (clean === 'CANCELLED') {
+            return -999;
+        }
+
+        let rank = 0;
+
+        for (let i = 0; i < clean.length; i++) {
+
+            const code =
+                clean.charCodeAt(i);
+
+            if (code >= 65 && code <= 90) {
+                rank =
+                    rank * 26 +
+                    (code - 64);
+            }
+        }
+
+        return rank;
+    }
+
+
+    function getLatestRevision(rawData) {
+
+        const drawingMap = {};
+
+        Object.values(rawData || {})
+            .forEach(item => {
+
+                if (!item) {
+                    return;
+                }
+
+                const drawingNumber =
+                    item.drgNum;
+
+                if (!drawingNumber) {
+                    return;
+                }
+
+                const rev =
+                    String(item.rev || '')
+                        .trim()
+                        .toUpperCase();
+
+                /*
+                   Cancelled revisions are ignored.
+                */
+
+                if (rev === 'CANCELLED') {
+                    return;
+                }
+
+                if (!drawingMap[drawingNumber]) {
+
+                    drawingMap[drawingNumber] =
+                        item;
+
+                    return;
+                }
+
+                const existing =
+                    drawingMap[drawingNumber];
+
+                if (
+                    revisionRank(rev) >
+                    revisionRank(existing.rev)
+                ) {
+
+                    drawingMap[drawingNumber] =
+                        item;
+                }
+            });
+
+        return Object.values(drawingMap);
+    }
+
+
+    /* =========================================================
+       LOAD ONE DRAWING JSON
+       ========================================================= */
+
+    async function loadSectionDrawings(section) {
+
+        try {
+
+            const response =
+                await fetch(
+                    `${baseUrl}${section}Drawings.json?t=${Date.now()}`
+                );
+
+            if (!response.ok) {
+                throw new Error(
+                    `HTTP ${response.status}`
+                );
+            }
+
+            const rawData =
+                await response.json();
+
+            return getLatestRevision(rawData);
+
+        } catch (error) {
+
+            console.error(
+                `${section}Drawings.json could not be loaded:`,
+                error
+            );
+
+            return [];
+        }
+    }
+
+
+    /* =========================================================
+       MONTHLY BAR CHART CALCULATION
+       =========================================================
+
+       Scheduled:
+       Target_Date falls in the month.
+
+       Issued:
+       Issue_Date falls in the month.
+
+       Delayed:
+       Target_Date has already passed AND
+       Issue_Date is blank.
+
+       NOTE:
+       A drawing can therefore appear in Scheduled and
+       Delayed for its target month. This is intentional:
+       Scheduled = planned workload
+       Delayed = portion of that workload not yet issued.
+    */
+
+    function calculateMonthlyData(drawings) {
+
+        const scheduled =
+            new Array(monthLabels.length).fill(0);
+
+        const issued =
+            new Array(monthLabels.length).fill(0);
+
+        const delayed =
+            new Array(monthLabels.length).fill(0);
+
+
+        const today =
+            new Date();
+
+        today.setHours(
+            0,
+            0,
+            0,
+            0
         );
 
-        ctx.restore();
+
+        drawings.forEach(item => {
+
+            if (!item) {
+                return;
+            }
+
+
+            /* -----------------------------------------
+               SCHEDULED
+               ----------------------------------------- */
+
+            const targetDate =
+                parseDate(item.Target_Date);
+
+            if (targetDate) {
+
+                const year =
+                    targetDate.getFullYear();
+
+                const month =
+                    targetDate.getMonth();
+
+                if (
+                    year === PLAN_YEAR &&
+                    month >= PLAN_START_MONTH &&
+                    month <= PLAN_END_MONTH
+                ) {
+
+                    const index =
+                        month -
+                        PLAN_START_MONTH;
+
+                    scheduled[index]++;
+                }
+
+
+                /* -----------------------------------------
+                   DELAYED
+                   ----------------------------------------- */
+
+                const issueDate =
+                    parseDate(item.Issue_Date);
+
+                if (
+                    targetDate < today &&
+                    !issueDate
+                ) {
+
+                    if (
+                        year === PLAN_YEAR &&
+                        month >= PLAN_START_MONTH &&
+                        month <= PLAN_END_MONTH
+                    ) {
+
+                        const index =
+                            month -
+                            PLAN_START_MONTH;
+
+                        delayed[index]++;
+                    }
+                }
+            }
+
+
+            /* -----------------------------------------
+               ISSUED
+               ----------------------------------------- */
+
+            const issueDate =
+                parseDate(item.Issue_Date);
+
+            if (issueDate) {
+
+                const year =
+                    issueDate.getFullYear();
+
+                const month =
+                    issueDate.getMonth();
+
+                if (
+                    year === PLAN_YEAR &&
+                    month >= PLAN_START_MONTH &&
+                    month <= PLAN_END_MONTH
+                ) {
+
+                    const index =
+                        month -
+                        PLAN_START_MONTH;
+
+                    issued[index]++;
+                }
+            }
+
+        });
+
+
+        return {
+            scheduled,
+            issued,
+            delayed
+        };
     }
-};
 
-Chart.register(centerTextPlugin);
-        async function fetchAllStatus() {
-		GrandTotal = 0;
-		GrandIssue = 0;
-			
-            const tableBody = document.getElementById('status-table-body');
-            
-            await Promise.all(sections.map(async (sec) => {
-                try {
-                    const res = await fetch(`${baseUrl}${sec}ToDisplay.json?t=${new Date().getTime()}`);
-                    dataMap[sec] = res.ok ? await res.json() : {};
-                } catch { dataMap[sec] = {}; }
-            }));
 
-            const rows = [
-                { key: '1', label: 'Total Drawings ', css: 'bg-white' },
-				{ key: '1', label: 'Inprogrss Drawings ', css: 'bg-pale' },
-                { key: '2', label: 'Forwarded for Checking', css: 'bg-blue' },
-                { key: '3', label: 'Checked, Not Approved', css: 'bg-yellow' },
-                { key: '4', label: 'Approved, To be issued', css: 'bg-orange' },
-                { key: '5', label: 'Issued', css: 'bg-green' },
-                { key: '6', label: 'Current Delay', css: 'bg-red' }
-            ];
+    /* =========================================================
+       CREATE / UPDATE BAR CHART
+       ========================================================= */
 
-            let html = '';
-            rows.forEach(row => {
-                let rowHtml = `<tr><td class="col-caption ${row.css}">${row.label}</td>`;
-                let rowTotal = 0;
-                sections.forEach(sec => {
-                    let val = parseInt(dataMap[sec][row.key] || 0);
-                    rowTotal += val;
-                    rowHtml += `<td class="${row.css}">${val}</td>`;
-                });
-                rowHtml += `<td class="${row.css}" style="border-left: 2px solid #0b0f19;">${rowTotal}</td></tr>`;
-                html += rowHtml;
-            });
-            tableBody.innerHTML = html;
+    function updateSectionBarChart(
+        section,
+        monthlyData
+    ) {
+
+        const canvas =
+            document.getElementById(
+                `barChart-${section}`
+            );
+
+        if (!canvas) {
+            console.error(
+                `Canvas barChart-${section} not found.`
+            );
+            return;
+        }
+
+
+        const chartData = {
+
+            labels: monthLabels,
+
+            datasets: [
+
+                {
+                    label: 'Scheduled',
+
+                    data:
+                        monthlyData.scheduled,
+
+                    backgroundColor:
+                        '#28759b',
+
+                    borderWidth: 0
+                },
+
+                {
+                    label: 'Issued',
+
+                    data:
+                        monthlyData.issued,
+
+                    backgroundColor:
+                        '#7ac943',
+
+                    borderWidth: 0
+                },
+
+                {
+                    label: 'Delayed',
+
+                    data:
+                        monthlyData.delayed,
+
+                    backgroundColor:
+                        '#ff0000',
+
+                    borderWidth: 0
+                }
+            ]
+        };
+
+
+        const chartOptions = {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            animation: false,
+
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
+
+            scales: {
+
+                x: {
+
+                    stacked: false,
+
+                    grid: {
+                        display: false
+                    },
+
+                    ticks: {
+                        color: '#c9d1d9',
+                        font: {
+                            size: 10
+                        }
+                    }
+                },
+
+                y: {
+
+                    beginAtZero: true,
+
+                    suggestedMax: 10,
+
+                    ticks: {
+
+                        color: '#c9d1d9',
+
+                        precision: 0,
+
+                        stepSize: 5
+                    },
+
+                    grid: {
+                        color:
+                            'rgba(139,148,158,0.18)'
+                    }
+                }
+            },
+
+            plugins: {
+
+                legend: {
+
+                    display: true,
+
+                    position: 'right',
+
+                    labels: {
+
+                        color: '#e6edf3',
+
+                        boxWidth: 12,
+
+                        boxHeight: 12,
+
+                        padding: 8,
+
+                        font: {
+                            size: 9
+                        }
+                    }
+                },
+
+                tooltip: {
+
+                    callbacks: {
+
+                        label: function(context) {
+
+                            return (
+                                `${context.dataset.label}: ` +
+                                `${context.parsed.y}`
+                            );
+                        }
+                    }
+                }
+            }
+        };
+
+
+        /* -----------------------------------------
+           FIRST CREATION
+           ----------------------------------------- */
+
+        if (!barChartInstances[section]) {
+
+            barChartInstances[section] =
+                new Chart(
+                    canvas.getContext('2d'),
+                    {
+                        type: 'bar',
+                        data: chartData,
+                        options: chartOptions
+                    }
+                );
+
+            return;
+        }
+
+
+        /* -----------------------------------------
+           UPDATE EXISTING CHART
+           ----------------------------------------- */
+
+        const chart =
+            barChartInstances[section];
+
+        chart.data.labels =
+            monthLabels;
+
+        chart.data.datasets[0].data =
+            monthlyData.scheduled;
+
+        chart.data.datasets[1].data =
+            monthlyData.issued;
+
+        chart.data.datasets[2].data =
+            monthlyData.delayed;
+
+        chart.update('none');
+    }
+
+
+    /* =========================================================
+       FETCH ALL FIVE BAR CHART DATA
+       ========================================================= */
+
+    async function fetchAllBarCharts() {
+
+        await Promise.all(
+
+            sections.map(
+                async section => {
+
+                    const drawings =
+                        await loadSectionDrawings(
+                            section
+                        );
+
+                    const monthlyData =
+                        calculateMonthlyData(
+                            drawings
+                        );
+
+                    updateSectionBarChart(
+                        section,
+                        monthlyData
+                    );
+                }
+            )
+        );
+    }
+
+
+    /* =========================================================
+       DRAWING STATUS TABLE
+       ========================================================= */
+
+    async function fetchAllStatus() {
+
+        GrandTotal = 0;
+
+        GrandIssue = 0;
+
+        const tableBody =
+            document.getElementById(
+                'status-table-body'
+            );
+
+
+        if (!tableBody) {
+            return;
+        }
+
+
+        await Promise.all(
+
+            sections.map(
+                async sec => {
+
+                    try {
+
+                        const res =
+                            await fetch(
+                                `${baseUrl}${sec}ToDisplay.json?t=${Date.now()}`
+                            );
+
+                        dataMap[sec] =
+                            res.ok
+                                ? await res.json()
+                                : {};
+
+                    } catch {
+
+                        dataMap[sec] = {};
+                    }
+                }
+            )
+        );
+
+
+        const rows = [
+
+            {
+                key: '1',
+                label: 'Total Drawings',
+                css: 'bg-white'
+            },
+
+            {
+                key: '6',
+                label: 'Preperation Inprogress',
+                css: 'bg-pale'
+            },
+
+            {
+                key: '2',
+                label: 'Under Checking',
+                css: 'bg-blue'
+            },
+
+            {
+                key: '3',
+                label: 'Checked, Not Approved',
+                css: 'bg-yellow'
+            },
+
+            {
+                key: '4',
+                label: 'Approved, To be issued',
+                css: 'bg-orange'
+            },
+
+            {
+                key: '5',
+                label: 'Issued',
+                css: 'bg-green'
+            }
+
+            /*
+              Current Delay is deliberately removed here
+              because your original code used key "6" again.
+
+              If your ToDisplay.json has a separate key
+              for Current Delay, add it here.
+            */
+        ];
+
+
+        let html = '';
+
+
+        rows.forEach(row => {
+
+            let rowHtml =
+                `<tr>
+                    <td class="col-caption ${row.css}">
+                        ${row.label}
+                    </td>`;
+
+            let rowTotal = 0;
+
 
             sections.forEach(sec => {
-                const issued = parseInt(dataMap[sec]['5'] || 0);
-                const progress = parseInt(dataMap[sec]['1'] || 0) - parseInt(dataMap[sec]['5'] || 0) ;
-                const total = issued + progress;
-				GrandTotal += total;
-				GrandIssue += issued;
-				
-				OAPercentage = 
-					GrandTotal > 0
-        			? Math.round((GrandIssue / GrandTotal) * 100)
-        			: 0;
 
-				const percentage =
-    				total > 0
-        			? Math.round((issued / total) * 100)
-        			: 0;
-				
+                const val =
+                    parseInt(
+                        dataMap[sec][row.key] || 0
+                    );
 
-				                const chartData = total > 0 ? [issued, progress] : [1];
-								 chartData1 = [GrandIssue,GrandTotal-GrandIssue];
-												
-                const chartColors = total > 0 ? ['#2ea043', '#E1E4E8'] : ['#30363d'];
+                rowTotal += val;
 
-                if(!chartInstances[sec] && typeof Chart !== 'undefined') {
-                    const ctx = document.getElementById(`chart-${sec}`).getContext('2d');
-                    chartInstances[sec] = new Chart(ctx, {
-                        type: 'doughnut',
-                        data: { datasets: [{ data: chartData, backgroundColor: chartColors, borderWidth: 0 }] },
-                        options: {
-   							responsive: true,
-    						maintainAspectRatio: true,
-    						cutout: '75%',
-    						plugins: {
-        						legend: {
-            						display: false
-        							},
-        						centerText: {
-            						percentage: percentage
-        										}
-    										}
-										}
-                    });
-                } else if(chartInstances[sec]) {
-                    chartInstances[sec].data.datasets[0].data = chartData;
-                    chartInstances[sec].data.datasets[0].backgroundColor = chartColors;
-					chartInstances[sec].options.plugins.centerText.percentage = percentage;
-                    chartInstances[sec].update();
-                }
-				
+                rowHtml +=
+                    `<td class="${row.css}">
+                        ${val}
+                    </td>`;
             });
-					const chartColors1 = GrandTotal > 0 ? ['#2ea043', '#E1E4E8'] : ['#30363d'];
-					if(!chartInstances1 && typeof Chart !== 'undefined') {
-					const ctx1 = document.getElementById("chart-Overall").getContext('2d');
-			        chartInstances1 = new Chart(ctx1, {
-                        type: 'doughnut',
-                        data: { datasets: [{ data: chartData1, backgroundColor: chartColors1, borderWidth: 0 }] },
-                        options: {
-   							responsive: true,
-    						maintainAspectRatio: true,
-    						cutout: '75%',
-    						plugins: {
-        						legend: {
-            						display: false
-        							},
-        						centerText: {
-            						percentage: OAPercentage 
-        										}
-    										}
-										}
-                    });	
-					 }
-					
-        }
 
-        // Counts today's and tomorrow's target-dated drawings per section, reading each section's Drawings.json
-        async function fetchTodayCounts() {
-            const now = new Date();
-            const tomorrow = new Date(now);
-            tomorrow.setDate(tomorrow.getDate() + 1);
 
-            const toDateStr = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-            const todayStr = toDateStr(now);
-            const tomorrowStr = toDateStr(tomorrow);
+            rowHtml +=
+                `<td class="${row.css}"
+                     style="border-left:2px solid #0b0f19;">
+                    ${rowTotal}
+                 </td>
+                </tr>`;
 
-            const counts = {};
-            await Promise.all(sections.map(async (sec) => {
-                try {
-                    const res = await fetch(`${baseUrl}${sec}Drawings.json?t=${new Date().getTime()}`);
-                    const rawData = res.ok ? await res.json() : {};
-                    const all = Object.values(rawData);
-                    const todayArr = all.filter(item => item.Target_Date === todayStr);
-                    const todayIssued = todayArr.filter(item => item.Issue_Date && item.Issue_Date !== "").length;
-                    const tomorrowArr = all.filter(item => item.Target_Date === tomorrowStr);
-                    const tomorrowIssued = tomorrowArr.filter(item => item.Issue_Date && item.Issue_Date !== "").length;
-                    counts[sec] = { todayScheduled: todayArr.length, todayIssued, tomorrowScheduled: tomorrowArr.length, tomorrowIssued };
-                } catch {
-                    counts[sec] = { todayScheduled: 0, todayIssued: 0, tomorrowScheduled: 0, tomorrowIssued: 0 };
-                }
-            }));
 
-            const row = document.getElementById('today-count-row');
-            row.innerHTML = sections.map(sec => `
-                <div class="today-count-box">
-                    <div class="tc-section">${sec}</div>
-                    <div class="tc-days">
-                        <div class="tc-day">
-                            <div class="tc-day-label">Today</div>
-                            <div class="tc-tier tc-scheduled">
-                                <div class="tc-label">Sched</div>
-                                <div class="tc-value">${counts[sec].todayScheduled}</div>
-                            </div>
-                            <div class="tc-tier tc-issued">
-                                <div class="tc-label">Issued</div>
-                                <div class="tc-value">${counts[sec].todayIssued}</div>
-                            </div>
-                        </div>
-                        <div class="tc-day">
-                            <div class="tc-day-label">Tomorrow</div>
-                            <div class="tc-tier tc-tomorrow-sched">
-                                <div class="tc-label">Sched</div>
-                                <div class="tc-value">${counts[sec].tomorrowScheduled}</div>
-                            </div>
-                            <div class="tc-tier tc-tomorrow-issued">
-                                <div class="tc-label">Issued</div>
-                                <div class="tc-value">${counts[sec].tomorrowIssued}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
+            html += rowHtml;
+        });
 
-    class Rotator {
-      constructor(fileSuffix, titlePrefix, listId, headerId, pageId, isDateFiltered, isDelayPanel = false) {
 
-    this.fileSuffix = fileSuffix;
-    this.titlePrefix = titlePrefix;
-    this.listId = listId;
-    this.headerId = headerId;
-    this.pageId = pageId;
+        tableBody.innerHTML =
+            html;
 
-    this.isDateFiltered = isDateFiltered;
-    this.isDelayPanel = isDelayPanel;
 
-    this.secIndex = 0;
-    this.pageIndex = 0;
-    this.itemsPerPage = 5;
-    this.currentData = [];
-}
-            async tick() {
-                if (this.currentData.length === 0 || this.pageIndex >= Math.ceil(this.currentData.length / this.itemsPerPage)) {
-                    this.secIndex = (this.secIndex + 1) % sections.length;
-                    await this.fetchData(sections[this.secIndex]);
-                    this.pageIndex = 0;
-                }
-                this.renderPage(); this.pageIndex++;
+        /* -----------------------------------------
+           DOUGHNUT PROGRESS
+           ----------------------------------------- */
+
+        sections.forEach(sec => {
+
+            const issued =
+                parseInt(
+                    dataMap[sec]['5'] || 0
+                );
+
+            const totalDrawingCount =
+                parseInt(
+                    dataMap[sec]['1'] || 0
+                );
+
+            const progress =
+                totalDrawingCount -
+                issued;
+
+            const total =
+                issued +
+                progress;
+
+
+            GrandTotal += total;
+
+            GrandIssue += issued;
+
+
+            const percentage =
+                total > 0
+                    ? Math.round(
+                        (issued / total) * 100
+                    )
+                    : 0;
+
+
+            const chartData =
+                total > 0
+                    ? [issued, progress]
+                    : [1];
+
+
+            const chartColors =
+                total > 0
+                    ? ['#2ea043', '#E1E4E8']
+                    : ['#30363d'];
+
+
+            const canvas =
+                document.getElementById(
+                    `chart-${sec}`
+                );
+
+
+            if (!canvas) {
+                return;
             }
-            async fetchData(section) {
-                document.getElementById(this.headerId).innerText = `${section} - FETCHING...`;
-                try {
-                    const res = await fetch(`${baseUrl}${section}${this.fileSuffix}.json?t=${new Date().getTime()}`);
-                   const rawData = await res.json();
 
-			let arr = Object.keys(rawData).map(key => {
-    			return {
-       			 dwg: key,
-        		...rawData[key]
-    				};
-			});
 
-		if (this.isDelayPanel) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    arr = arr.filter(item => {
-        if (!item.Target_Date)
-            return false;
+            /* -----------------------------------------
+               CREATE DOUGHNUT
+               ----------------------------------------- */
 
-        const targetDate = new Date(item.Target_Date);
-        targetDate.setHours(0, 0, 0, 0);
-        return (
-            item.Issue_Date === "" &&
-            targetDate < today
+            if (!chartInstances[sec]) {
+
+                chartInstances[sec] =
+                    new Chart(
+                        canvas.getContext('2d'),
+                        {
+
+                            type: 'doughnut',
+
+                            data: {
+
+                                datasets: [
+
+                                    {
+                                        data: chartData,
+
+                                        backgroundColor:
+                                            chartColors,
+
+                                        borderWidth: 0
+                                    }
+                                ]
+                            },
+
+                            options: {
+
+                                responsive: true,
+
+                                maintainAspectRatio: true,
+
+                                cutout: '75%',
+
+                                animation: false,
+
+                                plugins: {
+
+                                    legend: {
+                                        display: false
+                                    },
+
+                                    centerText: {
+                                        percentage:
+                                            percentage
+                                    }
+                                }
+                            }
+                        }
+                    );
+
+            } else {
+
+                chartInstances[sec]
+                    .data.datasets[0].data =
+                    chartData;
+
+                chartInstances[sec]
+                    .data.datasets[0]
+                    .backgroundColor =
+                    chartColors;
+
+                chartInstances[sec]
+                    .options
+                    .plugins
+                    .centerText
+                    .percentage =
+                    percentage;
+
+                chartInstances[sec]
+                    .update('none');
+            }
+
+        });
+
+
+        /* =====================================================
+           OVERALL DOUGHNUT
+           ===================================================== */
+
+        OAPercentage =
+            GrandTotal > 0
+                ? Math.round(
+                    (GrandIssue / GrandTotal) * 100
+                )
+                : 0;
+
+
+        const overallData =
+            GrandTotal > 0
+                ? [
+                    GrandIssue,
+                    GrandTotal - GrandIssue
+                ]
+                : [1];
+
+
+        const overallColors =
+            GrandTotal > 0
+                ? ['#2ea043', '#E1E4E8']
+                : ['#30363d'];
+
+
+        const overallCanvas =
+            document.getElementById(
+                'chart-Overall'
+            );
+
+
+        if (overallCanvas) {
+
+            if (!overallChart) {
+
+                overallChart =
+                    new Chart(
+                        overallCanvas.getContext('2d'),
+                        {
+
+                            type: 'doughnut',
+
+                            data: {
+
+                                datasets: [
+
+                                    {
+                                        data:
+                                            overallData,
+
+                                        backgroundColor:
+                                            overallColors,
+
+                                        borderWidth: 0
+                                    }
+                                ]
+                            },
+
+                            options: {
+
+                                responsive: true,
+
+                                maintainAspectRatio: true,
+
+                                cutout: '75%',
+
+                                animation: false,
+
+                                plugins: {
+
+                                    legend: {
+                                        display: false
+                                    },
+
+                                    centerText: {
+                                        percentage:
+                                            OAPercentage
+                                    }
+                                }
+                            }
+                        }
+                    );
+
+            } else {
+
+                overallChart
+                    .data
+                    .datasets[0]
+                    .data =
+                    overallData;
+
+                overallChart
+                    .data
+                    .datasets[0]
+                    .backgroundColor =
+                    overallColors;
+
+                overallChart
+                    .options
+                    .plugins
+                    .centerText
+                    .percentage =
+                    OAPercentage;
+
+                overallChart.update('none');
+            }
+        }
+    }
+
+
+    /* =========================================================
+       TODAY / TOMORROW / THIS WEEK
+       ========================================================= */
+
+    async function fetchTodayCounts() {
+
+        const now =
+            new Date();
+
+
+        const tomorrow =
+            new Date(now);
+
+        tomorrow.setDate(
+            tomorrow.getDate() + 1
         );
-    });
-}	
-if (this.isDateFiltered) {
-
-    const now = new Date();
-
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const localTodayStr =
-        `${year}-${month}-${day}`;
-
-    arr = arr.filter(item =>
-        item.Issue_Date === localTodayStr
-    );
-}
-	this.currentData = arr;
-if (this.isDelayPanel) {
-document.getElementById(this.headerId).innerHTML =
-    `${section} - ${this.titlePrefix}
-    <span style="
-        color:#FF0000;
-        font-size:1.2em;
-        font-weight:bold;
-    ">
-        [${arr.length}]
-    </span>`;
-} else {
-    document.getElementById(this.headerId).innerText =
-        section + ': ' + this.titlePrefix;
-}
-
-} catch (e) {
-    this.currentData = [];
-}
 
 
-}
-            renderPage() {
-                const totalPages = Math.max(1, Math.ceil(this.currentData.length / this.itemsPerPage));
-                const chunk = this.currentData.slice(this.pageIndex * this.itemsPerPage, (this.pageIndex + 1) * this.itemsPerPage);
-                document.getElementById(this.pageId).innerText = `Page ${this.pageIndex + 1} of ${totalPages}`;
-                document.getElementById(this.listId).innerHTML = chunk.length ? chunk.map(i => `<div style="margin-bottom:1vh; border-bottom:1px solid #30363d;"><b>${i.drgNum}</b><br><small>${i.Drawing_Name || i.Target_Date}</small></div>`).join('') : 'No Drawings  to display here...';
-            }
+        const toDateStr =
+            d =>
+                `${d.getFullYear()}-` +
+                `${String(d.getMonth() + 1).padStart(2, '0')}-` +
+                `${String(d.getDate()).padStart(2, '0')}`;
+
+
+        const todayStr =
+            toDateStr(now);
+
+        const tomorrowStr =
+            toDateStr(tomorrow);
+
+
+        /* -----------------------------------------
+           CURRENT WEEK
+           ----------------------------------------- */
+
+        const dayOfWeek =
+            now.getDay();
+
+        const diffToMonday =
+            dayOfWeek === 0
+                ? -6
+                : 1 - dayOfWeek;
+
+
+        const monday =
+            new Date(now);
+
+        monday.setDate(
+            monday.getDate() +
+            diffToMonday
+        );
+
+        monday.setHours(
+            0, 0, 0, 0
+        );
+
+
+        const sunday =
+            new Date(monday);
+
+        sunday.setDate(
+            sunday.getDate() + 6
+        );
+
+        sunday.setHours(
+            23, 59, 59, 999
+        );
+
+
+        const counts = {};
+
+
+        await Promise.all(
+
+            sections.map(
+                async sec => {
+
+                    try {
+
+                        const res =
+                            await fetch(
+                                `${baseUrl}${sec}Drawings.json?t=${Date.now()}`
+                            );
+
+
+                        const rawData =
+                            res.ok
+                                ? await res.json()
+                                : {};
+
+
+                        const all =
+                            getLatestRevision(
+                                rawData
+                            );
+
+
+                        /* TODAY */
+
+                        const todayArr =
+                            all.filter(
+                                item =>
+                                    item.Target_Date ===
+                                    todayStr
+                            );
+
+
+                        const todayIssued =
+                            todayArr.filter(
+                                item =>
+                                    item.Issue_Date &&
+                                    item.Issue_Date !== ''
+                            ).length;
+
+
+                        /* TOMORROW */
+
+                        const tomorrowArr =
+                            all.filter(
+                                item =>
+                                    item.Target_Date ===
+                                    tomorrowStr
+                            );
+
+
+                        const tomorrowIssued =
+                            tomorrowArr.filter(
+                                item =>
+                                    item.Issue_Date &&
+                                    item.Issue_Date !== ''
+                            ).length;
+
+
+                        /* THIS WEEK */
+
+                        const weekArr =
+                            all.filter(item => {
+
+                                if (
+                                    !item.Target_Date
+                                ) {
+                                    return false;
+                                }
+
+                                const d =
+                                    parseDate(
+                                        item.Target_Date
+                                    );
+
+                                return (
+                                    d >= monday &&
+                                    d <= sunday
+                                );
+                            });
+
+
+                        const weekIssued =
+                            weekArr.filter(
+                                item =>
+                                    item.Issue_Date &&
+                                    item.Issue_Date !== ''
+                            ).length;
+
+
+                        /* ACTUAL ISSUE DATE */
+
+                        const totalIssuedToday =
+                            all.filter(
+                                item =>
+                                    item.Issue_Date ===
+                                    todayStr
+                            ).length;
+
+
+                        const totalIssuedWeek =
+                            all.filter(item => {
+
+                                if (
+                                    !item.Issue_Date
+                                ) {
+                                    return false;
+                                }
+
+                                const d =
+                                    parseDate(
+                                        item.Issue_Date
+                                    );
+
+                                return (
+                                    d >= monday &&
+                                    d <= sunday
+                                );
+
+                            }).length;
+
+
+                        counts[sec] = {
+
+                            todayScheduled:
+                                todayArr.length,
+
+                            todayIssued,
+
+                            tomorrowScheduled:
+                                tomorrowArr.length,
+
+                            tomorrowIssued,
+
+                            weekScheduled:
+                                weekArr.length,
+
+                            weekIssued,
+
+                            totalIssuedToday,
+
+                            totalIssuedWeek
+                        };
+
+
+                    } catch {
+
+                        counts[sec] = {
+
+                            todayScheduled: 0,
+                            todayIssued: 0,
+
+                            tomorrowScheduled: 0,
+                            tomorrowIssued: 0,
+
+                            weekScheduled: 0,
+                            weekIssued: 0,
+
+                            totalIssuedToday: 0,
+                            totalIssuedWeek: 0
+                        };
+                    }
+
+                }
+            )
+        );
+
+
+        const row =
+            document.getElementById(
+                'today-count-row'
+            );
+
+
+        if (!row) {
+            return;
         }
 
-       	const delayRotator = new Rotator('Drawings','DELAYED DRAWINGS','delay-list','delay-header','delay-page', false,true);
-        //const todayRotator = new Rotator('Drawings', 'TODAY', 'today-list', 'today-header', 'today-page', true);
 
-        fetchAllStatus();
-        fetchTodayCounts();
-        setInterval(fetchAllStatus, 30000);
-        setInterval(fetchTodayCounts, 30000);
-        async function init() {
-            await delayRotator.fetchData(sections[0]);
-           // await todayRotator.fetchData(sections[0]);
-            delayRotator.tick(); //todayRotator.tick();
-            setInterval(() => delayRotator.tick(), 8000);
-           // setInterval(() => todayRotator.tick(), 8000);
-		setInterval(async () => { await delayRotator.fetchData( sections[delayRotator.secIndex]);}, 60000);
-        }
-        init();
-    </script>
+        row.innerHTML =
+
+            sections.map(
+                sec => `
+
+                <div class="today-count-box">
+
+                    <div class="tc-section">
+                        ${sec}
+                    </div>
+
+
+                    <div class="tc-days">
+
+
+                        <!-- TODAY -->
+
+                        <div class="tc-day">
+
+                            <div class="tc-day-label">
+                                Today
+                            </div>
+
+                            <div class="tc-tier tc-scheduled">
+
+                                <div class="tc-label">
+                                    Sched
+                                </div>
+
+                                <div class="tc-value">
+                                    ${counts[sec].todayScheduled}
+                                </div>
+
+                            </div>
+
+                            <div class="tc-tier tc-issued">
+
+                                <div class="tc-label">
+                                    Issued
+                                </div>
+
+                                <div class="tc-value">
+                                    ${counts[sec].todayIssued}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- TOMORROW -->
+
+                        <div class="tc-day">
+
+                            <div class="tc-day-label">
+                                Tomorrow
+                            </div>
+
+                            <div class="tc-tier tc-tomorrow-sched">
+
+                                <div class="tc-label">
+                                    Sched
+                                </div>
+
+                                <div class="tc-value">
+                                    ${counts[sec].tomorrowScheduled}
+                                </div>
+
+                            </div>
+
+                            <div class="tc-tier tc-tomorrow-issued">
+
+                                <div class="tc-label">
+                                    Issued
+                                </div>
+
+                                <div class="tc-value">
+                                    ${counts[sec].tomorrowIssued}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- THIS WEEK -->
+
+                        <div class="tc-day">
+
+                            <div class="tc-day-label">
+                                This Week
+                            </div>
+
+                            <div class="tc-tier tc-week-sched">
+
+                                <div class="tc-label">
+                                    Sched
+                                </div>
+
+                                <div class="tc-value">
+                                    ${counts[sec].weekScheduled}
+                                </div>
+
+                            </div>
+
+                            <div class="tc-tier tc-week-issued">
+
+                                <div class="tc-label">
+                                    Issued
+                                </div>
+
+                                <div class="tc-value">
+                                    ${counts[sec].weekIssued}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TOTALS -->
+
+                    <div class="tc-total-row">
+
+                        <div class="tc-tier">
+
+                            <div class="tc-day-label">
+                                Issued Today
+                            </div>
+
+                            <div class="tc-value">
+                                ${counts[sec].totalIssuedToday}
+                            </div>
+
+                        </div>
+
+
+                        <div class="tc-tier">
+
+                            <div class="tc-day-label">
+                                Issued this Week
+                            </div>
+
+                            <div class="tc-value">
+                                ${counts[sec].totalIssuedWeek}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `
+            ).join('');
+    }
+
+
+    /* =========================================================
+       INITIAL LOAD
+       ========================================================= */
+
+    async function initDashboard() {
+
+        console.log(
+            'NC-0263 Dashboard starting...'
+        );
+
+
+        /*
+           Run all three data groups initially.
+        */
+
+        await Promise.all([
+
+            fetchAllStatus(),
+
+            fetchTodayCounts(),
+
+            fetchAllBarCharts()
+
+        ]);
+
+
+        console.log(
+            'NC-0263 Dashboard loaded.'
+        );
+
+
+        /*
+           Refresh every 30 seconds.
+        */
+
+        setInterval(
+            fetchAllStatus,
+            30000
+        );
+
+
+        setInterval(
+            fetchTodayCounts,
+            30000
+        );
+
+
+        setInterval(
+            fetchAllBarCharts,
+            30000
+        );
+
+    }
+
+
+    /* =========================================================
+       START
+       ========================================================= */
+
+    initDashboard();
+
+</script>
+
 </body>
 </html>
