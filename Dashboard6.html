@@ -389,55 +389,72 @@ Chart.register(centerTextPlugin);
                     });	
 					 }
 			
-const labels = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-const chartdata2 = {
-  labels: labels,
-  datasets: [{
-    label: 'My First Dataset',
-    data: [65, 59, 80, 81, 56, 55, 40],
-    backgroundColor: [
-      'rgba(255, 99, 132, 0.2)',
-      'rgba(255, 159, 64, 0.2)',
-      'rgba(255, 205, 86, 0.2)',
-      'rgba(75, 192, 192, 0.2)',
-      'rgba(54, 162, 235, 0.2)',
-      'rgba(153, 102, 255, 0.2)',
-      'rgba(201, 203, 207, 0.2)'
-    ],
-    borderColor: [
-      'rgb(255, 99, 132)',
-      'rgb(255, 159, 64)',
-      'rgb(255, 205, 86)',
-      'rgb(75, 192, 192)',
-      'rgb(54, 162, 235)',
-      'rgb(153, 102, 255)',
-      'rgb(201, 203, 207)'
-    ],
-    borderWidth: 1
-  }]
+const config = {
+    type: 'bar',
+    data: {
+        labels: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [
+            {
+                label: 'Scheduled',
+                data: [44, 61, 72, 81, 88, 73, 100, 90, 78],
+                backgroundColor: '#28759b'
+            },
+            {
+                label: 'Issued',
+                data: [44, 60, 72, 73, 56, 10, 12, 8, 7],
+                backgroundColor: '#7ac943'
+            },
+            {
+                label: 'Delayed',
+                data: [0, 33, 36, 35, 12, 0, 0, 0, 0],
+                backgroundColor: '#ff0000'
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            x: {
+                stacked: false,
+                grid: {
+                    display: false
+                }
+            },
+            y: {
+                beginAtZero: true,
+                max: 120,
+                ticks: {
+                    stepSize: 20
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                position: 'right'
+            }
+        }
+    }
 };
 
-					const chartColors2 = GrandTotal > 0 ? ['#2ea043', '#E1E4E8'] : ['#30363d'];
-					if(!chartInstances2 && typeof Chart !== 'undefined') {
+			plugins: {
+    datalabels: {
+        anchor: 'end',
+        align: 'top',
+        color: '#444',
+        font: {
+            size: 11
+        },
+        formatter: value => value > 0 ? value : ''
+    }
+}
+
 					const ctx2 = document.getElementById("barcharhull").getContext('2d');
 			        chartInstances2 = new Chart(ctx2, {
                         type: 'bar',
-                        data: { datasets: [{ data: chartdata2, backgroundColor: chartColors2, borderWidth: 0 }] },
-                        options: {
-   							responsive: true,
-    						maintainAspectRatio: true,
-    						cutout: '75%',
-    						plugins: {
-        						legend: {
-            						display: false
-        							},
-        						centerText: {
-            						percentage: OAPercentage 
-        										}
-    										}
-										}
-                    });	
-					 }
+                        data:  datasets,
+                        options: options,
+    						plugins:[ChartDataLabels]
+										});					 
 					
         }
 
