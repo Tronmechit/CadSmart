@@ -10,6 +10,12 @@
         .dashboard-grid { display: grid; grid-template-columns: 35% 20% 25% 20%; grid-template-rows: 5% 31% 27% 32%; gap: 1.5vh; height: 100%; }
         .panel { background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 1vh; display: flex; flex-direction: column; box-sizing: border-box; overflow: hidden; }
 		.barchart-grid {display: grid; grid-template-columns:100%; grid-template-rows:20% 20% 20% 20% 20% ; gap: 1.5vh; height: 100%;}
+		.area-HullBarchart { grid-column: 1; grid-row: 1; }
+		.area-SOFBarchart  { grid-column: 1; grid-row: 2; }
+		.area-AOFBarchart { grid-column: 1; grid-row: 3; }
+		.area-MOFBarchart { grid-column: 1; grid-row: 4; }
+		.area-EOFBarchart { grid-column: 1; grid-row: 5; }
+		
 		.area-title { grid-column: 1/span 4; grid-row: 1; }
         .area-status { grid-column: 1; grid-row: 2; }
         .area-delay { grid-column: 3; grid-row: 2/ span 2; }
@@ -159,13 +165,22 @@
             <div id="today-count-row" class="today-count-row"></div>
 		</div>	
 		
-        <div class="barchart-grid  panel area-delay">			
-            <h2>Delayed Drawings </h2>
-            <div id="delay-header" class="sub-header">Loading...
-				<div id="delay-count"></div>
+        <div class="barchart-grid">		
+			<div class="panel area-HullBarchart">
+			<h3>test</>
 			</div>
-            <div id="delay-page" class="page-indicator"></div>
-            <div id="delay-list" class="dynamic-list"></div>
+			<div class="panel .area-SOFBarchart">
+			<h3>test</>
+			</div>
+			<div class="panel .area-AOFBarchart">
+			<h3>test</>
+			</div>
+			<div class="panel .area-MOFBarchart">
+			<h3>test</>
+			</div>
+			<div class="panel .area-EOFBarchart">
+			<h3>test</>
+			</div>
         </div>
         <div class="panel area-secwise">
 			<h2> Section-wise Progress</h2>
