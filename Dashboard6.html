@@ -78,13 +78,17 @@
 
         .charts-container { display: flex; justify-content: space-around; flex-grow: 1; align-items: center; padding-top: 0; }
         .charts-container1 { display: flex; justify-content: space-around; flex-grow: 1; align-items: center; padding-top: 0; }
+		.charts-containerbar { display: flex; justify-content: space-around; flex-grow: 1; align-items: center; padding-top: 0; }
+		
         .chart-wrapper { width: 18%; display: flex; flex-direction: column; align-items: center; }
         .chart-label { text-align: center; font-size: 2.5vh; margin-bottom: 0.3vh; color: #8b949e; font-weight: bold; }
         .charts-container1 .chart-wrapper { width: auto; height: 80%; }
+		.charts-containerbar .chart-wrapper { width: auto; height: 80%; }
 
         /* Fixed Aspect Ratio Container to prevent sheering */
         .canvas-container { position: relative; width: 100%; aspect-ratio: 1 / 1; display: flex; justify-content: center; }
         .canvas-container1 { position: relative; height: 100%; aspect-ratio: 1 / 1; display: flex; justify-content: space-around; }
+		.canvas-containerbar { position: relative; height: 100%; aspect-ratio: 1 / 1; display: flex; justify-content: space-around; }
 
         .dynamic-list { font-size: 1.8vh; line-height: 1.6; color: #e6edf3; overflow: hidden; }
         .page-indicator { text-align: right; font-size: 1.8vh; color: #8b949e; font-style: italic; margin-bottom: 1vh; }
@@ -169,6 +173,7 @@
 			    <div style="color: blue; text-align:center" class="barchart-grid">	
 					<div class="panel area-HullBarchart" style ="background-color:#1e222b;">
 					<h2 style = "font-size:16px">HULL PLAN VS PROGRESS</h2>
+						<canvas id="chart-Overall"></canvas>
 					</div>
 					<div class="panel area-SOFBarchart" style ="background-color:#1e222b;">
 					<h2 style = "font-size:16px">SOF PLAN VS PROGRESS</h2>
@@ -226,6 +231,7 @@
 		
 		let chartInstancesOA;
 		let chartInstances1;
+		let chartInstances2;
 		let GrandTotal = 0;
 		let GrandIssue = 0;
 		let OAPercentage;
@@ -366,6 +372,28 @@ Chart.register(centerTextPlugin);
 					const ctx1 = document.getElementById("chart-Overall").getContext('2d');
 			        chartInstances1 = new Chart(ctx1, {
                         type: 'doughnut',
+                        data: { datasets: [{ data: chartData1, backgroundColor: chartColors1, borderWidth: 0 }] },
+                        options: {
+   							responsive: true,
+    						maintainAspectRatio: true,
+    						cutout: '75%',
+    						plugins: {
+        						legend: {
+            						display: false
+        							},
+        						centerText: {
+            						percentage: OAPercentage 
+        										}
+    										}
+										}
+                    });	
+					 }
+
+					const chartColors1 = GrandTotal > 0 ? ['#2ea043', '#E1E4E8'] : ['#30363d'];
+					if(!chartInstances2 && typeof Chart !== 'undefined') {
+					const ctx1 = document.getElementById("chart-Overall").getContext('2d');
+			        chartInstances2 = new Chart(ctx1, {
+                        type: 'bar',
                         data: { datasets: [{ data: chartData1, backgroundColor: chartColors1, borderWidth: 0 }] },
                         options: {
    							responsive: true,
