@@ -388,8 +388,9 @@ Chart.register(centerTextPlugin);
 										}
                     });	
 					 }
-
-			const chartdata2 = {
+			
+const labels = Utils.months({count: 7});
+const chartdata2 = {
   labels: labels,
   datasets: [{
     label: 'My First Dataset',
