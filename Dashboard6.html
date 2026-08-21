@@ -173,7 +173,7 @@
 			    <div style="color: blue; text-align:center" class="barchart-grid">	
 					<div class="panel area-HullBarchart" style ="background-color:#1e222b;">
 					<h2 style = "font-size:16px">HULL PLAN VS PROGRESS</h2>
-						<!--canvas id="chart-Overall"></canvas--!>
+						<canvas id="barcharhull"></canvas>
 					</div>
 					<div class="panel area-SOFBarchart" style ="background-color:#1e222b;">
 					<h2 style = "font-size:16px">SOF PLAN VS PROGRESS</h2>
@@ -391,8 +391,8 @@ Chart.register(centerTextPlugin);
 
 					const chartColors2 = GrandTotal > 0 ? ['#2ea043', '#E1E4E8'] : ['#30363d'];
 					if(!chartInstances2 && typeof Chart !== 'undefined') {
-					const ctx1 = document.getElementById("chart-Overall").getContext('2d');
-			        chartInstances2 = new Chart(ctx1, {
+					const ctx2 = document.getElementById("barcharhull").getContext('2d');
+			        chartInstances2 = new Chart(ctx2, {
                         type: 'bar',
                         data: { datasets: [{ data: chartData1, backgroundColor: chartColors2, borderWidth: 0 }] },
                         options: {
