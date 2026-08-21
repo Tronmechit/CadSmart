@@ -1,216 +1,672 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Design Office Command Center</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body { background-color: #0b0f19; color: #e6edf3; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 1.0vh; height: 100vh; box-sizing: border-box; overflow: hidden; }
-        .dashboard-grid { display: grid; grid-template-columns: 55% 25% 20%; grid-template-rows: 65% 35%; gap: 1.5vh; height: 100%; }
-        .panel { background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 2vh; display: flex; flex-direction: column; box-sizing: border-box; overflow: hidden; }
-        
-        .area-status { grid-column: 1; grid-row: 1; }
-        .area-delay { grid-column: 2; grid-row: 1; }
-        .area-today { grid-column: 1; grid-row: 2; }
-        .area-attendance { grid-column: 2; grid-row: 2; }
-        .area-right { grid-column: 3; grid-row: 1 / span 2; background-color: transparent; border: none; padding: 0; }
-        .area-clock { background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 3vh 2vh; text-align: center; margin-bottom: 1.5vh; }
-        .area-meetings { background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 2vh; flex-grow: 1; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design Office Command Center</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        h2 { font-size: 3vh; margin: 0 0 1.5vh 0; color: #58a6ff; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
-        .sub-header { font-size: 2.2vh; color: #8b949e; text-align: center; margin-bottom: 1vh; }
+<style>
+body{background-color:#0b0f19;color:#e6edf3;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;margin:0;padding:1vh;height:100vh;box-sizing:border-box;overflow:hidden}
+.dashboard-grid{display:grid;grid-template-columns:35% 20% 25% 20%;grid-template-rows:5% 31% 27.5% 32%;gap:1.5vh;height:100%}
+.panel{background-color:#161b22;border:1px solid #30363d;border-radius:8px;padding:1vh;display:flex;flex-direction:column;box-sizing:border-box;overflow:hidden}
 
-        table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-bottom: 2vh; }
-        th, td { text-align: center; padding: 0.3vh; font-size: 2.5vh; font-weight: bold; border: 1px solid #30363d; }
-        th { background-color: #21262d; color: #c9d1d9; }
-        .col-caption { text-align: left; width: 40%; }
-        
-        .bg-white { background-color: #ffffff; color: #000000; }
-        .bg-blue { background-color: #00B0F0; color: #ffffff; }
-        .bg-yellow { background-color: #FFFF00; color: #000000; }
-        .bg-orange { background-color: #FFC000; color: #000000; }
-        .bg-green { background-color: #2ea043; color: #ffffff; }
-        .bg-red { background-color: #FF0000; color: #ffffff; }
+.barchart-grid{display:grid;grid-template-columns:100%;grid-template-rows:19.4% 19.4% 19.4% 19.4% 19.4%;gap:.8vh;height:100%}
+.area-HullBarchart{grid-column:1;grid-row:1}
+.area-SOFBarchart{grid-column:1;grid-row:2}
+.area-AOFBarchart{grid-column:1;grid-row:3}
+.area-MOFBarchart{grid-column:1;grid-row:4}
+.area-EOFBarchart{grid-column:1;grid-row:5}
 
-        .charts-container { display: flex; justify-content: space-around; flex-grow: 1; align-items: center; padding-top: .1vh; }
-        .chart-wrapper { width: 18%; display: flex; flex-direction: column; align-items: center; }
-        .chart-label { text-align: center; font-size: 1.8vh; margin-bottom: 0.5vh; color: #8b949e; font-weight: bold; }
-        
-        /* Fixed Aspect Ratio Container to prevent sheering */
-        .canvas-container { position: relative; width: 100%; aspect-ratio: 1 / 1; display: flex; justify-content: center; }
+.area-title{grid-column:1/span 4;grid-row:1}
+.area-status{grid-column:1;grid-row:2}
+.area-barcharts{grid-column:3;grid-row:2/span 3}
+.area-todaytomorrow{grid-column:1/span 2;grid-row:3}
+.area-secwise{grid-column:1/span 2;grid-row:4;padding:.5vh}
+.area-overallprogress{grid-column:2;grid-row:2;padding:.5vh}
+.area-right{grid-column:4;grid-row:2/span 3;background-color:transparent;border:none;padding:0}
+.area-clock{background-color:#161b22;border:1px solid #30363d;border-radius:8px;padding:3vh 2vh;text-align:center;margin-bottom:1.5vh}
+.area-meetings{background-color:#161b22;border:1px solid #30363d;border-radius:8px;padding:2vh;flex-grow:1}
 
-        .dynamic-list { font-size: 2vh; line-height: 1.6; color: #e6edf3; overflow: hidden; }
-        .page-indicator { text-align: right; font-size: 1.8vh; color: #8b949e; font-style: italic; margin-bottom: 1vh; }
-        #time-display { font-size: 7vh; font-weight: lighter; color: #ffffff; margin: 0; line-height: 1; letter-spacing: 2px;}
-        #date-display { font-size: 2.5vh; color: #58a6ff; margin-top: 1vh; }
-        .meeting-item { background-color: #21262d; padding: 1.5vh; margin-bottom: 1.5vh; border-radius: 4px; border-left: 4px solid #a371f7; }
-        .meeting-time { font-weight: bold; color: #a371f7; font-size: 2.2vh; }
-        .meeting-title { font-size: 1.8vh; margin-top: 0.5vh; }
-    </style>
+h2{font-size:3vh;margin:0 0 1.5vh 0;color:#58a6ff;text-transform:uppercase;letter-spacing:1px;text-align:center}
+h3{font-size:1.5vh;margin:0 0 1.5vh 0;color:#008000;text-transform:uppercase;letter-spacing:.8px;text-align:center}
+.area-secwise h2,.area-overallprogress h2{margin:.25vh 0}
+.area-secwise h3{margin:0 0 .4vh 0}
+.sub-header{font-size:2.2vh;color:#8b949e;text-align:center;margin-bottom:1vh}
+
+table{width:100%;border-collapse:collapse;table-layout:fixed;margin-bottom:1.2vh}
+th,td{text-align:center;padding:.3vh;font-size:2.5vh;font-weight:bold;border:1px solid #30363d}
+th{background-color:#21262d;color:#c9d1d9}
+.col-caption{text-align:left;width:40%}
+.area-status h2{margin-bottom:.6vh}
+.area-status table{margin-bottom:.6vh}
+.area-status th,.area-status td{padding:.15vh;font-size:2vh}
+.area-status .sub-header{margin-bottom:.3vh}
+
+.bg-white{background-color:#fff;color:#000}
+.bg-pale{background-color:#E6E6FA;color:#000}
+.bg-blue{background-color:#00B0F0;color:#fff}
+.bg-yellow{background-color:#FFFF00;color:#000}
+.bg-orange{background-color:#FFC000;color:#000}
+.bg-green{background-color:#2ea043;color:#fff}
+.bg-red{background-color:#FF0000;color:#fff}
+
+.today-count-row{display:flex;justify-content:center;gap:1vh;margin-top:.5vh}
+.today-count-box{flex:1;background-color:#21262d;border:1px solid #30363d;border-radius:6px;text-align:center;padding:.3vh;overflow:hidden}
+.today-count-box .tc-section{font-size:1.6vh;color:#e6edf3;letter-spacing:.5px;margin-bottom:.3vh;font-weight:600}
+.tc-days{display:flex;gap:.3vh}
+.tc-day{flex:1;display:flex;flex-direction:column;gap:.25vh;min-width:0}
+.tc-day-label{font-size:1vh;color:#8b949e;text-transform:uppercase;letter-spacing:.3px;font-weight:600;margin-bottom:.1vh;height:1.5vh;display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.today-count-box .tc-tier{border-radius:4px;padding:.2vh 0}
+.today-count-box .tc-label{font-size:1.25vh;letter-spacing:.2px;font-weight:500}
+.today-count-box .tc-value{font-size:2.2vh;font-weight:600;line-height:1.1}
+.today-count-box .tc-scheduled{background-color:#FFC000}
+.today-count-box .tc-scheduled .tc-label,.today-count-box .tc-scheduled .tc-value{color:#000}
+.today-count-box .tc-issued{background-color:#2ea043}
+.today-count-box .tc-issued .tc-label,.today-count-box .tc-issued .tc-value{color:#fff}
+.today-count-box .tc-tomorrow-sched{background-color:#58a6ff}
+.today-count-box .tc-tomorrow-sched .tc-label,.today-count-box .tc-tomorrow-sched .tc-value{color:#000}
+.today-count-box .tc-tomorrow-issued{background-color:#2ea043}
+.today-count-box .tc-tomorrow-issued .tc-label,.today-count-box .tc-tomorrow-issued .tc-value{color:#fff}
+.today-count-box .tc-week-sched{background-color:#a371f7}
+.today-count-box .tc-week-sched .tc-label,.today-count-box .tc-week-sched .tc-value{color:#000}
+.today-count-box .tc-week-issued{background-color:#2ea043}
+.today-count-box .tc-week-issued .tc-label,.today-count-box .tc-week-issued .tc-value{color:#fff}
+.tc-total-row{display:flex;gap:.3vh;margin-top:.35vh;padding-top:.35vh;border-top:1px solid #30363d}
+.tc-total-row .tc-tier{flex:1;min-width:0;background-color:#1f6f78}
+.tc-total-row .tc-label,.tc-total-row .tc-value{color:#fff}
+.tc-total-row .tc-day-label{color:#7fd7de}
+
+.charts-container{display:flex;justify-content:space-around;flex-grow:1;align-items:center;padding-top:0}
+.charts-container1{display:flex;justify-content:space-around;flex-grow:1;align-items:center;padding-top:0}
+.chart-wrapper{width:18%;display:flex;flex-direction:column;align-items:center}
+.chart-label{text-align:center;font-size:2.5vh;margin-bottom:.3vh;color:#8b949e;font-weight:bold}
+.charts-container1 .chart-wrapper{width:auto;height:80%}
+.canvas-container{position:relative;width:100%;aspect-ratio:1/1;display:flex;justify-content:center}
+.canvas-container1{position:relative;height:100%;aspect-ratio:1/1;display:flex;justify-content:space-around}
+
+.bar-chart-container{position:relative;flex:1;min-height:0;width:100%}
+.bar-chart-container canvas{width:100%!important;height:100%!important}
+
+.dynamic-list{font-size:1.8vh;line-height:1.6;color:#e6edf3;overflow:hidden}
+.page-indicator{text-align:right;font-size:1.8vh;color:#8b949e;font-style:italic;margin-bottom:1vh}
+#time-display{font-size:10vh;font-weight:lighter;color:#fff;margin:0;line-height:1;letter-spacing:2px}
+#date-display{font-size:2.5vh;color:#58a6ff;margin-top:1vh}
+.meeting-item{background-color:#21262d;padding:1.5vh;margin-bottom:1.5vh;border-radius:4px;border-left:4px solid #a371f7}
+.meeting-time{font-weight:bold;color:#a371f7;font-size:2.2vh}
+.meeting-title{font-size:1.8vh;margin-top:.5vh}
+
+@media(max-width:820px){
+body{height:auto;min-height:100vh;overflow-y:auto;padding:3vw}
+.dashboard-grid{display:flex;flex-direction:column;height:auto;gap:3vw}
+.panel,.area-right{grid-column:auto;grid-row:auto}
+.panel{overflow:visible;padding:4vw}
+.area-secwise,.area-overallprogress{padding:3vw}
+h2{font-size:5.5vw;margin-bottom:2vw}
+h3{font-size:3vw;margin-bottom:2vw}
+.area-secwise h2,.area-overallprogress h2{margin:1vw 0}
+.area-secwise h3{margin:0 0 1.5vw 0}
+.sub-header{font-size:4vw;margin-bottom:2vw}
+table{margin-bottom:2vw}
+th,td{font-size:3.6vw;padding:1.2vw}
+.area-status h2{margin-bottom:2vw}
+.area-status table{margin-bottom:2vw}
+.area-status th,.area-status td{font-size:2.2vw;padding:1vw}
+.area-status .sub-header{margin-bottom:1.5vw}
+.today-count-row{flex-wrap:wrap;gap:2vw}
+.today-count-box{flex:1 1 100%;padding:2vw}
+.today-count-box .tc-section{font-size:4vw;margin-bottom:1.5vw}
+.tc-day-label{font-size:2.4vw;height:3.2vw}
+.today-count-box .tc-label{font-size:2.6vw}
+.today-count-box .tc-value{font-size:5vw}
+.tc-days{gap:1.5vw}
+.today-count-box .tc-tier{padding:1vw 0}
+.tc-total-row{gap:1.5vw;margin-top:2vw;padding-top:2vw}
+.charts-container{flex-wrap:wrap;row-gap:3vw}
+.chart-wrapper{width:30%}
+.chart-label{font-size:3.4vw;margin-bottom:1vw}
+.charts-container1{padding:2vw 0}
+.charts-container1 .chart-wrapper{width:60%;height:auto}
+.canvas-container1{height:auto}
+.area-right{display:flex;flex-direction:column}
+.area-clock{display:none}
+.area-meetings,.area-s{padding:4vw}
+.meeting-item{padding:3vw;margin-bottom:2.5vw}
+.meeting-time{font-size:4vw}
+.meeting-title{font-size:3.4vw;margin-top:1vw}
+.dynamic-list{font-size:3.6vw}
+.page-indicator{font-size:3vw}
+}
+</style>
 </head>
+
 <body>
-    <div class="dashboard-grid">
-        <div class="panel area-status">
-            <h2>Drawing Status</h2>
-            <table>
-                <thead>
-                    <tr><th class="col-caption">Status</th><th>HULL</th><th>SOF</th><th>AOF</th><th>MOF</th><th>EOF</th><th style="background-color: #21262d; border-left: 2px solid #0b0f19;">TOTAL</th></tr>
-                </thead>
-                <tbody id="status-table-body"></tbody>
-            </table>
-            <div class="charts-container">
-                <div class="chart-wrapper"><div class="chart-label">HULL</div><div class="canvas-container"><canvas id="chart-Hull"></canvas></div></div>
-                <div class="chart-wrapper"><div class="chart-label">SOF</div><div class="canvas-container"><canvas id="chart-SOF"></canvas></div></div>
-                <div class="chart-wrapper"><div class="chart-label">AOF</div><div class="canvas-container"><canvas id="chart-AOF"></canvas></div></div>
-                <div class="chart-wrapper"><div class="chart-label">MOF</div><div class="canvas-container"><canvas id="chart-MOF"></canvas></div></div>
-                <div class="chart-wrapper"><div class="chart-label">EOF</div><div class="canvas-container"><canvas id="chart-EOF"></canvas></div></div>
-            </div>
-        </div>
-        <div class="panel area-delay">
-            <h2>Delayed Drawings</h2>
-            <div id="delay-header" class="sub-header">Loading...</div>
-            <div id="delay-page" class="page-indicator"></div>
-            <div id="delay-list" class="dynamic-list"></div>
-        </div>
-        <div class="panel area-today">
-            <h2>Today's Drawings</h2>
-            <div id="today-header" class="sub-header">Loading...</div>
-            <div id="today-page" class="page-indicator"></div>
-            <div id="today-list" class="dynamic-list"></div>
-        </div>
-        <div class="panel area-attendance">
-            <h2>...</h2>
-            <div style="display: flex; height: 100%; align-items: center; justify-content: center; color: #666; font-size: 2vh; text-align: center;">RESERVED</div>
-        </div>
-        <div class="area-right" style="display: flex; flex-direction: column;">
-            <div class="area-clock"><div id="time-display">00:00</div><div id="date-display">Day, Month 00</div></div>
-            <div class="panel area-meetings">
-                <h2>Today's Schedules</h2>
-                <div class="meeting-item"><div class="meeting-time">07:30 Hrs</div><div class="meeting-title">Yard Cleaning Campaign </div></div>
-                <div class="meeting-item"><div class="meeting-time">13:00 Hrs</div><div class="meeting-title">LRQA QMS Certification Renewal Audit </div></div>
-                <div class="meeting-item"><div class="meeting-time">13:30 Hrs</div><div class="meeting-title">NC 0263 and NC 0264 - Meeting with Owners</div></div>
-            </div>
-        </div>
-    </div>
+<div class="dashboard-grid">
 
-    <script>
-        const baseUrl = './'; 
-        const sections = ['Hull', 'SOF', 'AOF', 'MOF', 'EOF'];
-        const chartInstances = {}; 
+<div class="panel area-title">
+<h2>NC-0263 LIVE DASHBOARD</h2>
+</div>
 
-        function updateClock() {
-            const now = new Date();
-            let hours = now.getHours() % 12 || 12;
-            let minutes = now.getMinutes().toString().padStart(2, '0');
-            document.getElementById('time-display').innerText = `${hours}:${minutes}`;
-            document.getElementById('date-display').innerText = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
+<div class="panel area-status">
+<h2>Drawing Status - REV A</h2>
+<table>
+<thead>
+<tr><th class="col-caption">Status</th><th>HULL</th><th>SOF</th><th>AOF</th><th>MOF</th><th>EOF</th><th style="background-color:#21262d;border-left:2px solid #0b0f19">TOTAL</th></tr>
+</thead>
+<tbody id="status-table-body"></tbody>
+</table>
+</div>
 
-        async function fetchAllStatus() {
-            const tableBody = document.getElementById('status-table-body');
-            const dataMap = {};
-            await Promise.all(sections.map(async (sec) => {
-                try {
-                    const res = await fetch(`${baseUrl}${sec}ToDisplay.json?t=${new Date().getTime()}`);
-                    dataMap[sec] = res.ok ? await res.json() : {};
-                } catch { dataMap[sec] = {}; }
-            }));
+<div class="panel area-todaytomorrow">
+<h2>Today, Tomorrow &amp; This Week's Target Drawings</h2>
+<div id="today-count-row" class="today-count-row"></div>
+</div>
 
-            const rows = [
-                { key: '1', label: 'Total Drawings', css: 'bg-white' },
-                { key: '2', label: 'Forwarded for Checking', css: 'bg-blue' },
-                { key: '3', label: 'Checked, Not Approved', css: 'bg-yellow' },
-                { key: '4', label: 'Approved, To be issued', css: 'bg-orange' },
-                { key: '5', label: 'Issued', css: 'bg-green' },
-                { key: '6', label: 'Current Delay', css: 'bg-red' }
-            ];
+<div class="panel area-barcharts">
+<div class="barchart-grid">
 
-            let html = '';
-            rows.forEach(row => {
-                let rowHtml = `<tr><td class="col-caption ${row.css}">${row.label}</td>`;
-                let rowTotal = 0;
-                sections.forEach(sec => {
-                    let val = parseInt(dataMap[sec][row.key] || 0);
-                    rowTotal += val;
-                    rowHtml += `<td class="${row.css}">${val}</td>`;
-                });
-                rowHtml += `<td class="${row.css}" style="border-left: 2px solid #0b0f19;">${rowTotal}</td></tr>`;
-                html += rowHtml;
-            });
-            tableBody.innerHTML = html;
+<div class="panel area-HullBarchart" style="background-color:#1e222b">
+<h2 style="font-size:16px">HULL PLAN VS PROGRESS</h2>
+<div class="bar-chart-container"><canvas id="bar-Hull"></canvas></div>
+</div>
 
-            sections.forEach(sec => {
-                const issued = parseInt(dataMap[sec]['5'] || 0);
-                const progress = parseInt(dataMap[sec]['1'] || 0) - parseInt(dataMap[sec]['5'] || 0) ;
-                const total = issued + progress;
-                const chartData = total > 0 ? [issued, progress] : [1];
-                const chartColors = total > 0 ? ['#2ea043', '#FF4B33'] : ['#30363d'];
+<div class="panel area-SOFBarchart" style="background-color:#1e222b">
+<h2 style="font-size:16px">SOF PLAN VS PROGRESS</h2>
+<div class="bar-chart-container"><canvas id="bar-SOF"></canvas></div>
+</div>
 
-                if(!chartInstances[sec] && typeof Chart !== 'undefined') {
-                    const ctx = document.getElementById(`chart-${sec}`).getContext('2d');
-                    chartInstances[sec] = new Chart(ctx, {
-                        type: 'doughnut',
-                        data: { datasets: [{ data: chartData, backgroundColor: chartColors, borderWidth: 0 }] },
-                        options: { responsive: true, maintainAspectRatio: true, cutout: '75%', plugins: { legend: { display: false } } }
-                    });
-                } else if(chartInstances[sec]) {
-                    chartInstances[sec].data.datasets[0].data = chartData;
-                    chartInstances[sec].data.datasets[0].backgroundColor = chartColors;
-                    chartInstances[sec].update();
-                }
-            });
-        }
+<div class="panel area-AOFBarchart" style="background-color:#1e222b">
+<h2 style="font-size:16px">AOF PLAN VS PROGRESS</h2>
+<div class="bar-chart-container"><canvas id="bar-AOF"></canvas></div>
+</div>
 
-        class Rotator {
-            constructor(fileSuffix, titlePrefix, listId, headerId, pageId, isDateFiltered) {
-                this.fileSuffix = fileSuffix; this.titlePrefix = titlePrefix; this.listId = listId; this.headerId = headerId; this.pageId = pageId; this.isDateFiltered = isDateFiltered;
-                this.secIndex = 0; this.pageIndex = 0; this.itemsPerPage = 5; this.currentData = [];
-            }
-            async tick() {
-                if (this.currentData.length === 0 || this.pageIndex >= Math.ceil(this.currentData.length / this.itemsPerPage)) {
-                    this.secIndex = (this.secIndex + 1) % sections.length;
-                    await this.fetchData(sections[this.secIndex]);
-                    this.pageIndex = 0;
-                }
-                this.renderPage(); this.pageIndex++;
-            }
-            async fetchData(section) {
-                document.getElementById(this.headerId).innerText = `${section} - FETCHING...`;
-                try {
-                    const res = await fetch(`${baseUrl}${section}${this.fileSuffix}.json?t=${new Date().getTime()}`);
-                    const rawData = await res.json();
-                    let arr = Object.keys(rawData).map(key => ({ dwg: key, ...rawData[key] }));
-                    if (this.isDateFiltered) {
-                        const today = new Date().toISOString().split('T')[0];
-                        arr = arr.filter(item => item.Target_Date === today);
-                    }
-                    this.currentData = arr;
-                } catch (e) { this.currentData = []; }
-                document.getElementById(this.headerId).innerText = `${section}: ${this.titlePrefix}`;
-            }
-            renderPage() {
-                const totalPages = Math.max(1, Math.ceil(this.currentData.length / this.itemsPerPage));
-                const chunk = this.currentData.slice(this.pageIndex * this.itemsPerPage, (this.pageIndex + 1) * this.itemsPerPage);
-                document.getElementById(this.pageId).innerText = `Page ${this.pageIndex + 1} of ${totalPages}`;
-                document.getElementById(this.listId).innerHTML = chunk.length ? chunk.map(i => `<div style="margin-bottom:1vh; border-bottom:1px solid #30363d;"><b>${i.dwg}</b><br><small>${i.Drawing_Name || i.Target_Date}</small></div>`).join('') : 'No drawings to display here...';
-            }
-        }
+<div class="panel area-MOFBarchart" style="background-color:#1e222b">
+<h2 style="font-size:16px">MOF PLAN VS PROGRESS</h2>
+<div class="bar-chart-container"><canvas id="bar-MOF"></canvas></div>
+</div>
 
-        const delayRotator = new Rotator('DelayToDisplay', 'DELAYED', 'delay-list', 'delay-header', 'delay-page', false);
-        const todayRotator = new Rotator('Drawings', 'TODAY', 'today-list', 'today-header', 'today-page', true);
+<div class="panel area-EOFBarchart" style="background-color:#1e222b">
+<h2 style="font-size:16px">EOF PLAN VS PROGRESS</h2>
+<div class="bar-chart-container"><canvas id="bar-EOF"></canvas></div>
+</div>
 
-        fetchAllStatus();
-        setInterval(fetchAllStatus, 30000);
-        async function init() {
-            await delayRotator.fetchData(sections[0]);
-            await todayRotator.fetchData(sections[0]);
-            delayRotator.tick(); todayRotator.tick();
-            setInterval(() => delayRotator.tick(), 8000);
-            setInterval(() => todayRotator.tick(), 8000);
-        }
-        init();
-    </script>
+</div>
+</div>
+
+<div class="panel area-secwise">
+<h2>Section-wise Progress</h2>
+<h3>(Green - Issued)</h3>
+<div class="charts-container">
+<div class="chart-wrapper"><div class="chart-label">HULL</div><div class="canvas-container"><canvas id="chart-Hull"></canvas></div></div>
+<div class="chart-wrapper"><div class="chart-label">SOF</div><div class="canvas-container"><canvas id="chart-SOF"></canvas></div></div>
+<div class="chart-wrapper"><div class="chart-label">AOF</div><div class="canvas-container"><canvas id="chart-AOF"></canvas></div></div>
+<div class="chart-wrapper"><div class="chart-label">MOF</div><div class="canvas-container"><canvas id="chart-MOF"></canvas></div></div>
+<div class="chart-wrapper"><div class="chart-label">EOF</div><div class="canvas-container"><canvas id="chart-EOF"></canvas></div></div>
+</div>
+</div>
+
+<div class="panel area-overallprogress">
+<h2>Overall Progress</h2>
+<div class="charts-container1">
+<div class="chart-wrapper">
+<div class="canvas-container1"><canvas id="chart-Overall"></canvas></div>
+</div>
+</div>
+</div>
+
+<div class="area-right" style="display:flex;flex-direction:column">
+<div class="area-clock">
+<div id="time-display">00:00</div>
+<div id="date-display">Day, Month 00</div>
+</div>
+
+<div class="panel area-s">
+<h2>Today's Schedules</h2>
+<div class="meeting-item"><div class="meeting-time"></div><div class="meeting-title"></div></div>
+<div class="meeting-item"><div class="meeting-time"> </div><div class="meeting-title">...</div></div>
+<div class="meeting-item"><div class="meeting-time"> </div><div class="meeting-title">...</div></div>
+<div class="meeting-item"><div class="meeting-time"> </div><div class="meeting-title">...</div></div>
+</div>
+</div>
+
+</div>
+
+<script>
+const baseUrl='./';
+const sections=['Hull','SOF','AOF','MOF','EOF'];
+const chartInstances={};
+const barChartInstances={};
+const dataMap={};
+let chartInstances1=null;
+let GrandTotal=0;
+let GrandIssue=0;
+let OAPercentage=0;
+
+function updateClock(){
+const now=new Date();
+const hours=now.getHours()%12||12;
+const minutes=now.getMinutes().toString().padStart(2,'0');
+document.getElementById('time-display').innerText=`${hours}:${minutes}`;
+document.getElementById('date-display').innerText=now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+}
+setInterval(updateClock,1000);
+updateClock();
+
+const centerTextPlugin={
+id:'centerText',
+afterDraw(chart){
+const meta=chart.getDatasetMeta(0);
+if(!meta.data.length)return;
+const {ctx}=chart;
+const centerX=meta.data[0].x;
+const centerY=meta.data[0].y;
+const percentage=chart.options.plugins.centerText.percentage;
+ctx.save();
+ctx.fillStyle='#ffffff';
+ctx.font='bold 50px Segoe UI';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText(`${percentage}%`,centerX,centerY);
+ctx.restore();
+}
+};
+
+const barValuePlugin={
+id:'barValuePlugin',
+afterDatasetsDraw(chart){
+const {ctx}=chart;
+ctx.save();
+ctx.font='bold 8px Segoe UI';
+ctx.fillStyle='#e6edf3';
+ctx.textAlign='center';
+ctx.textBaseline='bottom';
+chart.data.datasets.forEach((dataset,datasetIndex)=>{
+const meta=chart.getDatasetMeta(datasetIndex);
+meta.data.forEach((bar,index)=>{
+const value=dataset.data[index];
+if(value===null||value===undefined)return;
+const y=bar.y-4-(datasetIndex*9);
+ctx.fillText(String(value),bar.x,y);
+});
+});
+ctx.restore();
+}
+};
+
+Chart.register(centerTextPlugin,barValuePlugin);
+
+function parseDate(value){
+if(!value||typeof value!=='string')return null;
+const m=value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+if(!m)return null;
+const d=new Date(Number(m[1]),Number(m[2])-1,Number(m[3]));
+return isNaN(d.getTime())?null:d;
+}
+
+function monthKey(date){
+return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}`;
+}
+
+function monthLabel(key){
+const parts=key.split('-');
+return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][Number(parts[1])-1];
+}
+
+function addMonths(date,count){
+return new Date(date.getFullYear(),date.getMonth()+count,1);
+}
+
+function buildMonthRange(items){
+const dates=[];
+items.forEach(item=>{
+const target=parseDate(item.Target_Date);
+const issue=parseDate(item.Issue_Date);
+if(target)dates.push(new Date(target.getFullYear(),target.getMonth(),1));
+if(issue)dates.push(new Date(issue.getFullYear(),issue.getMonth(),1));
+});
+if(!dates.length)return [];
+let min=new Date(Math.min(...dates.map(d=>d.getTime())));
+let max=new Date(Math.max(...dates.map(d=>d.getTime())));
+const result=[];
+while(min<=max){
+result.push(monthKey(min));
+min=addMonths(min,1);
+}
+return result;
+}
+
+function calculateBarData(rawData){
+const all=Object.values(rawData).filter(item=>{
+return item&&item.rev&&item.rev.trim().toUpperCase()==='A';
+});
+
+const monthKeys=buildMonthRange(all);
+const scheduled={};
+const issued={};
+const delayed={};
+
+monthKeys.forEach(k=>{
+scheduled[k]=0;
+issued[k]=0;
+delayed[k]=0;
+});
+
+const today=new Date();
+today.setHours(0,0,0,0);
+
+all.forEach(item=>{
+const target=parseDate(item.Target_Date);
+const issue=parseDate(item.Issue_Date);
+
+if(target){
+const targetKey=monthKey(target);
+if(scheduled[targetKey]===undefined){
+scheduled[targetKey]=0;
+issued[targetKey]=0;
+delayed[targetKey]=0;
+}
+scheduled[targetKey]++;
+
+if(issue){
+const issueKey=monthKey(issue);
+if(issued[issueKey]===undefined){
+issued[issueKey]=0;
+scheduled[issueKey]=0;
+delayed[issueKey]=0;
+}
+issued[issueKey]++;
+
+if(issue>target)delayed[targetKey]++;
+}else if(target<today){
+delayed[targetKey]++;
+}
+}else if(issue){
+const issueKey=monthKey(issue);
+if(issued[issueKey]===undefined){
+issued[issueKey]=0;
+scheduled[issueKey]=0;
+delayed[issueKey]=0;
+}
+issued[issueKey]++;
+}
+});
+
+const keys=Object.keys({...scheduled,...issued,...delayed}).sort();
+return{
+keys,
+labels:keys.map(monthLabel),
+scheduled:keys.map(k=>scheduled[k]||0),
+issued:keys.map(k=>issued[k]||0),
+delayed:keys.map(k=>delayed[k]||0)
+};
+}
+
+function createOrUpdateBarChart(section,rawData){
+const chartData=calculateBarData(rawData);
+const canvas=document.getElementById(`bar-${section}`);
+if(!canvas)return;
+
+const datasets=[
+{label:'Scheduled',data:chartData.scheduled,backgroundColor:'#28759b',borderWidth:0},
+{label:'Issued',data:chartData.issued,backgroundColor:'#7ac943',borderWidth:0},
+{label:'Delayed',data:chartData.delayed,backgroundColor:'#ff0000',borderWidth:0}
+];
+
+if(!barChartInstances[section]){
+barChartInstances[section]=new Chart(canvas.getContext('2d'),{
+type:'bar',
+data:{labels:chartData.labels,datasets},
+options:{
+responsive:true,
+maintainAspectRatio:false,
+animation:false,
+layout:{padding:{top:12,right:4,left:0,bottom:0}},
+scales:{
+x:{
+stacked:false,
+grid:{display:false},
+ticks:{color:'#8b949e',font:{size:9},maxRotation:45,minRotation:45,autoSkip:true}
+},
+y:{
+beginAtZero:true,
+suggestedMax:Math.max(10,Math.ceil(Math.max(...chartData.scheduled,...chartData.issued,...chartData.delayed)/20)*20),
+ticks:{color:'#8b949e',font:{size:9},stepSize:20},
+grid:{color:'rgba(139,148,158,0.18)'}
+}
+},
+plugins:{
+legend:{
+position:'right',
+labels:{color:'#e6edf3',font:{size:8},boxWidth:14,boxHeight:9,padding:5}
+},
+tooltip:{
+callbacks:{
+title:function(items){
+if(!items.length)return '';
+const key=chartData.keys[items[0].dataIndex];
+const parts=key.split('-');
+return `${monthLabel(key)} ${parts[0]}`;
+}
+}
+}
+}
+}
+});
+}else{
+barChartInstances[section].data.labels=chartData.labels;
+barChartInstances[section].data.datasets=datasets;
+barChartInstances[section].options.scales.y.suggestedMax=Math.max(10,Math.ceil(Math.max(...chartData.scheduled,...chartData.issued,...chartData.delayed)/20)*20);
+barChartInstances[section].update('none');
+}
+}
+
+async function fetchAllStatus(){
+GrandTotal=0;
+GrandIssue=0;
+
+await Promise.all(sections.map(async sec=>{
+try{
+const res=await fetch(`${baseUrl}${sec}ToDisplay.json?t=${Date.now()}`);
+dataMap[sec]=res.ok?await res.json():{};
+}catch{
+dataMap[sec]={};
+}
+}));
+
+const rows=[
+{key:'1',label:'Total Drawings',css:'bg-white'},
+{key:'6',label:'Preperation Inprogress',css:'bg-pale'},
+{key:'2',label:'Under Checking',css:'bg-blue'},
+{key:'3',label:'Checked, Not Approved',css:'bg-yellow'},
+{key:'4',label:'Approved, To be issued',css:'bg-orange'},
+{key:'5',label:'Issued',css:'bg-green'},
+{key:'6',label:'Current Delay',css:'bg-red'}
+];
+
+let html='';
+rows.forEach(row=>{
+let rowHtml=`<tr><td class="col-caption ${row.css}">${row.label}</td>`;
+let rowTotal=0;
+sections.forEach(sec=>{
+const val=parseInt(dataMap[sec][row.key]||0);
+rowTotal+=val;
+rowHtml+=`<td class="${row.css}">${val}</td>`;
+});
+rowHtml+=`<td class="${row.css}" style="border-left:2px solid #0b0f19">${rowTotal}</td></tr>`;
+html+=rowHtml;
+});
+document.getElementById('status-table-body').innerHTML=html;
+
+sections.forEach(sec=>{
+const issued=parseInt(dataMap[sec]['5']||0);
+const total=parseInt(dataMap[sec]['1']||0);
+const progress=Math.max(0,total-issued);
+const percentage=total>0?Math.round(issued/total*100):0;
+GrandTotal+=total;
+GrandIssue+=issued;
+
+const chartData=total>0?[issued,progress]:[1];
+const chartColors=total>0?['#2ea043','#E1E4E8']:['#30363d'];
+
+if(!chartInstances[sec]){
+const canvas=document.getElementById(`chart-${sec}`);
+if(canvas){
+chartInstances[sec]=new Chart(canvas.getContext('2d'),{
+type:'doughnut',
+data:{datasets:[{data:chartData,backgroundColor:chartColors,borderWidth:0}]},
+options:{
+responsive:true,
+maintainAspectRatio:true,
+cutout:'75%',
+plugins:{
+legend:{display:false},
+centerText:{percentage}
+}
+}
+});
+}
+}else{
+chartInstances[sec].data.datasets[0].data=chartData;
+chartInstances[sec].data.datasets[0].backgroundColor=chartColors;
+chartInstances[sec].options.plugins.centerText.percentage=percentage;
+chartInstances[sec].update('none');
+}
+
+createOrUpdateBarChart(sec,[]);
+});
+});
+
+OAPercentage=GrandTotal>0?Math.round(GrandIssue/GrandTotal*100):0;
+const overallData=GrandTotal>0?[GrandIssue,GrandTotal-GrandIssue]:[1];
+
+if(!chartInstances1){
+const canvas=document.getElementById('chart-Overall');
+if(canvas){
+chartInstances1=new Chart(canvas.getContext('2d'),{
+type:'doughnut',
+data:{datasets:[{data:overallData,backgroundColor:GrandTotal>0?['#2ea043','#E1E4E8']:['#30363d'],borderWidth:0}]},
+options:{
+responsive:true,
+maintainAspectRatio:true,
+cutout:'75%',
+plugins:{legend:{display:false},centerText:{percentage:OAPercentage}}
+}
+});
+}
+}else{
+chartInstances1.data.datasets[0].data=overallData;
+chartInstances1.data.datasets[0].backgroundColor=GrandTotal>0?['#2ea043','#E1E4E8']:['#30363d'];
+chartInstances1.options.plugins.centerText.percentage=OAPercentage;
+chartInstances1.update('none');
+}
+
+await fetchBarCharts();
+}
+
+async function fetchBarCharts(){
+await Promise.all(sections.map(async sec=>{
+try{
+const res=await fetch(`${baseUrl}${sec}Drawings.json?t=${Date.now()}`);
+if(!res.ok)return;
+const rawData=await res.json();
+createOrUpdateBarChart(sec,rawData);
+}catch(e){
+console.error(`Error loading ${sec}Drawings.json`,e);
+}
+}));
+}
+
+async function fetchTodayCounts(){
+const now=new Date();
+const tomorrow=new Date(now);
+tomorrow.setDate(tomorrow.getDate()+1);
+
+const toDateStr=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const todayStr=toDateStr(now);
+const tomorrowStr=toDateStr(tomorrow);
+
+const dayOfWeek=now.getDay();
+const diffToMonday=dayOfWeek===0?-6:1-dayOfWeek;
+const monday=new Date(now);
+monday.setDate(monday.getDate()+diffToMonday);
+monday.setHours(0,0,0,0);
+
+const sunday=new Date(monday);
+sunday.setDate(sunday.getDate()+6);
+sunday.setHours(0,0,0,0);
+
+const counts={};
+
+await Promise.all(sections.map(async sec=>{
+try{
+const res=await fetch(`${baseUrl}${sec}Drawings.json?t=${Date.now()}`);
+const rawData=res.ok?await res.json():{};
+const all=Object.values(rawData).filter(item=>item&&item.rev&&item.rev.trim().toUpperCase()==='A');
+
+const todayArr=all.filter(item=>item.Target_Date===todayStr);
+const todayIssued=todayArr.filter(item=>item.Issue_Date&&item.Issue_Date!=='').length;
+
+const tomorrowArr=all.filter(item=>item.Target_Date===tomorrowStr);
+const tomorrowIssued=tomorrowArr.filter(item=>item.Issue_Date&&item.Issue_Date!=='').length;
+
+const weekArr=all.filter(item=>{
+if(!item.Target_Date)return false;
+const d=parseDate(item.Target_Date);
+return d&&d>=monday&&d<=sunday;
+});
+const weekIssued=weekArr.filter(item=>item.Issue_Date&&item.Issue_Date!=='').length;
+
+const totalIssuedToday=all.filter(item=>item.Issue_Date===todayStr).length;
+const totalIssuedWeek=all.filter(item=>{
+const d=parseDate(item.Issue_Date);
+return d&&d>=monday&&d<=sunday;
+}).length;
+
+counts[sec]={todayScheduled:todayArr.length,todayIssued,tomorrowScheduled:tomorrowArr.length,tomorrowIssued,weekScheduled:weekArr.length,weekIssued,totalIssuedToday,totalIssuedWeek};
+}catch{
+counts[sec]={todayScheduled:0,todayIssued:0,tomorrowScheduled:0,tomorrowIssued:0,weekScheduled:0,weekIssued:0,totalIssuedToday:0,totalIssuedWeek:0};
+}
+}));
+
+document.getElementById('today-count-row').innerHTML=sections.map(sec=>`
+<div class="today-count-box">
+<div class="tc-section">${sec}</div>
+<div class="tc-days">
+<div class="tc-day">
+<div class="tc-day-label">Today</div>
+<div class="tc-tier tc-scheduled"><div class="tc-label">Sched</div><div class="tc-value">${counts[sec].todayScheduled}</div></div>
+<div class="tc-tier tc-issued"><div class="tc-label">Issued</div><div class="tc-value">${counts[sec].todayIssued}</div></div>
+</div>
+<div class="tc-day">
+<div class="tc-day-label">Tomorrow</div>
+<div class="tc-tier tc-tomorrow-sched"><div class="tc-label">Sched</div><div class="tc-value">${counts[sec].tomorrowScheduled}</div></div>
+<div class="tc-tier tc-tomorrow-issued"><div class="tc-label">Issued</div><div class="tc-value">${counts[sec].tomorrowIssued}</div></div>
+</div>
+<div class="tc-day">
+<div class="tc-day-label">This Week</div>
+<div class="tc-tier tc-week-sched"><div class="tc-label">Sched</div><div class="tc-value">${counts[sec].weekScheduled}</div></div>
+<div class="tc-tier tc-week-issued"><div class="tc-label">Issued</div><div class="tc-value">${counts[sec].weekIssued}</div></div>
+</div>
+</div>
+<div class="tc-total-row">
+<div class="tc-tier"><div class="tc-day-label">Issued Today</div><div class="tc-value">${counts[sec].totalIssuedToday}</div></div>
+<div class="tc-tier"><div class="tc-day-label">Issued this Week</div><div class="tc-value">${counts[sec].totalIssuedWeek}</div></div>
+</div>
+</div>
+`).join('');
+}
+
+async function init(){
+await fetchAllStatus();
+await fetchTodayCounts();
+await fetchBarCharts();
+}
+
+init();
+
+setInterval(fetchAllStatus,30000);
+setInterval(fetchTodayCounts,30000);
+setInterval(fetchBarCharts,30000);
+</script>
 </body>
 </html>
