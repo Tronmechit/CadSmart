@@ -666,7 +666,7 @@
   "50645": {"drgNum": "DR-NC-0263-551-100-331", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF COMPRESSED AIR SYSTEM-STARTING AIR-UNIT 331 & 332", "Issue_Date": "", "Target_Date": "2026-12-09"},
   "50646": {"drgNum": "DR-NC-0263-551-100-4002", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF COMPRESSED AIR SYSTEM-STARTING AIR  Z-4002", "Issue_Date": "", "Target_Date": "2027-01-02"},
   "50647": {"drgNum": "DR-NC-0263-551-100-431", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF COMPRESSED AIR SYSTEM-STARTING AIR-UNIT 431& 432", "Issue_Date": "", "Target_Date": "2027-01-20"},
-  "50648": {"drgNum": "DR-NC-0263-552-000", "rev": "A", "Drawing_Name": "QUICK CLOSING VALVE SYSTEM", "Issue_Date": "", "Target_Date": "2026-07-22"},
+  "50648": {"drgNum": "DR-NC-0263-552-000", "rev": "A", "Drawing_Name": "QUICK CLOSING VALVE SYSTEM", "Issue_Date": "2026-02-22", "Target_Date": "2026-07-22"},
   "50649": {"drgNum": "DR-NC-0263-552-100-421", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF QUICK CLOSING VALVE SYSTEM FOR FUEL OIL VALVES-UNIT 420, 421 & 422", "Issue_Date": "", "Target_Date": "2026-10-09"},
   "50650": {"drgNum": "DR-NC-0263-552-100-431", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF QUICK CLOSING VALVE SYSTEM FOR FUEL OIL VALVES", "Issue_Date": "", "Target_Date": "2027-01-29"},
   "50651": {"drgNum": "DR-NC-0263-554-101-411", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF COMPRESSED AIR BUBBLING SYSTEM-UNIT 411", "Issue_Date": "2026-04-20", "Target_Date": "2026-04-16"},
