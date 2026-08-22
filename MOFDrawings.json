@@ -342,6 +342,7 @@
   "50330": {"drgNum": "DR-NC-0263-502-000-711", "rev": "A", "Drawing_Name": "SPOOL DRAWING OF UNIT 711", "Issue_Date": "2026-05-20", "Target_Date": "2026-05-06"},
   "50331": {"drgNum": "DR-NC-0263-501-001-020", "rev": "A", "Drawing_Name": "SPOOL & PIPING LAYOUT OF PIPE MODULE-20 (SHIP SYS RM SEWAGE TR PP PIPES U-711)", "Issue_Date": "2026-05-20", "Target_Date": "2026-05-15"},
   "50332": {"drgNum": "DR-NC-0263-502-000-720", "rev": "A", "Drawing_Name": "SPOOL DRAWING OF UNIT 720", "Issue_Date": "2026-05-26", "Target_Date": "2026-05-26"},
+  "50787": {"drgNum": "DR-NC-0263-502-000-222", "rev": "B", "Drawing_Name": "SPOOL DRAWING OF UNIT 222", "Issue_Date": "", "Target_Date": "2026-08-25"},
   "50333": {"drgNum": "DR-NC-0263-502-000-222", "rev": "A", "Drawing_Name": "SPOOL DRAWING OF UNIT 222", "Issue_Date": "2026-06-06", "Target_Date": "2026-06-05"},
   "50334": {"drgNum": "DR-NC-0263-501-002-018", "rev": "Cancelled", "Drawing_Name": "SUPPORT DETAILS & LAYOUT OF PIPE MODULE-18 (SHIP SYS RM FW HYP PP 1& 2 PIPES U-712)", "Issue_Date": "", "Target_Date": ""},
   "50335": {"drgNum": "DR-NC-0263-501-001-008", "rev": "Cancelled", "Drawing_Name": "SPOOL & PIPING LAYOUT OF PIPE MODULE-08 (ER FIRE PP 1&2 PIPES U-410)", "Issue_Date": "", "Target_Date": ""},
