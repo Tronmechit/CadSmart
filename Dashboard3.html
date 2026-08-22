@@ -8,15 +8,17 @@
 
 <style>
 body{background-color:#0b0f19;color:#e6edf3;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;margin:0;padding:1vh;height:100vh;box-sizing:border-box;overflow:hidden}
-.dashboard-grid{display:grid;grid-template-columns:35% 20% 25% 20%;grid-template-rows:5% 31% 27.5% 32%;gap:1.5vh;height:100%}
+.dashboard-grid{display:grid;grid-template-columns:30fr 20fr 30fr 20fr;grid-template-rows:5fr 31fr 27.5fr 32fr;gap:1.5vh;height:100%}
 .panel{background-color:#161b22;border:1px solid #30363d;border-radius:8px;padding:1vh;display:flex;flex-direction:column;box-sizing:border-box;overflow:hidden}
 
-.barchart-grid{display:grid;grid-template-columns:100%;grid-template-rows:19.4% 19.4% 19.4% 19.4% 19.4%;gap:.8vh;height:100%}
+.barchart-grid{display:grid;grid-template-columns:100%;grid-template-rows:repeat(5,1fr);gap:.8vh;height:100%}
 .area-HullBarchart{grid-column:1;grid-row:1}
 .area-SOFBarchart{grid-column:1;grid-row:2}
 .area-AOFBarchart{grid-column:1;grid-row:3}
 .area-MOFBarchart{grid-column:1;grid-row:4}
 .area-EOFBarchart{grid-column:1;grid-row:5}
+.area-HullBarchart,.area-SOFBarchart,.area-AOFBarchart,.area-MOFBarchart,.area-EOFBarchart{padding:.4vh .6vh}
+.area-HullBarchart h2,.area-SOFBarchart h2,.area-AOFBarchart h2,.area-MOFBarchart h2,.area-EOFBarchart h2{font-size:1.3vh;margin:0 0 .15vh 0;line-height:1.1}
 
 .area-title{grid-column:1/span 4;grid-row:1}
 .area-status{grid-column:1;grid-row:2}
@@ -40,7 +42,7 @@ th{background-color:#21262d;color:#c9d1d9}
 .col-caption{text-align:left;width:40%}
 .area-status h2{margin-bottom:.6vh}
 .area-status table{margin-bottom:.6vh}
-.area-status th,.area-status td{padding:.15vh;font-size:2vh}
+.area-status th,.area-status td{padding:.15vh;font-size:1.8vh}
 .area-status .sub-header{margin-bottom:.3vh}
 
 .bg-white{background-color:#fff;color:#000}
@@ -53,13 +55,13 @@ th{background-color:#21262d;color:#c9d1d9}
 
 .today-count-row{display:flex;justify-content:center;gap:1vh;margin-top:.5vh}
 .today-count-box{flex:1;background-color:#21262d;border:1px solid #30363d;border-radius:6px;text-align:center;padding:.3vh;overflow:hidden}
-.today-count-box .tc-section{font-size:1.6vh;color:#e6edf3;letter-spacing:.5px;margin-bottom:.3vh;font-weight:600}
+.today-count-box .tc-section{font-size:1.4vh;color:#e6edf3;letter-spacing:.5px;margin-bottom:.3vh;font-weight:600}
 .tc-days{display:flex;gap:.3vh}
 .tc-day{flex:1;display:flex;flex-direction:column;gap:.25vh;min-width:0}
 .tc-day-label{font-size:1vh;color:#8b949e;text-transform:uppercase;letter-spacing:.3px;font-weight:600;margin-bottom:.1vh;height:1.5vh;display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .today-count-box .tc-tier{border-radius:4px;padding:.2vh 0}
 .today-count-box .tc-label{font-size:1.25vh;letter-spacing:.2px;font-weight:500}
-.today-count-box .tc-value{font-size:2.2vh;font-weight:600;line-height:1.1}
+.today-count-box .tc-value{font-size:2vh;font-weight:600;line-height:1.1}
 .today-count-box .tc-scheduled{background-color:#FFC000}
 .today-count-box .tc-scheduled .tc-label,.today-count-box .tc-scheduled .tc-value{color:#000}
 .today-count-box .tc-issued{background-color:#2ea043}
@@ -136,6 +138,9 @@ th,td{font-size:3.6vw;padding:1.2vw}
 .meeting-title{font-size:3.4vw;margin-top:1vw}
 .dynamic-list{font-size:3.6vw}
 .page-indicator{font-size:3vw}
+.barchart-grid{display:flex;flex-direction:column;gap:3vw;height:auto}
+.area-HullBarchart,.area-SOFBarchart,.area-AOFBarchart,.area-MOFBarchart,.area-EOFBarchart{height:45vh}
+.area-barcharts{padding:3vw}
 }
 </style>
 </head>
@@ -166,27 +171,27 @@ th,td{font-size:3.6vw;padding:1.2vw}
 <div class="barchart-grid">
 
 <div class="panel area-HullBarchart" style="background-color:#1e222b">
-<h2 style="font-size:16px">HULL PLAN VS PROGRESS</h2>
+<h2>HULL PLAN VS PROGRESS</h2>
 <div class="bar-chart-container"><canvas id="bar-Hull"></canvas></div>
 </div>
 
 <div class="panel area-SOFBarchart" style="background-color:#1e222b">
-<h2 style="font-size:16px">SOF PLAN VS PROGRESS</h2>
+<h2>SOF PLAN VS PROGRESS</h2>
 <div class="bar-chart-container"><canvas id="bar-SOF"></canvas></div>
 </div>
 
 <div class="panel area-AOFBarchart" style="background-color:#1e222b">
-<h2 style="font-size:16px">AOF PLAN VS PROGRESS</h2>
+<h2>AOF PLAN VS PROGRESS</h2>
 <div class="bar-chart-container"><canvas id="bar-AOF"></canvas></div>
 </div>
 
 <div class="panel area-MOFBarchart" style="background-color:#1e222b">
-<h2 style="font-size:16px">MOF PLAN VS PROGRESS</h2>
+<h2>MOF PLAN VS PROGRESS</h2>
 <div class="bar-chart-container"><canvas id="bar-MOF"></canvas></div>
 </div>
 
 <div class="panel area-EOFBarchart" style="background-color:#1e222b">
-<h2 style="font-size:16px">EOF PLAN VS PROGRESS</h2>
+<h2>EOF PLAN VS PROGRESS</h2>
 <div class="bar-chart-container"><canvas id="bar-EOF"></canvas></div>
 </div>
 
@@ -255,12 +260,14 @@ updateClock();
 const centerTextPlugin={
 id:'centerText',
 afterDraw(chart){
+const opts=chart.options.plugins&&chart.options.plugins.centerText;
+if(!opts||typeof opts.percentage!=='number')return;
 const meta=chart.getDatasetMeta(0);
 if(!meta.data.length)return;
 const {ctx}=chart;
 const centerX=meta.data[0].x;
 const centerY=meta.data[0].y;
-const percentage=chart.options.plugins.centerText.percentage;
+const percentage=opts.percentage;
 ctx.save();
 ctx.fillStyle='#ffffff';
 ctx.font='bold 50px Segoe UI';
@@ -284,8 +291,8 @@ chart.data.datasets.forEach((dataset,datasetIndex)=>{
 const meta=chart.getDatasetMeta(datasetIndex);
 meta.data.forEach((bar,index)=>{
 const value=dataset.data[index];
-if(value===null||value===undefined)return;
-const y=bar.y-4-(datasetIndex*9);
+if(value===null||value===undefined||value===0)return;
+const y=bar.y-2;
 ctx.fillText(String(value),bar.x,y);
 });
 });
@@ -299,7 +306,9 @@ function parseDate(value){
 if(!value||typeof value!=='string')return null;
 const m=value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
 if(!m)return null;
-const d=new Date(Number(m[1]),Number(m[2])-1,Number(m[3]));
+const year=Number(m[1]);
+if(year<2000||year>2035)return null; // reject placeholder/typo dates (e.g. blank Excel cells exporting as 1900-xx-xx, or stray far-future years)
+const d=new Date(year,Number(m[2])-1,Number(m[3]));
 return isNaN(d.getTime())?null:d;
 }
 
@@ -317,22 +326,25 @@ return new Date(date.getFullYear(),date.getMonth()+count,1);
 }
 
 function buildMonthRange(items){
-const dates=[];
-items.forEach(item=>{
-const target=parseDate(item.Target_Date);
-const issue=parseDate(item.Issue_Date);
-if(target)dates.push(new Date(target.getFullYear(),target.getMonth(),1));
-if(issue)dates.push(new Date(issue.getFullYear(),issue.getMonth(),1));
-});
-if(!dates.length)return [];
-let min=new Date(Math.min(...dates.map(d=>d.getTime())));
-let max=new Date(Math.max(...dates.map(d=>d.getTime())));
-const result=[];
-while(min<=max){
-result.push(monthKey(min));
-min=addMonths(min,1);
-}
-return result;
+    const dates = [];
+    items.forEach(item => {
+        const target = parseDate(item.Target_Date);
+        const issue = parseDate(item.Issue_Date);
+        if (target) {
+            dates.push(new Date(target.getFullYear(), target.getMonth(), 1));
+        } else if (issue) {
+            dates.push(new Date(issue.getFullYear(), issue.getMonth(), 1));
+        }
+    });
+    if (!dates.length) return [];
+    let min = new Date(Math.min(...dates.map(d => d.getTime())));
+    let max = new Date(Math.max(...dates.map(d => d.getTime())));
+    const result = [];
+    while (min <= max) {
+        result.push(monthKey(min));
+        min = addMonths(min, 1);
+    }
+    return result;
 }
 
 function calculateBarData(rawData){
@@ -354,41 +366,37 @@ delayed[k]=0;
 const today=new Date();
 today.setHours(0,0,0,0);
 
-all.forEach(item=>{
-const target=parseDate(item.Target_Date);
-const issue=parseDate(item.Issue_Date);
+all.forEach(item => {
+    const target = parseDate(item.Target_Date);
+    const issue = parseDate(item.Issue_Date);
 
-if(target){
-const targetKey=monthKey(target);
-if(scheduled[targetKey]===undefined){
-scheduled[targetKey]=0;
-issued[targetKey]=0;
-delayed[targetKey]=0;
-}
-scheduled[targetKey]++;
+    if (target) {
+        const targetKey = monthKey(target);
+        if (scheduled[targetKey] === undefined) {
+            scheduled[targetKey] = 0;
+            issued[targetKey] = 0;
+            delayed[targetKey] = 0;
+        }
+        scheduled[targetKey]++;
 
-if(issue){
-const issueKey=monthKey(issue);
-if(issued[issueKey]===undefined){
-issued[issueKey]=0;
-scheduled[issueKey]=0;
-delayed[issueKey]=0;
-}
-issued[issueKey]++;
-
-if(issue>target)delayed[targetKey]++;
-}else if(target<today){
-delayed[targetKey]++;
-}
-}else if(issue){
-const issueKey=monthKey(issue);
-if(issued[issueKey]===undefined){
-issued[issueKey]=0;
-scheduled[issueKey]=0;
-delayed[issueKey]=0;
-}
-issued[issueKey]++;
-}
+        if (issue) {
+            // Issued count is attributed to the TARGET month, not the issue month,
+            // even if actually issued in a later month.
+            issued[targetKey]++;
+            // Once issued, never counted as delayed - regardless of how late.
+        } else if (target < today) {
+            delayed[targetKey]++;
+        }
+    } else if (issue) {
+        // No target date at all - fall back to bucketing by issue month.
+        const issueKey = monthKey(issue);
+        if (issued[issueKey] === undefined) {
+            issued[issueKey] = 0;
+            scheduled[issueKey] = 0;
+            delayed[issueKey] = 0;
+        }
+        issued[issueKey]++;
+    }
 });
 
 const keys=Object.keys({...scheduled,...issued,...delayed}).sort();
@@ -425,19 +433,19 @@ scales:{
 x:{
 stacked:false,
 grid:{display:false},
-ticks:{color:'#8b949e',font:{size:9},maxRotation:45,minRotation:45,autoSkip:true}
+ticks:{color:'#8b949e',font:{size:7},maxRotation:45,minRotation:45,autoSkip:true,maxTicksLimit:12}
 },
 y:{
 beginAtZero:true,
-suggestedMax:Math.max(10,Math.ceil(Math.max(...chartData.scheduled,...chartData.issued,...chartData.delayed)/20)*20),
-ticks:{color:'#8b949e',font:{size:6},stepSize:20},
+suggestedMax:Math.max(10,Math.ceil(Math.max(...chartData.scheduled,...chartData.issued,...chartData.delayed)/10)*10),
+ticks:{color:'#8b949e',font:{size:9},stepSize:10},
 grid:{color:'rgba(139,148,158,0.18)'}
 }
 },
 plugins:{
 legend:{
 position:'right',
-labels:{color:'#e6edf3',font:{size:6},boxWidth:9,boxHeight:9,padding:3}
+labels:{color:'#e6edf3',font:{size:10},boxWidth:18,boxHeight:12,padding:8}
 },
 tooltip:{
 callbacks:{
@@ -455,7 +463,7 @@ return `${monthLabel(key)} ${parts[0]}`;
 }else{
 barChartInstances[section].data.labels=chartData.labels;
 barChartInstances[section].data.datasets=datasets;
-barChartInstances[section].options.scales.y.suggestedMax=Math.max(10,Math.ceil(Math.max(...chartData.scheduled,...chartData.issued,...chartData.delayed)/20)*20);
+barChartInstances[section].options.scales.y.suggestedMax=Math.max(10,Math.ceil(Math.max(...chartData.scheduled,...chartData.issued,...chartData.delayed)/10)*10);
 barChartInstances[section].update('none');
 }
 }
@@ -531,8 +539,6 @@ chartInstances[sec].data.datasets[0].backgroundColor=chartColors;
 chartInstances[sec].options.plugins.centerText.percentage=percentage;
 chartInstances[sec].update('none');
 }
-
-createOrUpdateBarChart(sec,[]);
 });
 
 OAPercentage=GrandTotal>0?Math.round(GrandIssue/GrandTotal*100):0;
