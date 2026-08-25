@@ -539,7 +539,7 @@
   "50515": {"drgNum": "DR-NC-0263-526-100-631", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF FIRE LINE SYSTEM-UNIT 631 & 632", "Issue_Date": "2026-08-18", "Target_Date": "2026-08-14"},
   "50516": {"drgNum": "DR-NC-0263-526-100-421", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF FIRE LINE SYSTEM-UNIT 420, 421 & 422", "Issue_Date": "2026-08-05", "Target_Date": "2026-08-17"},
   "50517": {"drgNum": "DR-NC-0263-526-100-4003", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF FIRE LINE SYSTEM Z-4003", "Issue_Date": "", "Target_Date": "2026-09-07"},
-  "50518": {"drgNum": "DR-NC-0263-526-100-321", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF FIRE LINE SYSTEM-UNIT 321 & 322", "Issue_Date": "", "Target_Date": "2026-09-09"},
+  "50518": {"drgNum": "DR-NC-0263-526-100-321", "rev": "Cancelled", "Drawing_Name": "PIPING LAYOUT OF FIRE LINE SYSTEM-UNIT 321 & 322", "Issue_Date": "", "Target_Date": "2026-09-09"},
   "50519": {"drgNum": "DR-NC-0263-526-100-4002", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF FIRE LINE SYSTEM  Z-4002", "Issue_Date": "", "Target_Date": "2026-09-25"},
   "50520": {"drgNum": "DR-NC-0263-526-100-5001", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF FIRE LINE SYSTEM Z-5001", "Issue_Date": "", "Target_Date": "2026-10-09"},
   "50521": {"drgNum": "DR-NC-0263-526-100-820", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF FIRE LINE SYSTEM-UNIT 820", "Issue_Date": "", "Target_Date": "2026-10-19"},
