@@ -218,7 +218,7 @@
   "50206": {"drgNum": "DR-NC-0263-298-498", "rev": "A", "Drawing_Name": "FOUNDATION DETAILS OF PRESSURIZED EXP.TANK (CIRC PUMP)", "Issue_Date": "2026-06-09", "Target_Date": "2026-06-08"},
   "50207": {"drgNum": "DR-NC-0263-298-448", "rev": "A", "Drawing_Name": "FOUNDATION DETAILS OF PROVISION PLANT - 1", "Issue_Date": "2026-06-11", "Target_Date": "2026-06-10"},
   "50208": {"drgNum": "DR-NC-0263-298-424", "rev": "A", "Drawing_Name": "FOUNDATION DETAILS OF HOT WATER BOILER", "Issue_Date": "2026-06-13", "Target_Date": "2026-06-12"},
-  "50209": {"drgNum": "DR-NC-0263-298-405", "rev": "A", "Drawing_Name": "FOUNDATION DETAILS OF STARTING AIR RECEIVER", "Issue_Date": "2026-06-18", "Target_Date": "2026-06-15"},
+  "50209": {"drgNum": "DR-NC-0263-298-405", "rev": "B", "Drawing_Name": "FOUNDATION DETAILS OF STARTING AIR RECEIVER", "Issue_Date": "2026-06-18", "Target_Date": "2026-09-01"},
   "50210": {"drgNum": "DR-NC-0263-298-406", "rev": "A", "Drawing_Name": "FOUNDATION DETAILS OF STARTING AIR COMPRESSORS 1 & 2", "Issue_Date": "2026-06-23", "Target_Date": "2026-06-17"},
   "50211": {"drgNum": "DR-NC-0263-298-408", "rev": "A", "Drawing_Name": "FOUNDATION DETAIL OF SERVICE AIR RECIVER", "Issue_Date": "2026-06-19", "Target_Date": "2026-06-19"},
   "50212": {"drgNum": "DR-NC-0263-298-409", "rev": "A", "Drawing_Name": "FOUNDATION DETAILS OF SERVICE AIR COMPRESSOR", "Issue_Date": "2026-06-23", "Target_Date": "2026-06-22"},
