@@ -183,7 +183,7 @@
   "70169": {"drgNum": "DR-NC-0263-783-001-3023", "rev": "A", "Drawing_Name": "PENETRATION PLAN & FITTINGS (ELECTRICAL) - ZONE 3002/3003- UNIT 432/431", "Issue_Date": "", "Target_Date": "2026-10-04"},
   "70170": {"drgNum": "DR-NC-0263-782-302-3023", "rev": "A", "Drawing_Name": "ELECTRICAL MOUNTING BEDS - ZONE 3002/3003- UNIT 432/431", "Issue_Date": "", "Target_Date": "2026-10-04"},
   "70171": {"drgNum": "DR-NC-0263-742-303-3034", "rev": "A", "Drawing_Name": "ELECTRICAL EQUIPMENT ARRANGEMENT - ZONE 3003/3004  UNIT  731, 732", "Issue_Date": "", "Target_Date": "2026-09-24"},
-  "70172": {"drgNum": "DR-NC-0263-781-303-3034", "rev": "A", "Drawing_Name": "CABLE TRAYS -  ZONE 3003/3004  UNIT  731, 732", "Issue_Date": "", "Target_Date": "2026-09-24"},
+  "70172": {"drgNum": "DR-NC-0263-781-303-3034", "rev": "A", "Drawing_Name": "CABLE TRAYS -  ZONE 3003/3004  UNIT  731, 732", "Issue_Date": "2026-09-24", "Target_Date": "2026-09-24"},
   "70173": {"drgNum": "DR-NC-0263-783-001-3034", "rev": "A", "Drawing_Name": "PENETRATION PLAN & FITTINGS (ELECTRICAL) -  ZONE 3003/3004  UNIT  731, 732", "Issue_Date": "", "Target_Date": "2026-09-24"},
   "70174": {"drgNum": "DR-NC-0263-782-303-3034", "rev": "A", "Drawing_Name": "ELECTRICAL MOUNTING BEDS -  ZONE 3003/3004  UNIT  731, 732", "Issue_Date": "2026-09-18", "Target_Date": "2026-09-24"},
   "70175": {"drgNum": "DR-NC-0263-742-402-4023", "rev": "A", "Drawing_Name": "ELECTRICAL EQUIPMENT ARRANGEMENT - ZONE 4002/4003 UNIT 542,641", "Issue_Date": "", "Target_Date": "2026-11-05"},
