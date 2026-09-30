@@ -615,6 +615,7 @@
   "50577": {"drgNum": "DR-NC-0263-532-100-4004", "rev": "A", "Drawing_Name": "PIPE LAYOUT OF EXTERNAL DRAIN SYSTEM Z-4004", "Issue_Date": "", "Target_Date": "2027-01-14"},
   "50578": {"drgNum": "DR-NC-0263-532-101-840", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF INTERNAL DRAINAGE SYSTEM-UNIT 840", "Issue_Date": "", "Target_Date": "2027-01-30"},
   "50579": {"drgNum": "DR-NC-0263-533-000", "rev": "A", "Drawing_Name": "SANITARY DISCHARGE SYSTEM", "Issue_Date": "2026-05-20", "Target_Date": "2026-04-07"},
+  "50809": {"drgNum": "DR-NC-0263-533-100-521", "rev": "B", "Drawing_Name": "PIPE LAYOUT OF SANITARY DISCHARGE SYSTEM-UNIT 521 & 522", "Issue_Date": "", "Target_Date": "2026-10-01"},
   "50580": {"drgNum": "DR-NC-0263-533-100-521", "rev": "A", "Drawing_Name": "PIPE LAYOUT OF SANITARY DISCHARGE SYSTEM-UNIT 521 & 522", "Issue_Date": "2026-05-18", "Target_Date": "2026-05-15"},
   "50581": {"drgNum": "DR-NC-0263-533-100-711", "rev": "A", "Drawing_Name": "PIPE LAYOUT OF SANITARY DISCHARGE SYSTEM-UNIT 711&712", "Issue_Date": "2026-05-25", "Target_Date": "2026-05-22"},
   "50801": {"drgNum": "DR-NC-0263-533-100-631", "rev": "A", "Drawing_Name": "PIPE LAYOUT OF SANITARY DISCHARGE SYSTEM-UNIT 631 & 632", "Issue_Date": "2026-09-17", "Target_Date": "2026-09-17"},
