@@ -166,6 +166,7 @@
   "70152": {"drgNum": "DR-NC-0263-771-002", "rev": "A", "Drawing_Name": "SPOOL DRAWING OF SPEED LOG", "Issue_Date": "2026-06-05", "Target_Date": "2026-08-07"},
   "70153": {"drgNum": "DR-NC-0263-771-401-003", "rev": "A", "Drawing_Name": "SPOOL DRAWING OF ADCP", "Issue_Date": "2026-06-18", "Target_Date": "2026-08-07"},
   "70154": {"drgNum": "DR-NC-0263-771-401-004", "rev": "A", "Drawing_Name": "SPOOL DRAWING OF DWES", "Issue_Date": "2026-06-18", "Target_Date": "2026-08-07"},
+  "70211": {"drgNum": "DR-NC-0263-771-403-003", "rev": "B", "Drawing_Name": "PIPING LAYOUT & PENETRATION PLAN FOR DWES FWD & AFT", "Issue_Date": "", "Target_Date": "2026-10-11"},
   "70155": {"drgNum": "DR-NC-0263-771-403-003", "rev": "A", "Drawing_Name": "PIPING LAYOUT & PENETRATION PLAN FOR DWES FWD & AFT", "Issue_Date": "2026-06-18", "Target_Date": "2026-08-07"},
   "70156": {"drgNum": "DR-NC-0263-771-403-002", "rev": "A", "Drawing_Name": "PIPING LAYOUT & PENETRATION PLAN FOR ADCP", "Issue_Date": "2026-06-19", "Target_Date": "2026-08-07"},
   "70157": {"drgNum": "DR-NC-0263-771-403-001", "rev": "A", "Drawing_Name": "PIPING LAYOUT & PENETRATION PLAN FOR  SPEED LOG", "Issue_Date": "2026-06-19", "Target_Date": "2026-08-07"},
