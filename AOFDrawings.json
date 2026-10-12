@@ -141,6 +141,7 @@
   "30132": {"drgNum": "DR-NC-0263-341-001", "rev": "A", "Drawing_Name": "INSULATION  ARRANGEMENT - TWEEN DECK", "Issue_Date": "2026-07-14", "Target_Date": "2026-09-15"},
   "30191": {"drgNum": "DR-NC-0263-341-002", "rev": "B", "Drawing_Name": "INSULATION  ARRANGEMENT - MAIN DECK", "Issue_Date": "", "Target_Date": "2026-10-15"},
   "30133": {"drgNum": "DR-NC-0263-341-002", "rev": "A", "Drawing_Name": "INSULATION  ARRANGEMENT - MAIN DECK", "Issue_Date": "2026-09-15", "Target_Date": "2026-09-15"},
+  "30193": {"drgNum": "DR-NC-0263-341-003", "rev": "B", "Drawing_Name": "INSULATION  ARRANGEMENT - A DECK", "Issue_Date": "", "Target_Date": "2026-10-15"},
   "30134": {"drgNum": "DR-NC-0263-341-003", "rev": "A", "Drawing_Name": "INSULATION  ARRANGEMENT - A DECK", "Issue_Date": "2026-09-15", "Target_Date": "2026-09-15"},
   "30135": {"drgNum": "DR-NC-0263-341-004", "rev": "A", "Drawing_Name": "INSULATION  ARRANGEMENT - B DECK", "Issue_Date": "2026-09-15", "Target_Date": "2026-09-15"},
   "30136": {"drgNum": "DR-NC-0263-341-005", "rev": "A", "Drawing_Name": "INSULATION  ARRANGEMENT - TANK TOP", "Issue_Date": "2026-07-14", "Target_Date": "2026-09-15"},
