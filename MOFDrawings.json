@@ -67,6 +67,7 @@
   "50064": {"drgNum": "DR-NC-0263-523-003", "rev": "A", "Drawing_Name": "FRESH WATER COOLING SYSTEM 5-8", "Issue_Date": "2026-03-12", "Target_Date": "2026-03-03"},
   "50065": {"drgNum": "DR-NC-0263-523-004", "rev": "A", "Drawing_Name": "FRESH WATER COOLING SYSTEM 9-11", "Issue_Date": "2026-03-12", "Target_Date": "2026-03-17"},
   "50066": {"drgNum": "DR-NC-0263-525-001", "rev": "A", "Drawing_Name": "FRESH WATER PRODUCTION SYSTEM", "Issue_Date": "2026-03-07", "Target_Date": "2026-03-03"},
+  "50820": {"drgNum": "DR-NC-0263-525-000", "rev": "A", "Drawing_Name": "POTABLE WATER SYSTEM - BELOW MAIN DECK", "Issue_Date": "", "Target_Date": "2026-10-23"},
   "50067": {"drgNum": "DR-NC-0263-525-002", "rev": "A", "Drawing_Name": "POTABLE WATER SYSTEM - ABOVE MAIN DECK", "Issue_Date": "2026-04-20", "Target_Date": "2026-03-17"},
   "50068": {"drgNum": "DR-NC-0263-525-003", "rev": "A", "Drawing_Name": "WINDOW FLUSHING SYSTEM", "Issue_Date": "2026-04-04", "Target_Date": "2026-03-21"},
   "50069": {"drgNum": "DR-NC-0263-526-000", "rev": "A", "Drawing_Name": "FIRE LINE SYSTEM", "Issue_Date": "2026-03-10", "Target_Date": "2026-03-03"},
