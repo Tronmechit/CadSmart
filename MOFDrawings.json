@@ -76,6 +76,7 @@
   "50072": {"drgNum": "DR-NC-0263-532-101-521", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF INTERNAL DRAINAGE SYSTEM -UNIT 521 & 522", "Issue_Date": "2026-06-01", "Target_Date": "2026-05-29"},
   "50073": {"drgNum": "DR-NC-0263-534-000", "rev": "A", "Drawing_Name": "OILY BILGE AND SLUDGE SYSTEM", "Issue_Date": "2026-03-19", "Target_Date": "2026-03-11"},
   "50074": {"drgNum": "DR-NC-0263-541-000", "rev": "A", "Drawing_Name": "LUB. OIL SYSTEM 1", "Issue_Date": "2026-03-24", "Target_Date": "2026-03-17"},
+  "50824": {"drgNum": "DR-NC-0263-542-001", "rev": "A", "Drawing_Name": "LUB, OIL SYSTEM 3", "Issue_Date": "", "Target_Date": "2026-10-28"},
   "50075": {"drgNum": "DR-NC-0263-542-000", "rev": "A", "Drawing_Name": "LUB, OIL SYSTEM 2", "Issue_Date": "2026-03-20", "Target_Date": "2026-03-11"},
   "50076": {"drgNum": "DR-NC-0263-544-000", "rev": "A", "Drawing_Name": "FUEL OIL SUPPLY SYSTEM", "Issue_Date": "2026-03-10", "Target_Date": "2026-03-11"},
   "50077": {"drgNum": "DR-NC-0263-544-001", "rev": "A", "Drawing_Name": "FUEL OIL PURIFICATION SYSTEM", "Issue_Date": "2026-03-10", "Target_Date": "2026-03-11"},
