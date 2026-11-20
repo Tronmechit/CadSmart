@@ -5,75 +5,50 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NC-0263 Dashboard Launcher</title>
 <style>
-  * { box-sizing: border-box; }
-  html, body { width: 100%; height: 100%; margin: 0; }
-  body {
-    display: flex; align-items: center; justify-content: center;
-    background: #0b0f19; color: #e6edf3;
-    font-family: "Segoe UI", Arial, sans-serif;
-  }
-  #launcher {
-    text-align: center; padding: 28px; max-width: 700px;
-  }
-  h1 { color: #58a6ff; font-size: clamp(24px, 4vw, 42px); margin: 0 0 14px; }
-  p { color: #aab6c5; font-size: clamp(14px, 1.8vw, 20px); margin: 0 0 28px; }
-  button {
-    border: 0; border-radius: 10px; padding: 18px 34px;
-    background: #238636; color: white; font-size: clamp(18px, 2.2vw, 26px);
-    font-weight: 700; cursor: pointer;
-  }
-  button:focus { outline: 3px solid #58a6ff; outline-offset: 4px; }
-  #message { min-height: 2em; margin-top: 20px; font-size: 14px; color: #f0c674; }
-  #screen {
-    display: none; position: fixed; inset: 0;
-    width: 100%; height: 100%; background: #0b0f19;
-  }
-  #screen:fullscreen { width: 100vw; height: 100vh; }
-  #dashboard { display: block; width: 100%; height: 100%; border: 0; }
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; }
+body { display:flex; align-items:center; justify-content:center; background:#fff; color:#222; font-family:Arial,sans-serif; }
+#launcher { text-align:center; padding:20px; }
+h1 { margin:0 0 16px; font-size:24px; font-weight:600; }
+button { padding:8px 16px; border:1px solid #999; border-radius:3px; background:#eee; color:#222; font-size:14px; cursor:pointer; }
+button:focus { outline:2px solid #555; outline-offset:2px; }
+#message { min-height:20px; margin-top:12px; font-size:13px; color:#b00020; }
+#dashboard { display:none; position:fixed; inset:0; width:100%; height:100%; border:0; background:#0b0f19; }
+body.dashboard-active #launcher { display:none; }
+body.dashboard-active #dashboard { display:block; }
 </style>
 </head>
 <body>
-  <main id="launcher">
-    <h1>NC-0263 LIVE DASHBOARD</h1>
-    <p>Select the button below to launch the dashboard in fullscreen mode.</p>
-    <button id="launch" type="button">LAUNCH FULLSCREEN DASHBOARD</button>
-    <div id="message" role="status"></div>
-  </main>
-
-  <section id="screen" aria-label="Fullscreen dashboard">
-    <iframe id="dashboard" title="NC-0263 Live Dashboard"></iframe>
-  </section>
-
+<main id="launcher">
+  <h1>NC-0263 LIVE DASHBOARD</h1>
+  <button id="launch" type="button">Launch Dashboard</button>
+  <div id="message" role="status"></div>
+</main>
+<iframe id="dashboard" title="NC-0263 Live Dashboard"></iframe>
 <script>
 const launchButton = document.getElementById('launch');
-const screen = document.getElementById('screen');
 const dashboard = document.getElementById('dashboard');
 const message = document.getElementById('message');
 
 launchButton.addEventListener('click', async () => {
   message.textContent = '';
-  screen.style.display = 'block';
-
-  // Start loading while still in the user-initiated click handler.
   dashboard.src = './Dashboard6.html';
-
+  document.body.classList.add('dashboard-active');
   try {
-    if (!screen.requestFullscreen) {
-      throw new Error('Fullscreen API is not supported by this TV browser.');
-    }
-    await screen.requestFullscreen();
+    if (!document.documentElement.requestFullscreen) throw new Error('Fullscreen unavailable');
+    await document.documentElement.requestFullscreen();
   } catch (error) {
-    screen.style.display = 'none';
+    message.textContent = 'Full Screen Fail!';
+    document.body.classList.remove('dashboard-active');
     dashboard.src = 'about:blank';
-    message.textContent =
-      'This TV browser did not allow webpage fullscreen. Try its kiosk/fullscreen setting, or use a browser that supports fullscreen mode.';
   }
 });
 
 document.addEventListener('fullscreenchange', () => {
   if (!document.fullscreenElement) {
-    screen.style.display = 'none';
+    document.body.classList.remove('dashboard-active');
     dashboard.src = 'about:blank';
+    message.textContent = '';
   }
 });
 </script>
