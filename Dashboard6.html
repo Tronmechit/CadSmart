@@ -74,8 +74,12 @@ th{background-color:#21262d;color:#c9d1d9}
 .today-count-box .tc-week-sched .tc-label,.today-count-box .tc-week-sched .tc-value{color:#000}
 .today-count-box .tc-week-issued{background-color:#2ea043}
 .today-count-box .tc-week-issued .tc-label,.today-count-box .tc-week-issued .tc-value{color:#fff}
-.tc-total-row{display:flex;gap:.3vh;margin-top:.35vh;padding-top:.35vh;border-top:1px solid #30363d}
-.tc-total-row .tc-tier{flex:1;min-width:0;background-color:#1f6f78}
+//.tc-total-row{display:flex;gap:.3vh;margin-top:.35vh;padding-top:.35vh;border-top:1px solid #30363d}
+//.tc-total-row .tc-tier{flex:1;min-width:0;background-color:#1f6f78}
+.tc-total-row{display:flex;gap:.4vw;margin-top:.35vh;padding-top:.35vh;border-top:1px solid #30363d;width:100%;box-sizing:border-box;container-type:inline-size}
+.tc-total-row .tc-tier{flex:1 1 0;min-width:0;width:auto!important;margin:0!important;padding:4px 2px!important;box-sizing:border-box;background-color:#1f6f78;overflow:hidden}
+.tc-total-row .tc-tier>*{max-width:100%;font-size:clamp(8px,6.5cqi,16px)!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
 .tc-total-row .tc-label,.tc-total-row .tc-value{color:#fff}
 .tc-total-row .tc-day-label{color:#7fd7de}
 
