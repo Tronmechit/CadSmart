@@ -538,6 +538,7 @@
   "50459": {"drgNum": "DR-NC-0263-523-102-410", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF FRESH WATER COOLING SYSTEM 3&4-UNIT 410", "Issue_Date": "2026-05-18", "Target_Date": "2026-05-15"},
   "50460": {"drgNum": "DR-NC-0263-523-101-410", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF FRESH WATER COOLING SYSTEM 1&2-UNIT 410", "Issue_Date": "2026-05-20", "Target_Date": "2026-05-18"},
   "50461": {"drgNum": "DR-NC-0263-523-004-711", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF FRESH WATER COOLING SYSTEM (9-11)-UNIT 711&712", "Issue_Date": "2026-06-01", "Target_Date": "2026-05-29"},
+  "50855": {"drgNum": "DR-NC-0263-523-103-711", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF FRESH WATER COOLING SYSTEM 5-8 UNIT 711 & 712", "Issue_Date": "", "Target_Date": "2026-11-23"},
   "50462": {"drgNum": "DR-NC-0263-523-103-721", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF FRESH WATER COOLING SYSTEM 5-8 UNIT 721 & 722", "Issue_Date": "2026-07-02", "Target_Date": "2026-06-30"},
   "50463": {"drgNum": "DR-NC-0263-523-104-721", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF FRESH WATER COOLING SYSTEM 9-11 UNIT 721 & 722", "Issue_Date": "2026-07-06", "Target_Date": "2026-07-02"},
   "50464": {"drgNum": "DR-NC-0263-523-105-410", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF SEA WATER SPRAY SYSTEM-UNIT 410", "Issue_Date": "2026-07-17", "Target_Date": "2026-07-21"},
