@@ -280,6 +280,7 @@
   "20791": {"drgNum": "DR-NC-0263-231-103", "rev": "A", "Drawing_Name": "AC DUCTING FOR BRIDGE DECK - RETURN AIR", "Issue_Date": "", "Target_Date": "2026-12-02"},
   "20783": {"drgNum": "DR-NC-0263-231-104", "rev": "A", "Drawing_Name": "AC DUCTING FOR BRIDGE DECK - NATURAL AIR", "Issue_Date": "2026-11-09", "Target_Date": "2026-11-11"},
   "20781": {"drgNum": "DR-NC-0263-231-105", "rev": "A", "Drawing_Name": "AC DUCTING FOR BRIDGE DECK - EXTRACT AIR", "Issue_Date": "2026-11-09", "Target_Date": "2026-11-11"},
+  "20792": {"drgNum": "DR-NC-0263-231-106", "rev": "A", "Drawing_Name": "AC DUCTING FOR BRIDGE DECK - SUPPLY AIR", "Issue_Date": "", "Target_Date": "2026-12-04"},
   "20259": {"drgNum": "DR-NC-0263-231-200", "rev": "A", "Drawing_Name": "DUCTING FOR C DECK", "Issue_Date": "2026-10-13", "Target_Date": "2026-10-08"},
   "20260": {"drgNum": "DR-NC-0263-231-201", "rev": "A", "Drawing_Name": "AHU-2 DUCTING ARRANGEMENT (Z-6001)", "Issue_Date": "2026-10-13", "Target_Date": "2026-10-06"},
   "20261": {"drgNum": "DR-NC-0263-231-202", "rev": "A", "Drawing_Name": "AHU-4 DUCTING ARRANGEMENT (Z-6001)", "Issue_Date": "2026-10-20", "Target_Date": "2026-09-30"},
