@@ -270,7 +270,9 @@ const centerY=meta.data[0].y;
 const percentage=opts.percentage;
 ctx.save();
 ctx.fillStyle='#ffffff';
-ctx.font='bold 20px Segoe UI';
+const fontSize = (window.innerHeight * 4.17) / 100;
+ctx.font = `bold ${fontSize}px "Segoe UI"`;
+
 ctx.textAlign='center';
 ctx.textBaseline='middle';
 ctx.fillText(`${percentage}%`,centerX,centerY);
