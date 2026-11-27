@@ -645,6 +645,7 @@
   "50562": {"drgNum": "DR-NC-0263-532-100-7001", "rev": "A", "Drawing_Name": "PIPE LAYOUT OF EXTERNAL DRAIN SYSTEM Z-7001", "Issue_Date": "2026-10-24", "Target_Date": "2026-10-20"},
   "50563": {"drgNum": "DR-NC-0263-532-101-5001", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF INTERNAL DRAINAGE SYSTEM Z-5001", "Issue_Date": "2026-10-22", "Target_Date": "2026-10-20"},
   "50565": {"drgNum": "DR-NC-0263-532-101-5002", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF INTERNAL DRAINAGE SYSTEM Z-5002", "Issue_Date": "2026-10-24", "Target_Date": "2026-10-29"},
+  "50860": {"drgNum": "DR-NC-0263-532-100-6001", "rev": "A", "Drawing_Name": "PIPE LAYOUT OF EXTERNAL DRAIN SYSTEM Z-6001", "Issue_Date": "", "Target_Date": "2026-11-28"},
   "50566": {"drgNum": "DR-NC-0263-532-100-5002", "rev": "A", "Drawing_Name": "PIPE LAYOUT OF EXTERNAL DRAIN SYSTEM Z-5002", "Issue_Date": "2026-10-20", "Target_Date": "2026-11-07"},
   "50567": {"drgNum": "DR-NC-0263-532-100-431", "rev": "A", "Drawing_Name": "PIPE LAYOUT OF EXTERNAL DRAIN SYSTEM-UNIT 431& 432", "Issue_Date": "2026-11-06", "Target_Date": "2026-11-11"},
   "50568": {"drgNum": "DR-NC-0263-532-101-431", "rev": "A", "Drawing_Name": "PIPING LAYOUT OF INTERNAL DRAINAGE SYSTEM-UNIT 431& 432", "Issue_Date": "2026-11-10", "Target_Date": "2026-11-13"},
